@@ -35,11 +35,11 @@ public class LiveFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		mWebView = (WebView) getView().findViewById(R.id.webView1);
 		
-		//load bambuser (only load an image for now, bambuser will be a later challenge)
+		//load bambuser
 		//we should probably bounce this via the website, in case we change streaming-partner
 		//eg http://slashat.se/mobile/livestream.php
 		try {
-			mWebView.loadUrl("http://slashat.se/wp-content/uploads/grafik/tshirtbanner.png");
+			mWebView.loadUrl("http://embed.bambuser.com/channel/slashat");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
