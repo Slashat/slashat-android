@@ -4,6 +4,7 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
@@ -14,9 +15,20 @@ import android.widget.Toast;
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
     
 	private static final String TAG = "Slashat";
+	private static LiveFragment liveFrag;
+	private static ArchiveFragment archiveFrag;
+	private static AboutFragment aboutFrag;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        //initiate our fragments
+        if (savedInstanceState == null) {
+            //initial fragment objects
+        	liveFrag = new LiveFragment();
+        	archiveFrag = new ArchiveFragment();
+        	aboutFrag = new AboutFragment();
+        }
         
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -44,24 +56,16 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		if (tab.getPosition() == 0) {
 			//live		
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-live");
-			
-			LiveFragment liveFrag = new LiveFragment();
 			ft.replace(android.R.id.content, liveFrag);
-			
 		} else if (tab.getPosition() == 1) {
 			//archive			
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-archive");
-			
-			ArchiveFragment archiveFrag = new ArchiveFragment();
 			ft.replace(android.R.id.content, archiveFrag);
 		} else if (tab.getPosition() == 2) {
 			//about			
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-about");
-			
-			AboutFragment aboutFrag = new AboutFragment();
 			ft.replace(android.R.id.content, aboutFrag);
 		}
-
 	}
 
 	@Override
