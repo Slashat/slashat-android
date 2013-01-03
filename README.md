@@ -11,4 +11,4 @@ Krav
 
 ActionBarSherlock 
 -------------
-Appen kräver att ActionBarSherlock (http://actionbarsherlock.com/) ligger i en mapp brevid slashat-android-mappen. Det krävs även att ni importerat ActionBarSherlock in i Eclipse så länkningen funkar korrekt vid kompilering.
+Appen kräver att ActionBarSherlock (http://actionbarsherlock.com/) ligger i en mapp brevid slashat-android-mappen. Det krävs även att ni importerat ActionBarSherlock in i Eclipse så länkningen funkar korrekt vid kompilering. Man skall även lägga till android-support-v4.jar ifrån ActionBarSherlock mappen. (se till att hela ActionBarSherlock-mappen ligger i parent dir till android-slashat-mappen) samt köra new Android project from existing source och välja Sherlock mappen och sedan välja library projektet. Först efter detta steget så hittar eclipse alla ActionBarSherlock referenser korrekt.
