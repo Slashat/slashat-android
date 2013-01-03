@@ -5,8 +5,8 @@ Slashat.se för Android-enheter
 
 Krav
 -------------
-Skall funka ner till 2.1
-Kräver ActionBarSherlock för att ge oss fragment-stöd ner till 2.1 (se sektion nedan för mer info om ActionBarSherlock)
+* Skall funka ner till Android 2.1, API Level: 7, Eclair.
+* Kräver ActionBarSherlock för att ge oss fragment-stöd ner till 2.1 (se sektion nedan för mer info om ActionBarSherlock)
 
 ActionBarSherlock 
 -------------
