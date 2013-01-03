@@ -23,9 +23,9 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
     	ActionBar.Tab liveTab= getSupportActionBar().newTab();
     	liveTab.setText("Live");
     	ActionBar.Tab archiveTab = getSupportActionBar().newTab();
-    	archiveTab.setText("Arkiv");
+    	archiveTab.setText("Showarkiv");
     	ActionBar.Tab aboutTab = getSupportActionBar().newTab();
-    	aboutTab.setText("Om Oss");
+    	aboutTab.setText("Om Slashat");
     	
     	liveTab.setTabListener(this);
     	archiveTab.setTabListener(this);
