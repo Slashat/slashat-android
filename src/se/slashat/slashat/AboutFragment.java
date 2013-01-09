@@ -1,6 +1,10 @@
 package se.slashat.slashat;
 
+import java.util.Arrays;
+
+import se.slashat.slashat.adapter.PersonAdapter;
 import se.slashat.slashat.adapter.PersonalAdapter;
+import se.slashat.slashat.model.Personal;
 import se.slashat.slashat.service.PersonalService;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -8,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class AboutFragment extends ListFragment {
+public class AboutFragment extends ListFragment implements Callback<Personal>{
 	PersonalAdapter adapter;
 
 	@Override
@@ -16,9 +20,10 @@ public class AboutFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 
 		adapter = new PersonalAdapter(getActivity(), R.layout.about_item_row,
-				PersonalService.getPersonal());
+				PersonalService.getPersonal(),this);
 
 		setListAdapter(adapter);
+		
 	}
 
 	@Override
@@ -26,5 +31,13 @@ public class AboutFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.fragment_about, container, false);
+	}
+
+	@Override
+	public void call(Personal personal) {
+		
+		PersonAdapter p = new PersonAdapter(getActivity(), R.layout.about_detail, Arrays.asList(personal));
+		setListAdapter(p);
+		
 	}
 }
