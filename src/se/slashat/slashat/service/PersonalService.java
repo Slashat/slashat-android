@@ -14,7 +14,7 @@ public class PersonalService {
 				"Jezper Söderlund",
 				R.drawable.jezper,
 				"kontakt@jezper.se",
-				"@jezperse",
+				"jezperse",
 				"http://www.jezper.se",
 				"En glad och bekväm herre, årsmodell 1980. Jobbar som originalare men är också aktiv inom dansmusikscenen som producenten och DJ:n Airbase."
 						+ "\n\nHan spenderar orimligt mycket tid framför datorer och har numer helt och hållet lämnat PC-land för en hundraprocentig Apple-miljö."
@@ -25,7 +25,7 @@ public class PersonalService {
 				"Tommie Podziemski",
 				R.drawable.tommie,
 				"tommie@tommie.nu",
-				"@tommienu",
+				"tommienu",
 				"http://www.tommie.nu",
 				"Tommie en tjötig och sportig serie-entreprenör med visst huvud för kod."
 						+ "Vilket allt som oftast innebär att Tommie får en idé på fredagen, spenderar hela helgen på att koda den för att sedan lägga ner allt på måndagen."
@@ -36,7 +36,7 @@ public class PersonalService {
 				"Magnus Jonasson",
 				R.drawable.magnus,
 				"magnus@magnusjonasson.com",
-				"@magnusjonasson",
+				"magnusjonasson",
 				"http://www.magnusjonasson.com",
 				"Killen som drar upp medelåldern på Slashat-redaktionen då han är den enda i gänget som är född på 70-talet."
 						+ "\n\nMagnus jobbar till vardags som IT-tekniker och konsult med affärssystem och Windows Server-miljöer som specialitet, men föredrar faktiskt Mac privat."
@@ -46,7 +46,7 @@ public class PersonalService {
 				"Johan Larsson",
 				R.drawable.johan,
 				"johan@johanl.se",
-				"@kottkrig",
+				"kottkrig",
 				"http://johanl.se",
 				"Älskar allt som är interaktivt. Utvecklar till vardags multimediaproduktioner och till sängdags så utvecklar jag annat smått och gott."
 						+ "\n\nÄr biOS så jag använder (och utvecklar) lika gärna med Android som iOS. Det finns styrkor och svagheter med allt men jag försöker att använda det som känns mest spännande för stunden."
