@@ -1,60 +1,36 @@
 package se.slashat.slashat.adapter;
 
-import java.util.List;
-
 import se.slashat.slashat.R;
 import se.slashat.slashat.model.Personal;
-import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PersonAdapter extends ArrayAdapter<Personal>{
+public class PersonAdapter extends AbstractArrayAdapter<Personal> {
 
-	private Context context;
-	private int layoutResourceId;
 	private Personal person;
 
-	public PersonAdapter(Context context, int layoutResourceId,
-			List<Personal> objects) {
-		super(context, layoutResourceId, objects);
+	public PersonAdapter(Context context, int layoutResourceId, Personal[] data) {
+		super(context, layoutResourceId, data);
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
-		this.person = objects.get(0);
+		this.person = data[0];
 	}
-	
+
+	static class PersonHolder extends Holder {
+		TextView name;
+		TextView email;
+		TextView twitter;
+		TextView homepage;
+		TextView bio;
+		ImageView photo;
+	}
+
 	@Override
-	public View getView(int position, View convertView, final ViewGroup parent) {
-		
-		View row = convertView;
-		PersonHolder holder;
-		if (row == null) {
-			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			row = inflater.inflate(layoutResourceId, parent, false);
-			holder = createHolderForPerson(row);
-			row.setTag(holder);
-		} else {
-			holder = (PersonHolder) row.getTag();
-		}
-
-
-		holder.name.setText(person.getName());
-		holder.email.setText(person.getEmail());
-		holder.twitter.setText(person.getTwitter());
-		holder.homepage.setText(person.getHomepage());
-		holder.bio.setText(person.getBio());
-		holder.photo.setImageResource(person.getImg());
-
-		return row;		
-	}
-	
-	private PersonHolder createHolderForPerson(View row) {
-		PersonHolder holder;
-		holder = new PersonHolder();
+	public PersonHolder createHolder(View row) {
+		PersonHolder holder = new PersonHolder();
 		holder.photo = (ImageView) row.findViewById(R.id.photo);
 		holder.name = (TextView) row.findViewById(R.id.name);
 		holder.email = (TextView) row.findViewById(R.id.email);
@@ -64,13 +40,28 @@ public class PersonAdapter extends ArrayAdapter<Personal>{
 		return holder;
 	}
 
-	static class PersonHolder {
-		TextView name;
-		TextView email;
-		TextView twitter;
-		TextView homepage;
-		TextView bio;
-		ImageView photo;
+	@Override
+	public boolean isClickable() {
+		return false;
 	}
 
+	@Override
+	public OnClickListener createOnClickListener(Personal t) {
+		return new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			}
+		};
+	}
+
+	@Override
+	public void setDataOnHolder(Holder holder, Personal t) {
+		PersonHolder ph = (PersonHolder) holder;
+		ph.name.setText(person.getName());
+		ph.email.setText(person.getEmail());
+		ph.twitter.setText(person.getTwitter());
+		ph.homepage.setText(person.getHomepage());
+		ph.bio.setText(person.getBio());
+		ph.photo.setImageResource(person.getImg());
+	}
 }

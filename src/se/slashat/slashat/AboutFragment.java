@@ -1,7 +1,5 @@
 package se.slashat.slashat;
 
-import java.util.Arrays;
-
 import se.slashat.slashat.adapter.PersonAdapter;
 import se.slashat.slashat.adapter.PersonalAdapter;
 import se.slashat.slashat.model.Personal;
@@ -36,7 +34,7 @@ public class AboutFragment extends ListFragment implements Callback<Personal>{
 	@Override
 	public void call(Personal personal) {
 		
-		PersonAdapter p = new PersonAdapter(getActivity(), R.layout.about_detail, Arrays.asList(personal));
+		PersonAdapter p = new PersonAdapter(getActivity(), R.layout.about_detail, new Personal[]{personal});
 		setListAdapter(p);
 		
 	}
