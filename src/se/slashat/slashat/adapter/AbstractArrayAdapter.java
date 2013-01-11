@@ -45,12 +45,37 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T> {
 		return row;
 	}
 
+	/**
+	 * Create a holder for this row. The holder is following the Android holder
+	 * pattern for UI caching
+	 * 
+	 * @param row
+	 * @return
+	 */
 	public abstract Holder createHolder(View row);
+
+	/**
+	 * Returns an OnClickListener that will be executed when the user clicks on
+	 * this row. It takes the generic type of the class as argument (the
+	 * datamodel of the clicked row)
+	 * 
+	 * @param t
+	 * @return
+	 */
 
 	public abstract OnClickListener createOnClickListener(T t);
 
+	/**
+	 * Is the row clickable or not
+	 * @return
+	 */
 	public abstract boolean isClickable();
 
+	/**
+	 * Set all the data on the holder based on the datamodel T
+	 * @param holder
+	 * @param t
+	 */
 	public abstract void setDataOnHolder(Holder holder, T t);
 
 	static class Holder {

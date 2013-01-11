@@ -97,6 +97,7 @@ public class PersonAdapter extends AbstractArrayAdapter<Personal> {
 
 	private void openTwitterIntent(final Personal t) {
 		try {
+			// TODO: Can all twitter clients be targeted?
 			// Looks like every different client has it's own way to open it
 			// correctly. Tried with twitter:// but got errors that no
 			// application was found.
@@ -120,8 +121,9 @@ public class PersonAdapter extends AbstractArrayAdapter<Personal> {
 		intent.setType("text/plain");
 		intent.putExtra(android.content.Intent.EXTRA_EMAIL,
 				new String[] { t.getEmail() });
+		// TODO: The chooser shows more than just email clients.
 		context.startActivity(Intent.createChooser(intent,
-				"Send email with which Application?"));
+				"VŠlj applikation att skicka mail med"));
 	}
 
 	private void openBrowserIntent(Personal t) {

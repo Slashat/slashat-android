@@ -46,7 +46,6 @@ public class PersonalAdapter extends AbstractArrayAdapter<Personal> {
 		return new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				System.out.println(personal.getBio());
 				callback.call(personal);
 			}
 		};
