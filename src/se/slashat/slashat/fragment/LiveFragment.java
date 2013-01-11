@@ -1,5 +1,8 @@
-package se.slashat.slashat;
+package se.slashat.slashat.fragment;
 
+import se.slashat.slashat.R;
+import se.slashat.slashat.R.id;
+import se.slashat.slashat.R.layout;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;

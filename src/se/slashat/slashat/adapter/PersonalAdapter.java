@@ -1,64 +1,60 @@
 package se.slashat.slashat.adapter;
 
+import se.slashat.slashat.Callback;
 import se.slashat.slashat.R;
 import se.slashat.slashat.model.Personal;
-import android.app.Activity;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PersonalAdapter extends ArrayAdapter<Personal> {
+public class PersonalAdapter extends AbstractArrayAdapter<Personal> {
 
-	private int layoutResourceId;
-	private Context context;
-	private Personal[] data;
+	private Callback<Personal> callback;
 
 	public PersonalAdapter(Context context, int layoutResourceId,
-			Personal data[]) {
+			Personal data[], Callback<Personal> callback) {
 		super(context, layoutResourceId, data);
 
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
 		this.data = data;
+		this.callback = callback;
 	}
 
-	
+	public static class PersonalHolder extends Holder {
+		TextView txtTitle;
+		ImageView imgView;
+	}
+
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		
-		View row = convertView;
-		PersonalHolder holder;
-		if (row == null) {
-			LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-			row = inflater.inflate(layoutResourceId, parent, false);
-			holder = createHolderForPersonal(row);
-			row.setTag(holder);
-		} else {
-			holder = (PersonalHolder) row.getTag();
-		}
-
-		Personal personal = data[position];
-		holder.txtTitle.setText(personal.getName());
-		holder.imgView.setImageResource(personal.getImg());
-
-		return row;
-	}
-
-
-	private PersonalHolder createHolderForPersonal(View row) {
-		PersonalHolder holder;
-		holder = new PersonalHolder();
+	public Holder createHolder(View row) {
+		PersonalHolder holder = new PersonalHolder();
 		holder.imgView = (ImageView) row.findViewById(R.id.imgIcon);
 		holder.txtTitle = (TextView) row.findViewById(R.id.txtTitle);
 		return holder;
 	}
 
-	static class PersonalHolder {
-		TextView txtTitle;
-		ImageView imgView;
+	@Override
+	public boolean isClickable() {
+		return true;
+	}
+
+	@Override
+	public OnClickListener createOnClickListener(final Personal personal) {
+		return new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				callback.call(personal);
+			}
+		};
+	}
+
+	@Override
+	public void setDataOnHolder(Holder holder, Personal personal) {
+		PersonalHolder ph = (PersonalHolder) holder;
+		ph.txtTitle.setText(personal.getName());
+		ph.imgView.setImageResource(personal.getImg());
 	}
 }
