@@ -123,7 +123,7 @@ public class PersonAdapter extends AbstractArrayAdapter<Personal> {
 				new String[] { t.getEmail() });
 		// TODO: The chooser shows more than just email clients.
 		context.startActivity(Intent.createChooser(intent,
-				"VŠlj applikation att skicka mail med"));
+				"VÃ¤lj applikation att skicka mail med"));
 	}
 
 	private void openBrowserIntent(Personal t) {
