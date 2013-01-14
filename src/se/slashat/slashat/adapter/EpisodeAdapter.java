@@ -1,7 +1,8 @@
 package se.slashat.slashat.adapter;
 
-import se.slashat.slashat.model.Episode;
+import se.slashat.slashat.CallbackPair;
 import se.slashat.slashat.R;
+import se.slashat.slashat.model.Episode;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,11 +11,14 @@ import android.widget.TextView;
 public class EpisodeAdapter extends AbstractArrayAdapter<Episode> {
 
 
-	public EpisodeAdapter(Context context, int layoutResourceId, Episode[] data) {
+	private CallbackPair<String,String> episodeCallback;
+
+	public EpisodeAdapter(Context context, int layoutResourceId, Episode[] data,CallbackPair<String,String> episodeCallback) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
 		this.data = data;
+		this.episodeCallback = episodeCallback;
 	}
 
 	public static class EpisodeHolder extends Holder{
@@ -32,10 +36,14 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> {
 	}
 
 	@Override
-	public OnClickListener createOnClickListener(Episode e) {
+	public OnClickListener createOnClickListener(final Episode episode) {
 		return new OnClickListener() {
+			/**
+			 * Pass the selected episode details to the Fragment that will start playing it.
+			 */
 			@Override
 			public void onClick(View v) {
+				episodeCallback.call(episode.getStreamUrl(),"Avsnitt "+episode.getEpisodeNumber()+" - "+episode.getName());
 			}
 		};
 	}
