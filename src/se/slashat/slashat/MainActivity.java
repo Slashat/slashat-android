@@ -1,10 +1,16 @@
 package se.slashat.slashat;
 
+
+import se.slashat.slashat.fragment.AboutFragment;
+import se.slashat.slashat.fragment.ArchiveFragment;
+import se.slashat.slashat.fragment.FragmentSwitcher;
+import se.slashat.slashat.fragment.LiveFragment;
 import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
@@ -12,22 +18,19 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 
 import android.widget.Toast;
 
-public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
+public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener,FragmentSwitcher {
     
 	private static final String TAG = "Slashat";
 	private static LiveFragment liveFrag;
 	private static ArchiveFragment archiveFrag;
-	private static AboutFragment aboutFrag;
 	
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
         //initiate our fragments
         if (savedInstanceState == null) {
             //initial fragment objects
         	liveFrag = new LiveFragment();
         	archiveFrag = new ArchiveFragment();
-        	aboutFrag = new AboutFragment();
         }
         
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -48,6 +51,19 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
     	getSupportActionBar().addTab(aboutTab);
     	
     }
+    
+    public void switchFragment(Fragment fragment,boolean addToBackstack){
+    	FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
+    	beginTransaction.replace(android.R.id.content,fragment);
+    	if (addToBackstack){
+    		beginTransaction.addToBackStack(null);
+    	}else{
+    		getSupportFragmentManager().popBackStack();
+    	}
+    	beginTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+    	
+    	beginTransaction.commit();
+    }
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
@@ -56,15 +72,15 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		if (tab.getPosition() == 0) {
 			//live		
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-live");
-			ft.replace(android.R.id.content, liveFrag);
+			switchFragment(liveFrag, false);
 		} else if (tab.getPosition() == 1) {
 			//archive			
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-archive");
-			ft.replace(android.R.id.content, archiveFrag);
+			switchFragment(archiveFrag, false);
 		} else if (tab.getPosition() == 2) {
 			//about			
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-about");
-			ft.replace(android.R.id.content, aboutFrag);
+			switchFragment(new AboutFragment(this), false); // Create a new AboutFragment each time.
 		}
 	}
 
