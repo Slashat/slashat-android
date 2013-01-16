@@ -1,6 +1,6 @@
 package se.slashat.slashat.androidservice;
 
-import java.io.IOException;
+import java.io.Serializable;
 
 import se.slashat.slashat.MainActivity;
 
@@ -22,14 +22,23 @@ import android.os.IBinder;
  *
  */
 
-public class EpisodePlayer extends Service implements OnPreparedListener {
+public class EpisodePlayer extends Service implements OnPreparedListener, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private MediaPlayer mediaPlayer;
 	private EpisodePlayerBinder binder;
 	private Notification notification;
 	private String episodeName;
 
-	public class EpisodePlayerBinder extends Binder {
+	public class EpisodePlayerBinder extends Binder implements Serializable{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public EpisodePlayer getService() {
 			return EpisodePlayer.this;
 		}

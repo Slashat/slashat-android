@@ -32,7 +32,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	private static final String TAG = "Slashat";
 	private static LiveFragment liveFrag;
-	private static ArchiveFragment archiveFrag;
 	private EpisodePlayer episodePlayer;
 	private boolean episodePlayerBound;
 
@@ -42,7 +41,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 		if (savedInstanceState == null) {
 			// initial fragment objects
 			liveFrag = new LiveFragment();
-			archiveFrag = new ArchiveFragment(episodePlayer);
 		}
 
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -69,7 +67,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		super.onStart();
 		bindToEpisodePlayerService();
 	}
-	
+
 	public void switchFragment(Fragment fragment, boolean addToBackstack) {
 		FragmentTransaction beginTransaction = getSupportFragmentManager()
 				.beginTransaction();
@@ -98,13 +96,19 @@ public class MainActivity extends SherlockFragmentActivity implements
 			// archive
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition()
 					+ "-archive");
-			switchFragment(new ArchiveFragment(episodePlayer), false);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable(ArchiveFragment.EPISODEPLAYER, episodePlayer);
+			ArchiveFragment archiveFragment = new ArchiveFragment();
+			archiveFragment.setArguments(bundle);
+			switchFragment(archiveFragment, false);
 		} else if (tab.getPosition() == 2) {
 			// about
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-about");
-			switchFragment(new AboutFragment(this), false); // Create a new
-															// AboutFragment
-															// each time.
+			Bundle bundle = new Bundle();
+			bundle.putSerializable(AboutFragment.FRAGMENTSWITCHER, this);
+			AboutFragment aboutFragment = new AboutFragment();
+			aboutFragment.setArguments(bundle);
+			switchFragment(aboutFragment, false);
 		}
 	}
 
@@ -124,32 +128,33 @@ public class MainActivity extends SherlockFragmentActivity implements
 	private void bindToEpisodePlayerService() {
 		Intent intent = new Intent(this, EpisodePlayer.class);
 		if (EpisodePlayerRunning()) {
-			getApplicationContext().bindService(intent, episodePlayerConnection,
-					Context.BIND_AUTO_CREATE);
+			getApplicationContext().bindService(intent,
+					episodePlayerConnection, Context.BIND_AUTO_CREATE);
 		} else {
 			getApplicationContext().startService(intent);
-			getApplicationContext().bindService(intent, episodePlayerConnection,
-					Context.BIND_AUTO_CREATE);
+			getApplicationContext().bindService(intent,
+					episodePlayerConnection, Context.BIND_AUTO_CREATE);
 		}
 	}
-	
+
 	/**
 	 * Stop the Episode player service.
 	 */
-	
+
 	private void unBindEpisodePlayerService() {
-		if (episodePlayerBound){
+		if (episodePlayerBound) {
 			episodePlayer.stopPlay();
 			getApplicationContext().unbindService(episodePlayerConnection);
 			episodePlayerBound = false;
 		}
-		
-        Intent intent = new Intent(this, EpisodePlayer.class);
-        getApplicationContext().stopService(intent);
+
+		Intent intent = new Intent(this, EpisodePlayer.class);
+		getApplicationContext().stopService(intent);
 	}
 
 	/**
 	 * Checks if the Episode Player Service is running or not
+	 * 
 	 * @return
 	 */
 	private boolean EpisodePlayerRunning() {
@@ -165,7 +170,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 	}
 
 	/**
-	 * The connection to the Episode player service used to control the service itself (not the player).
+	 * The connection to the Episode player service used to control the service
+	 * itself (not the player).
 	 */
 	private ServiceConnection episodePlayerConnection = new ServiceConnection() {
 
