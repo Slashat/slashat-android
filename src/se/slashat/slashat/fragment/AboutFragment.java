@@ -15,10 +15,8 @@ import android.widget.ArrayAdapter;
 
 public class AboutFragment extends ListFragment implements Callback<Personal> {
 	// ArrayAdapter<Personal> adapter;
-	private FragmentSwitcher fragmentSwitcher;
 
 	public static final String ADAPTER = "adapter";
-	public static final String FRAGMENTSWITCHER = "fragmentSwitcher";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,8 +27,7 @@ public class AboutFragment extends ListFragment implements Callback<Personal> {
 
 		@SuppressWarnings("unchecked")
 		ArrayAdapter<Personal> adapter = (ArrayAdapter<Personal>) bundle.getSerializable(ADAPTER);
-		fragmentSwitcher = (FragmentSwitcher) bundle.getSerializable(FRAGMENTSWITCHER);
-
+		
 		// If no adapter is found in the bundle create a new one with all
 		// people.
 		if (adapter == null) {
@@ -55,11 +52,9 @@ public class AboutFragment extends ListFragment implements Callback<Personal> {
 
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(ADAPTER, p);
-		bundle.putSerializable(FRAGMENTSWITCHER, fragmentSwitcher);
 
 		AboutFragment aboutFragment = new AboutFragment();
 		aboutFragment.setArguments(bundle);
-		this.fragmentSwitcher.switchFragment(aboutFragment, true);
-
+		FragmentSwitcher.getInstance().switchFragment(aboutFragment, true);
 	}
 }

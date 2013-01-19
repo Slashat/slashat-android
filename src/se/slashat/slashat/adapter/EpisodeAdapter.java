@@ -1,5 +1,7 @@
 package se.slashat.slashat.adapter;
 
+import java.io.Serializable;
+
 import se.slashat.slashat.CallbackPair;
 import se.slashat.slashat.R;
 import se.slashat.slashat.model.Episode;
@@ -8,9 +10,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
-public class EpisodeAdapter extends AbstractArrayAdapter<Episode> {
+public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Serializable {
 
-
+	
+	private static final long serialVersionUID = 1L;
 	private CallbackPair<String,String> episodeCallback;
 
 	public EpisodeAdapter(Context context, int layoutResourceId, Episode[] data,CallbackPair<String,String> episodeCallback) {

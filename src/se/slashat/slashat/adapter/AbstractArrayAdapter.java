@@ -10,12 +10,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T> implements Serializable{
+public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	protected int layoutResourceId;
 	protected Context context;
 	protected T[] data;

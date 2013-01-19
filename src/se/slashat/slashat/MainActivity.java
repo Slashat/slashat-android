@@ -1,5 +1,7 @@
 package se.slashat.slashat;
 
+import java.io.Serializable;
+
 import se.slashat.slashat.androidservice.EpisodePlayer;
 import se.slashat.slashat.androidservice.EpisodePlayer.EpisodePlayerBinder;
 import se.slashat.slashat.fragment.AboutFragment;
@@ -28,20 +30,17 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import android.widget.Toast;
 
 public class MainActivity extends SherlockFragmentActivity implements
-		ActionBar.TabListener, FragmentSwitcher {
+		ActionBar.TabListener{
 
 	private static final String TAG = "Slashat";
-	private static LiveFragment liveFrag;
 	private EpisodePlayer episodePlayer;
 	private boolean episodePlayerBound;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// initiate our fragments
-		if (savedInstanceState == null) {
-			// initial fragment objects
-			liveFrag = new LiveFragment();
-		}
+		
+		FragmentSwitcher.initalize(getSupportFragmentManager());
 
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -69,18 +68,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 	}
 
 	public void switchFragment(Fragment fragment, boolean addToBackstack) {
-		FragmentTransaction beginTransaction = getSupportFragmentManager()
-				.beginTransaction();
-		beginTransaction.replace(android.R.id.content, fragment);
-		if (addToBackstack) {
-			beginTransaction.addToBackStack(null);
-		} else {
-			getSupportFragmentManager().popBackStack();
-		}
-		beginTransaction
-				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-
-		beginTransaction.commit();
+		FragmentSwitcher.getInstance().switchFragment(fragment, addToBackstack);
 	}
 
 	@Override
@@ -91,7 +79,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		if (tab.getPosition() == 0) {
 			// live
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-live");
-			switchFragment(liveFrag, false);
+			switchFragment(new LiveFragment(), false);
 		} else if (tab.getPosition() == 1) {
 			// archive
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition()
@@ -105,7 +93,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			// about
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-about");
 			Bundle bundle = new Bundle();
-			bundle.putSerializable(AboutFragment.FRAGMENTSWITCHER, this);
+			//bundle.putSerializable(AboutFragment.FRAGMENTSWITCHER, this);
 			AboutFragment aboutFragment = new AboutFragment();
 			aboutFragment.setArguments(bundle);
 			switchFragment(aboutFragment, false);
