@@ -33,7 +33,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		ActionBar.TabListener{
 
 	private static final String TAG = "Slashat";
-	private EpisodePlayer episodePlayer;
+	public static EpisodePlayer episodePlayer;
 	private boolean episodePlayerBound;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 		// initiate our fragments
 		
 		FragmentSwitcher.initalize(getSupportFragmentManager());
+		EpisodePlayer.initalize(getApplicationContext());
 
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -64,7 +65,6 @@ public class MainActivity extends SherlockFragmentActivity implements
 	@Override
 	protected void onStart() {
 		super.onStart();
-		bindToEpisodePlayerService();
 	}
 
 	public void switchFragment(Fragment fragment, boolean addToBackstack) {
@@ -85,7 +85,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition()
 					+ "-archive");
 			Bundle bundle = new Bundle();
-			bundle.putSerializable(ArchiveFragment.EPISODEPLAYER, episodePlayer);
+			//bundle.putSerializable(ArchiveFragment.EPISODEPLAYER, episodePlayer);
 			ArchiveFragment archiveFragment = new ArchiveFragment();
 			archiveFragment.setArguments(bundle);
 			switchFragment(archiveFragment, false);
@@ -109,71 +109,4 @@ public class MainActivity extends SherlockFragmentActivity implements
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 		onTabSelected(tab, ft);
 	}
-
-	/**
-	 * Starts up the Episode player service and binds it.
-	 */
-	private void bindToEpisodePlayerService() {
-		Intent intent = new Intent(this, EpisodePlayer.class);
-		if (EpisodePlayerRunning()) {
-			getApplicationContext().bindService(intent,
-					episodePlayerConnection, Context.BIND_AUTO_CREATE);
-		} else {
-			getApplicationContext().startService(intent);
-			getApplicationContext().bindService(intent,
-					episodePlayerConnection, Context.BIND_AUTO_CREATE);
-		}
-	}
-
-	/**
-	 * Stop the Episode player service.
-	 */
-
-	private void unBindEpisodePlayerService() {
-		if (episodePlayerBound) {
-			episodePlayer.stopPlay();
-			getApplicationContext().unbindService(episodePlayerConnection);
-			episodePlayerBound = false;
-		}
-
-		Intent intent = new Intent(this, EpisodePlayer.class);
-		getApplicationContext().stopService(intent);
-	}
-
-	/**
-	 * Checks if the Episode Player Service is running or not
-	 * 
-	 * @return
-	 */
-	private boolean EpisodePlayerRunning() {
-		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		for (RunningServiceInfo service : manager
-				.getRunningServices(Integer.MAX_VALUE)) {
-			if ("se.slashat.slashat.slashat.androidservice.EpisodePlayer"
-					.equals(service.service.getClassName())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * The connection to the Episode player service used to control the service
-	 * itself (not the player).
-	 */
-	private ServiceConnection episodePlayerConnection = new ServiceConnection() {
-
-		@Override
-		public void onServiceConnected(ComponentName name, IBinder service) {
-			EpisodePlayerBinder binder = (EpisodePlayerBinder) service;
-			episodePlayer = binder.getService();
-			episodePlayerBound = true;
-
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName name) {
-			episodePlayerBound = false;
-		}
-	};
 }

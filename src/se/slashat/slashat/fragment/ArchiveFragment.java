@@ -16,7 +16,6 @@ public class ArchiveFragment extends ListFragment implements
 
 	public final static String EPISODEPLAYER = "episodePlayer";
 	private EpisodeAdapter adapter;
-	private EpisodePlayer episodePlayer;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,10 +27,6 @@ public class ArchiveFragment extends ListFragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Bundle bundle = savedInstanceState == null ? getArguments()
-				: savedInstanceState;
-
-		episodePlayer = (EpisodePlayer) bundle.getSerializable(EPISODEPLAYER);
 
 		adapter = new EpisodeAdapter(getActivity(), R.layout.archive_item_row,
 				ArchiveService.getEpisodes(), this);
@@ -43,8 +38,9 @@ public class ArchiveFragment extends ListFragment implements
 	 */
 	@Override
 	public void call(String streamUrl, String episodeName) {
-		episodePlayer.stopPlay();
-		episodePlayer.initializePlayer(streamUrl, episodeName);
+		EpisodePlayer.getEpisodePlayer().stopPlay();
+		EpisodePlayer.getEpisodePlayer().initializePlayer(streamUrl,
+				episodeName);
 
 	}
 
