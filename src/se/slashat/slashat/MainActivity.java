@@ -1,40 +1,23 @@
 package se.slashat.slashat;
 
-import java.io.Serializable;
-
 import se.slashat.slashat.androidservice.EpisodePlayer;
-import se.slashat.slashat.androidservice.EpisodePlayer.EpisodePlayerBinder;
 import se.slashat.slashat.fragment.AboutFragment;
 import se.slashat.slashat.fragment.ArchiveFragment;
 import se.slashat.slashat.fragment.FragmentSwitcher;
 import se.slashat.slashat.fragment.LiveFragment;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
-
-import android.widget.Toast;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class MainActivity extends SherlockFragmentActivity implements
 		ActionBar.TabListener{
 
 	private static final String TAG = "Slashat";
-	public static EpisodePlayer episodePlayer;
-	private boolean episodePlayerBound;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
