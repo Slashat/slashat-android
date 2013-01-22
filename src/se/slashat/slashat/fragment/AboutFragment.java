@@ -14,39 +14,22 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 public class AboutFragment extends ListFragment implements Callback<Personal> {
-	ArrayAdapter<Personal> adapter;
-	private FragmentSwitcher fragmentSwitcher;
+	// ArrayAdapter<Personal> adapter;
 
-	// TODO: replace with default constructor and setArguments
-	/**
-	 * Create a new AboutFragment without an adapter. This will show all the
-	 * persons in a clickable list
-	 * 
-	 * @param fragmentSwitcher
-	 */
-	public AboutFragment(FragmentSwitcher fragmentSwitcher) {
-		this.fragmentSwitcher = fragmentSwitcher;
-	}
-
-	// TODO: replace with default constructor and setArguments
-	/**
-	 * Creates a new AboutFragment with an adapter already set. Used for showing
-	 * details about a person without the need to have another Fragment class.
-	 * 
-	 * @param fragmentSwitcher
-	 * @param adapter
-	 */
-	public AboutFragment(FragmentSwitcher fragmentSwitcher,
-			ArrayAdapter<Personal> adapter) {
-		this.fragmentSwitcher = fragmentSwitcher;
-		this.adapter = adapter;
-	}
+	public static final String ADAPTER = "adapter";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// If the AboutFragment was called without an adapter create the one
-		// that shows all persons.
+
+		Bundle bundle = savedInstanceState == null ? getArguments()
+				: savedInstanceState;
+
+		@SuppressWarnings("unchecked")
+		ArrayAdapter<Personal> adapter = (ArrayAdapter<Personal>) bundle.getSerializable(ADAPTER);
+		
+		// If no adapter is found in the bundle create a new one with all
+		// people.
 		if (adapter == null) {
 			adapter = new PersonalAdapter(getActivity(),
 					R.layout.about_item_row, PersonalService.getPersonal(),
@@ -66,9 +49,12 @@ public class AboutFragment extends ListFragment implements Callback<Personal> {
 	public void call(Personal personal) {
 		PersonAdapter p = new PersonAdapter(getActivity(),
 				R.layout.about_detail, new Personal[] { personal });
-		// Create a new AboutFragment with an adapter already set
-		this.fragmentSwitcher.switchFragment(new AboutFragment(
-				fragmentSwitcher, p), true);
 
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(ADAPTER, p);
+
+		AboutFragment aboutFragment = new AboutFragment();
+		aboutFragment.setArguments(bundle);
+		FragmentSwitcher.getInstance().switchFragment(aboutFragment, true);
 	}
 }

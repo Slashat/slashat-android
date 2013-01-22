@@ -1,5 +1,7 @@
 package se.slashat.slashat.adapter;
 
+import java.io.Serializable;
+
 import se.slashat.slashat.R;
 import se.slashat.slashat.model.Personal;
 import android.content.Context;
@@ -11,8 +13,9 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PersonAdapter extends AbstractArrayAdapter<Personal> {
+public class PersonAdapter extends AbstractArrayAdapter<Personal> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Personal person;
 
 	public PersonAdapter(Context context, int layoutResourceId, Personal[] data) {
