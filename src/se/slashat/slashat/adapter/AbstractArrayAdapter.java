@@ -1,5 +1,7 @@
 package se.slashat.slashat.adapter;
 
+import java.io.Serializable;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T> {
+public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
 
 	protected int layoutResourceId;
 	protected Context context;

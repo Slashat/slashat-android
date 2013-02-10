@@ -8,7 +8,7 @@ public class PersonalService {
 	public static Personal[] getPersonal() {
 
 		// Create static entries for every person.
-		Personal[] personal = new Personal[4];
+		Personal[] personal = new Personal[5];
 
 		personal[0] = new Personal(
 				"Jezper Söderlund",
@@ -51,6 +51,13 @@ public class PersonalService {
 				"Älskar allt som är interaktivt. Utvecklar till vardags multimediaproduktioner och till söngdags så utvecklar jag annat smått och gott."
 						+ "\n\när biOS så jag använder (och utvecklar) lika gärna med Android som iOS. Det finns styrkor och svagheter med allt men jag försöker att använda det som känns mest spännande för stunden."
 						+ "\n\nArbetar hellre i OS X och Linux än i Windows när jag vill vara produktiv. Använder hellre Windows än annat när det kommer till lek & spel.");
+		personal[4] = new Personal(
+				"Team Slashat Development",
+				R.drawable.ic_launcher,
+				"no@email.com",
+				"slashatse",
+				"http://slashat.se",
+				"Nicklaslof osv osv osv. Här skall namnen stå på alla som varit delaktiga i utvecklingen.");
 
 		return personal;
 

@@ -1,6 +1,10 @@
 package se.slashat.slashat.model;
 
-public class Personal {
+import java.io.Serializable;
+
+public class Personal implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private final String name;
 	private final String email;
 	private final String twitter;

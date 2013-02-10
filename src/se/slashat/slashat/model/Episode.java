@@ -1,6 +1,10 @@
 package se.slashat.slashat.model;
 
-public class Episode {
+import java.io.Serializable;
+
+public class Episode implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String streamUrl;
 	private int episodeNumber;
