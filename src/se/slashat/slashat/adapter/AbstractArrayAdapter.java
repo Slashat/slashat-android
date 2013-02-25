@@ -8,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
+public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T> {
 
 	protected int layoutResourceId;
 	protected Context context;
@@ -23,29 +23,29 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
 
 	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
-
-		System.out.println(position);
 		View row = convertView;
 		Holder holder;
 		final T t = data[position];
-		//if (row == null) { //Temporary disabled until I have figured out the correct way to assign rows to the real data.
+		if (row == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
 			holder = createHolder(row);
 			row.setTag(holder);
-			if (isClickable()) {
-				row.setOnClickListener(createOnClickListener(t));
-			} else {
-				row.setClickable(false);
-			}
 
-		//} else {
-		//	holder = (Holder) row.getTag();
-		//}
+		} else {
+			holder = (Holder) row.getTag();
+		}
+
+		if (isClickable()) {
+			row.setOnClickListener(createOnClickListener(t));
+		} else {
+			row.setClickable(false);
+		}
+
 		setDataOnHolder(holder, t);
 		return row;
 	}
-	
+
 	/**
 	 * Create a holder for this row. The holder is following the Android holder
 	 * pattern for UI caching
@@ -68,12 +68,14 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
 
 	/**
 	 * Is the row clickable or not
+	 * 
 	 * @return
 	 */
 	public abstract boolean isClickable();
 
 	/**
 	 * Set all the data on the holder based on the datamodel T
+	 * 
 	 * @param holder
 	 * @param t
 	 */
