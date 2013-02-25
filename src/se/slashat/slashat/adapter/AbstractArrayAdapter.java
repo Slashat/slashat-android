@@ -1,7 +1,5 @@
 package se.slashat.slashat.adapter;
 
-import java.io.Serializable;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,10 +24,11 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
 	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
 
+		System.out.println(position);
 		View row = convertView;
 		Holder holder;
 		final T t = data[position];
-		if (row == null) {
+		//if (row == null) { //Temporary disabled until I have figured out the correct way to assign rows to the real data.
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
 			holder = createHolder(row);
@@ -40,13 +39,13 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
 				row.setClickable(false);
 			}
 
-		} else {
-			holder = (Holder) row.getTag();
-		}
+		//} else {
+		//	holder = (Holder) row.getTag();
+		//}
 		setDataOnHolder(holder, t);
 		return row;
 	}
-
+	
 	/**
 	 * Create a holder for this row. The holder is following the Android holder
 	 * pattern for UI caching
