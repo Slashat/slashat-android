@@ -4,6 +4,7 @@ import se.slashat.slashat.CallbackPair;
 import se.slashat.slashat.R;
 import se.slashat.slashat.androidservice.EpisodePlayer;
 import se.slashat.slashat.async.EpisodeLoaderAsyncTask;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -37,9 +38,13 @@ public class ArchiveFragment extends ListFragment implements
 	 */
 	@Override
 	public void call(String streamUrl, String episodeName) {
+		ProgressDialog progressDialog = new ProgressDialog(getActivity());
+		progressDialog.setTitle("Buffrar avsnitt");
+		progressDialog.setMessage(episodeName);
+		progressDialog.show();
 		EpisodePlayer.getEpisodePlayer().stopPlay();
 		EpisodePlayer.getEpisodePlayer().initializePlayer(streamUrl,
-				episodeName);
+				episodeName, progressDialog);
 
 	}
 

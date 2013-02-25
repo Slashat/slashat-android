@@ -7,6 +7,7 @@ import se.slashat.slashat.MainActivity;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.ComponentName;
@@ -38,6 +39,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 	private static EpisodePlayer episodePlayer;
 	private Notification notification;
 	private String episodeName;
+	private ProgressDialog progressDialog;
 
 	public class EpisodePlayerBinder extends Binder implements Serializable {
 		/**
@@ -86,17 +88,19 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 	 * @param streamUrl
 	 * @param episodeName
 	 */
-	public void initializePlayer(String streamUrl, String episodeName) {
+	public void initializePlayer(String streamUrl, String episodeName, ProgressDialog progressDialog) {
 		this.episodeName = episodeName;
+		this.progressDialog = progressDialog;
+		
 		mediaPlayer = new MediaPlayer();
 		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
 		if (streamUrl == null) {
 			stopPlay(); // Temporary to stop playing until buttons are
 						// implemented.
+			progressDialog.dismiss();
 			return;
 		}
-
 		try {
 			mediaPlayer.setDataSource(streamUrl);
 		} catch (Exception e) {
@@ -145,8 +149,11 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 		startForeground(1, notification);
 
 		mediaPlayer.start();
+		progressDialog.dismiss();
 
 	}
+	
+
 
 	/**
 	 * Stops playing the current media and removes the player from the
