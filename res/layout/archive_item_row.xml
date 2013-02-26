@@ -6,13 +6,13 @@
     android:padding="2dp" >
 	
         <TextView
-        android:id="@+id/episodeNumber"
+        android:id="@+id/episodeNumberAndTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:layout_marginTop="2dp"
         android:gravity="center_vertical"
-        android:text="Avsnitt 199"
+        android:text="#199 - Vi CES och hörs"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -20,13 +20,13 @@
     
 
     <TextView
-        android:id="@+id/txtTitle"
+        android:id="@+id/dateAndLength"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:layout_marginTop="2dp"
         android:gravity="center_vertical"
-        android:text="Vi CES och hörs"
+        android:text="22 jan 2013 - 1:07:45"
         android:textColor="#000000"
         android:textSize="15sp"
         />

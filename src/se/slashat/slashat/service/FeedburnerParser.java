@@ -2,6 +2,10 @@ package se.slashat.slashat.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -18,23 +22,29 @@ import android.util.Xml;
 
 public class FeedburnerParser {
 	private Itemcallback itemcallback;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat(
+			"E, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 
 	/**
 	 * 
-	 * Callers to the Feedburner service needs to pass an implementation of this interface.
-	 * For every parsed item found in the xml file it will execute the callback method with the parsed information.
-	 *
+	 * Callers to the Feedburner service needs to pass an implementation of this
+	 * interface. For every parsed item found in the xml file it will execute
+	 * the callback method with the parsed information.
+	 * 
 	 */
 	public interface Itemcallback {
-		public void callback(String title, String url);
+		public void callback(String title, String url, String duration,
+				Date published);
+
 		public void setCount(int attributeCount);
 	}
 
 	public void parseFeed(InputStream inputStream, Itemcallback itemcallback)
-			throws XmlPullParserException, IOException {
+			throws XmlPullParserException, IOException, ParseException {
 
 		this.itemcallback = itemcallback;
-		itemcallback.setCount(205); // Figure out how to get the correct count from the XML-file
+		itemcallback.setCount(205); // Figure out how to get the correct count
+									// from the XML-file
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
 		parser.setInput(inputStream, null);
@@ -45,12 +55,12 @@ public class FeedburnerParser {
 	}
 
 	private void readFeed(XmlPullParser parser) throws XmlPullParserException,
-			IOException {
+			IOException, ParseException {
 
 		parser.require(XmlPullParser.START_TAG, "", "rss");
 
 		parser.nextTag();
-		
+
 		while (parser.next() != XmlPullParser.END_DOCUMENT) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
@@ -65,10 +75,12 @@ public class FeedburnerParser {
 	}
 
 	private void readEntry(XmlPullParser parser) throws XmlPullParserException,
-			IOException {
+			IOException, ParseException {
 		parser.require(XmlPullParser.START_TAG, "", "item");
 		String title = null;
 		String url = null;
+		Date date = null;
+		String duration = null;
 
 		while (parser.next() != XmlPullParser.END_TAG) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -79,15 +91,36 @@ public class FeedburnerParser {
 				title = readTitle(parser);
 			} else if (name.equals("media:content")) {
 				url = getMediaReadUrl(parser);
+			} else if (name.equals("pubDate")) {
+				date = getDate(parser);
+			} else if (name.equals("itunes:duration")) {
+				duration = getDuration(parser);
 			} else {
 				skip(parser);
 			}
 		}
 
-		// For every episode item found in the feedburner xml file call the callers callback with title and url so it
+		// For every episode item found in the feedburner xml file call the
+		// callers callback with title and url so it
 		// can creates the internal models for each episode.
-		itemcallback.callback(title, url);
+		itemcallback.callback(title, url, duration, date);
 
+	}
+
+	private String getDuration(XmlPullParser parser)
+			throws XmlPullParserException, IOException {
+		parser.require(XmlPullParser.START_TAG, "", "itunes:duration");
+		String duration = readText(parser);
+		parser.require(XmlPullParser.END_TAG, "", "itunes:duration");
+		return duration;
+	}
+
+	private Date getDate(XmlPullParser parser) throws XmlPullParserException,
+			IOException, ParseException {
+		parser.require(XmlPullParser.START_TAG, "", "pubDate");
+		Date duration = readDate(parser);
+		parser.require(XmlPullParser.END_TAG, "", "pubDate");
+		return duration;
 	}
 
 	private String getMediaReadUrl(XmlPullParser parser)
@@ -118,6 +151,16 @@ public class FeedburnerParser {
 		String result = "";
 		if (parser.next() == XmlPullParser.TEXT) {
 			result = parser.getText();
+			parser.nextTag();
+		}
+		return result;
+	}
+
+	private Date readDate(XmlPullParser parser) throws XmlPullParserException,
+			IOException, ParseException {
+		Date result = null;
+		if (parser.next() == XmlPullParser.TEXT) {
+			result = dateFormat.parse(parser.getText());
 			parser.nextTag();
 		}
 		return result;
