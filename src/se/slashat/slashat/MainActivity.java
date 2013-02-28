@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -22,7 +23,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// initiate our fragments
-		
+		setContentView(R.layout.activity_main);
 		FragmentSwitcher.initalize(getSupportFragmentManager());
 		EpisodePlayer.initalize(getApplicationContext());
 
