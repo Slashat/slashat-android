@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Binder;
 import android.os.IBinder;
@@ -29,7 +30,7 @@ import android.os.IBinder;
  * 
  */
 
-public class EpisodePlayer extends Service implements OnPreparedListener,
+public class EpisodePlayer extends Service implements OnPreparedListener, OnCompletionListener,
 		Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -40,6 +41,9 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 	private Notification notification;
 	private String episodeName;
 	private ProgressDialog progressDialog;
+	private static PlayerInterface playerInterface;
+	private DurationUpdaterThread durationUpdaterThread;
+	private static boolean paused = false;
 
 	public class EpisodePlayerBinder extends Binder implements Serializable {
 		/**
@@ -52,26 +56,48 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 		}
 	}
 
+	/**
+	 * Callback interface to inform caller about duration updates and update
+	 * media player status.
+	 * 
+	 * @author Nicklas Löf
+	 * 
+	 */
+	public interface PlayerInterface {
+		public void durationUpdate(int seekMax, int seek);
+
+		public void onMediaPaused();
+
+		public void onMediaStopped();
+
+		public void onMediaPlaying();
+	}
+
 	public EpisodePlayer() {
 
 	}
 
 	/**
-	 * Initalizes the episoderplayer and binds it as a service.
-	 * It seems to need the applicationContext from the MainActivity to work correctly.
+	 * Initalizes the episoderplayer and binds it as a service. It seems to need
+	 * the applicationContext from the MainActivity to work correctly.
+	 * 
 	 * @param context
 	 */
-	public static void initalize(Context context) {
+	public static void initalize(Context context,
+			PlayerInterface playerInterface) {
+		EpisodePlayer.playerInterface = playerInterface;
 		new EpisodePlayer().bindToEpisodePlayerService(context);
 	}
-	
+
 	/**
 	 * Gets the episodeplayer.
+	 * 
 	 * @return
 	 */
-	public static EpisodePlayer getEpisodePlayer(){
-		if (episodePlayer == null){
-			throw new IllegalStateException("Please initalize the EpisodePlayer service before trying to use it");
+	public static EpisodePlayer getEpisodePlayer() {
+		if (episodePlayer == null) {
+			throw new IllegalStateException(
+					"Please initalize the EpisodePlayer service before trying to use it");
 		}
 		return episodePlayer;
 	}
@@ -88,10 +114,11 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 	 * @param streamUrl
 	 * @param episodeName
 	 */
-	public void initializePlayer(String streamUrl, String episodeName, ProgressDialog progressDialog) {
+	public void initializePlayer(String streamUrl, String episodeName,
+			ProgressDialog progressDialog) {
 		this.episodeName = episodeName;
 		this.progressDialog = progressDialog;
-		
+
 		mediaPlayer = new MediaPlayer();
 		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
@@ -108,6 +135,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 		}
 
 		mediaPlayer.setOnPreparedListener(this);
+		mediaPlayer.setOnCompletionListener(this);
 		mediaPlayer.prepareAsync();
 
 	}
@@ -126,12 +154,63 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 	public void onPrepared(MediaPlayer mp) {
 		startPlay();
 	}
+	
+	@Override
+	public void onCompletion(MediaPlayer mp) {
+		durationUpdaterThread.interupt();
+		playerInterface.onMediaStopped();
+	}
 
 	/**
 	 * Start play the media set in initializePlayer() and plays the media in the
 	 * background.
 	 */
 	private void startPlay() {
+
+		setNotification();
+		mediaPlayer.start();
+		progressDialog.dismiss();
+
+		durationUpdaterThread = new DurationUpdaterThread(mediaPlayer,
+				playerInterface);
+		durationUpdaterThread.start();
+
+		playerInterface.onMediaPlaying();
+
+	}
+
+	/**
+	 * Stops playing the current media and removes the player from the
+	 * background
+	 */
+	public void stopPlay() {
+		if (mediaPlayer != null) {
+			mediaPlayer.stop();
+			unsetNotification();
+		}
+		paused = false;
+		playerInterface.onMediaStopped();
+	}
+
+	public void seek(int position) {
+		mediaPlayer.seekTo(position);
+	}
+
+	public void pause() {
+		paused = true;
+		if (mediaPlayer != null) {
+			mediaPlayer.pause();
+			unsetNotification();
+		}
+	}
+
+	public void resume() {
+		paused = false;
+		setNotification();
+		mediaPlayer.start();
+	}
+	
+	private void setNotification(){
 		// TODO Replace with Non deprecated way to create notifications
 		notification = new Notification(android.R.drawable.ic_media_play,
 				"slashat.se", System.currentTimeMillis());
@@ -147,34 +226,29 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 				contentText, pendingIntent);
 
 		startForeground(1, notification);
-
-		mediaPlayer.start();
-		progressDialog.dismiss();
-
 	}
 	
+	private void unsetNotification(){
+		stopForeground(true);
+	}
 
+	public boolean isPlaying() {
+		return mediaPlayer.isPlaying();
+	}
 
-	/**
-	 * Stops playing the current media and removes the player from the
-	 * background
-	 */
-	public void stopPlay() {
-		if (mediaPlayer != null) {
-			mediaPlayer.stop();
-			stopForeground(true);
-		}
+	public boolean isPaused() {
+		return paused;
 	}
 
 	private void bindToEpisodePlayerService(Context context) {
 		Intent intent = new Intent(context, EpisodePlayer.class);
 		if (isEpisodePlayerRunning(context)) {
-			context.bindService(intent,
-					episodePlayerConnection, Context.BIND_AUTO_CREATE);
+			context.bindService(intent, episodePlayerConnection,
+					Context.BIND_AUTO_CREATE);
 		} else {
 			context.startService(intent);
-			context.bindService(intent,
-					episodePlayerConnection, Context.BIND_AUTO_CREATE);
+			context.bindService(intent, episodePlayerConnection,
+					Context.BIND_AUTO_CREATE);
 		}
 	}
 
@@ -184,7 +258,8 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 	 * @return
 	 */
 	private boolean isEpisodePlayerRunning(Context context) {
-		ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+		ActivityManager manager = (ActivityManager) context
+				.getSystemService(ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager
 				.getRunningServices(Integer.MAX_VALUE)) {
 			if ("se.slashat.slashat.slashat.androidservice.EpisodePlayer"
@@ -229,5 +304,52 @@ public class EpisodePlayer extends Service implements OnPreparedListener,
 		Intent intent = new Intent(this, EpisodePlayer.class);
 		getApplicationContext().stopService(intent);
 	}
+
+	/**
+	 * Background thread that runs every second and sends duration updates to
+	 * the PlayerInterface.
+	 * 
+	 * @author Nicklas Löf
+	 * 
+	 */
+	public static class DurationUpdaterThread extends Thread {
+
+		private PlayerInterface playerInterface;
+		private MediaPlayer mediaPlayer;
+		private boolean interupt;
+
+		public DurationUpdaterThread(MediaPlayer mediaPlayer,
+				PlayerInterface playerInterface) {
+			this.mediaPlayer = mediaPlayer;
+			this.playerInterface = playerInterface;
+		}
+		
+		public void interupt(){
+			interupt = true;
+		}
+
+		@Override
+		public void run() {
+			while (!interupt) {
+				try {
+					Thread.sleep(1000);
+					if (!mediaPlayer.isPlaying() && !paused) {
+						interupt = true;
+					}
+					if (playerInterface != null) {
+						playerInterface.durationUpdate(
+								mediaPlayer.getDuration(),
+								mediaPlayer.getCurrentPosition());
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			if (playerInterface != null) {
+				playerInterface.durationUpdate(0, 0);
+			}
+		}
+	}
+
 
 }

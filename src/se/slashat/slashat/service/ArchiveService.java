@@ -49,10 +49,6 @@ public class ArchiveService {
 			return episodes.toArray(new Episode[episodes.size()]);
 		}
 
-		episodes.add(new Episode("STOP PLAYING", 999, null, "", new Date()));
-		// Temporary to allow stop playing until we have better player controls
-		// implemented
-
 		try {
 			FeedburnerParser feedburnerParser = new FeedburnerParser();
 			progressMessage = "Hämtar avsnittsinformation";

@@ -20,15 +20,17 @@
         android:layout_alignParentTop="false" >
 
         <ImageButton
+            android:id="@+id/playPauseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="Play and pause"
             android:src="@android:drawable/ic_media_play" />
 
-		<SeekBar
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_vertical"/>
-
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
 </RelativeLayout>
