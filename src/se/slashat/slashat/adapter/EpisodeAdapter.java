@@ -1,6 +1,8 @@
 package se.slashat.slashat.adapter;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import se.slashat.slashat.CallbackPair;
 import se.slashat.slashat.R;
@@ -15,6 +17,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 	
 	private static final long serialVersionUID = 1L;
 	private CallbackPair<String,String> episodeCallback;
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("sv"));
 
 	public EpisodeAdapter(Context context, int layoutResourceId, Episode[] data,CallbackPair<String,String> episodeCallback) {
 		super(context, layoutResourceId, data);
@@ -33,8 +36,8 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 	
 	public Holder createHolder(View row) {
 		EpisodeHolder holder = new EpisodeHolder();
-		holder.episodeNumber = (TextView) row.findViewById(R.id.episodeNumber);		
-		holder.txtTitle = (TextView) row.findViewById(R.id.txtTitle);
+		holder.episodeNumber = (TextView) row.findViewById(R.id.episodeNumberAndTitle);		
+		holder.txtTitle = (TextView) row.findViewById(R.id.dateAndLength);
 		return holder;
 	}
 
@@ -59,8 +62,8 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 	@Override
 	public void setDataOnHolder(Holder holder, Episode episode) {
 		EpisodeHolder eh = (EpisodeHolder) holder;
-		eh.episodeNumber.setText("Avsnitt "+episode.getEpisodeNumber());
-		eh.txtTitle.setText(episode.getName());
+		eh.episodeNumber.setText("#"+episode.getEpisodeNumber()+" - "+episode.getName());
+		eh.txtTitle.setText(dateFormat.format(episode.getPublished())+" - "+episode.getDuration());
 
 	}
 }

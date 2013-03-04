@@ -1,26 +1,128 @@
 package se.slashat.slashat.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import se.slashat.slashat.async.EpisodeLoaderAsyncTask.UpdateCallback;
 import se.slashat.slashat.model.Episode;
 
-public class ArchiveService {
+/**
+ * Load episodes from a source (currently Feedburner but later on our own
+ * webservice)
+ * 
+ * @author Nicklas Löf
+ * 
+ */
 
-	
-	public static Episode[] getEpisodes(){
-		
-		Episode[] episodes = new Episode[10];
-		
-		episodes[0] = new Episode("STOP PLAY",000,null); // Temporary until buttons are implemented.
-		episodes[1] = new Episode("Vi CES och hörs!",199,"http://www.slashat.se/feed/podcast/slashat-avsnitt-199.mp3");
-		episodes[2] = new Episode("Feber!",198,"http://www.slashat.se/feed/podcast/slashat-avsnitt-198.mp3");
-		episodes[3] = new Episode("Årsshow 2012!",197,"http://www.slashat.se/feed/podcast/slashat-avsnitt-197.mp3");
-		episodes[4] = new Episode("So long, and thanks for all the fish!",196,"http://www.slashat.se/feed/podcast/slashat-avsnitt-196.mp3");
-		episodes[5] = new Episode("Trendat!",195,"http://www.slashat.se/feed/podcast/slashat-avsnitt-195.mp3");
-		episodes[6] = new Episode("T-tjötar!",194,"http://www.slashat.se/feed/podcast/slashat-avsnitt-194.mp3");
-		episodes[7] = new Episode("Jeppe Gangnam Style!",193,"http://www.slashat.se/feed/podcast/slashat-avsnitt-193.mp3");
-		episodes[8] = new Episode("#decembergate!",192,"http://www.slashat.se/feed/podcast/slashat-avsnitt-192.mp3");
-		episodes[9] = new Episode("McAffarlane!",191,"http://www.slashat.se/feed/podcast/slashat-avsnitt-191.mp3");		
-		
-		return episodes;
-		
+public class ArchiveService {
+	private static Pattern episodeNumberPattern = Pattern.compile("#[0-9]*");
+	private static Pattern episodeNamePattern = Pattern.compile("-.*");
+	private static String progressMessage = "";
+	private static int episodeCount;
+	private static ArrayList<Episode> episodes = new ArrayList<Episode>();
+
+	public static int getProcessedNumbers() {
+		return episodes.size();
+	}
+
+	public static String getProgressMessage() {
+		return progressMessage;
+	}
+
+	public static int getNumberOfEpisodes() {
+		return episodeCount;
+	}
+
+	public static Episode[] getEpisodes(final UpdateCallback updateCallback) {
+
+		// If we already have parsed the Episodes return that cached list.
+		if (!episodes.isEmpty()) {
+			return episodes.toArray(new Episode[episodes.size()]);
+		}
+
+		try {
+			FeedburnerParser feedburnerParser = new FeedburnerParser();
+			progressMessage = "Hämtar avsnittsinformation";
+			updateCallback.onUpdate();
+			URL url = new URL("http://feeds.feedburner.com/slashat?format=xml");
+			InputStream inputStream = url.openStream();
+
+			try {
+				progressMessage = "Extraherar avsnitt";
+				updateCallback.onUpdate();
+				feedburnerParser.parseFeed(inputStream,
+						new FeedburnerParser.Itemcallback() {
+							/*
+							 * For every item that the Feedburner parser founds
+							 * we are creating our Episode model object and
+							 * tells the Asynctask that we have an update so it
+							 * can display the progress.
+							 */
+							@Override
+							public void callback(String title, String url,
+									String duration, Date published) {
+								// This processing is not safe to changes in the
+								// titles in the RSS-feed and might
+								// break in case of an "conflicting" episode
+								// title.
+								int episodeNumber = 000;
+								String episodeTitle = "";
+								Matcher matcher = episodeNumberPattern
+										.matcher(title);
+								if (matcher.find()) {
+									episodeNumber = Integer.valueOf(matcher
+											.group().replaceFirst("#", ""));
+								}
+
+								matcher = episodeNamePattern.matcher(title);
+
+								if (matcher.find()) {
+									episodeTitle = matcher.group()
+											.replaceFirst("- ", "");
+								}
+
+								Episode episode = new Episode(episodeTitle,
+										episodeNumber, url, duration, published);
+								episodes.add(episode);
+								updateCallback.onUpdate();
+							}
+
+							@Override
+							public void setCount(int attributeCount) {
+								episodeCount = attributeCount;
+
+							}
+						});
+			} catch (XmlPullParserException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		if (episodes.isEmpty()) {
+			episodes.add(new Episode("Kunde inte ladda några avsnitt", 000,
+					null, "", new Date()));
+		}
+
+		return episodes.toArray(new Episode[episodes.size()]);
+
 	}
 }

@@ -1,7 +1,5 @@
 package se.slashat.slashat.adapter;
 
-import java.io.Serializable;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
+public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T> {
 
 	protected int layoutResourceId;
 	protected Context context;
@@ -25,7 +23,6 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
 
 	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
-
 		View row = convertView;
 		Holder holder;
 		final T t = data[position];
@@ -34,15 +31,17 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
 			row = inflater.inflate(layoutResourceId, parent, false);
 			holder = createHolder(row);
 			row.setTag(holder);
-			if (isClickable()) {
-				row.setOnClickListener(createOnClickListener(t));
-			} else {
-				row.setClickable(false);
-			}
 
 		} else {
 			holder = (Holder) row.getTag();
 		}
+
+		if (isClickable()) {
+			row.setOnClickListener(createOnClickListener(t));
+		} else {
+			row.setClickable(false);
+		}
+
 		setDataOnHolder(holder, t);
 		return row;
 	}
@@ -69,12 +68,14 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T>{
 
 	/**
 	 * Is the row clickable or not
+	 * 
 	 * @return
 	 */
 	public abstract boolean isClickable();
 
 	/**
 	 * Set all the data on the holder based on the datamodel T
+	 * 
 	 * @param holder
 	 * @param t
 	 */

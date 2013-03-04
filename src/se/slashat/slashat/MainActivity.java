@@ -1,6 +1,7 @@
 package se.slashat.slashat;
 
 import se.slashat.slashat.androidservice.EpisodePlayer;
+import se.slashat.slashat.androidservice.EpisodePlayer.PlayerInterface;
 import se.slashat.slashat.fragment.AboutFragment;
 import se.slashat.slashat.fragment.ArchiveFragment;
 import se.slashat.slashat.fragment.FragmentSwitcher;
@@ -9,22 +10,28 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 
 public class MainActivity extends SherlockFragmentActivity implements
-		ActionBar.TabListener{
+		ActionBar.TabListener {
 
 	private static final String TAG = "Slashat";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// initiate our fragments
-		
+		setContentView(R.layout.activity_main);
 		FragmentSwitcher.initalize(getSupportFragmentManager());
-		EpisodePlayer.initalize(getApplicationContext());
+		EpisodePlayer.initalize(getApplicationContext(),
+				new PlayerInterfaceImpl());
 
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -68,7 +75,8 @@ public class MainActivity extends SherlockFragmentActivity implements
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition()
 					+ "-archive");
 			Bundle bundle = new Bundle();
-			//bundle.putSerializable(ArchiveFragment.EPISODEPLAYER, episodePlayer);
+			// bundle.putSerializable(ArchiveFragment.EPISODEPLAYER,
+			// episodePlayer);
 			ArchiveFragment archiveFragment = new ArchiveFragment();
 			archiveFragment.setArguments(bundle);
 			switchFragment(archiveFragment, false);
@@ -76,7 +84,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 			// about
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-about");
 			Bundle bundle = new Bundle();
-			//bundle.putSerializable(AboutFragment.FRAGMENTSWITCHER, this);
+			// bundle.putSerializable(AboutFragment.FRAGMENTSWITCHER, this);
 			AboutFragment aboutFragment = new AboutFragment();
 			aboutFragment.setArguments(bundle);
 			switchFragment(aboutFragment, false);
@@ -91,5 +99,90 @@ public class MainActivity extends SherlockFragmentActivity implements
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 		onTabSelected(tab, ft);
+	}
+
+	/**
+	 * Connection between UI elements and the Episodeplayer.
+	 * 
+	 * When play button is pressed we pause or resume. On play and pause events
+	 * the button is updated. Every second we receive the duration and current
+	 * position from the player and updates the {@link SeekBar}. When the user moves the
+	 * {@link SeekBar} position and releases it the player skips to that position.
+	 * 
+	 * Currently we are using the Android resource for buttons. Those might look
+	 * wrong on older versions of Android. In that case replace with our own
+	 * resources instead.
+	 * 
+	 */
+	private final class PlayerInterfaceImpl implements PlayerInterface,
+			OnSeekBarChangeListener, OnClickListener {
+		SeekBar seekBar = (SeekBar) findViewById(R.id.seekbar);
+		ImageButton button = (ImageButton) findViewById(R.id.playPauseButton);
+		private int newPosition;
+
+		public PlayerInterfaceImpl() {
+			seekBar.setOnSeekBarChangeListener(this);
+			button.setOnClickListener(this);
+		}
+
+		@Override
+		public void durationUpdate(final int seekMax, final int seek) {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					seekBar.setMax(seekMax);
+					seekBar.setProgress(seek);
+				}
+			});
+		}
+
+		@Override
+		public void onProgressChanged(SeekBar seekBar, int progress,
+				boolean fromUser) {
+			if (fromUser == false)
+				return;
+			newPosition = progress;
+		}
+
+		@Override
+		public void onStartTrackingTouch(SeekBar seekBar) {
+
+		}
+
+		@Override
+		public void onStopTrackingTouch(SeekBar seekBar) {
+			EpisodePlayer.getEpisodePlayer().seek(newPosition);
+
+		}
+
+		@Override
+		public void onMediaPaused() {
+			button.setImageResource(android.R.drawable.ic_media_play);
+			// maybe use setDrawable instead
+		}
+
+		@Override
+		public void onMediaStopped() {
+			button.setImageResource(android.R.drawable.ic_media_play);
+			// maybe use setDrawable instead
+		}
+
+		@Override
+		public void onMediaPlaying() {
+			button.setImageResource(android.R.drawable.ic_media_pause);
+			// maybe use setDrawable instead
+		}
+
+		@Override
+		public void onClick(View v) {
+			if (EpisodePlayer.getEpisodePlayer().isPlaying()) {
+				EpisodePlayer.getEpisodePlayer().pause();
+				onMediaPaused();
+			} else {
+				EpisodePlayer.getEpisodePlayer().resume();
+				onMediaPlaying();
+			}
+
+		}
 	}
 }
