@@ -6,6 +6,7 @@ import se.slashat.slashat.fragment.AboutFragment;
 import se.slashat.slashat.fragment.ArchiveFragment;
 import se.slashat.slashat.fragment.FragmentSwitcher;
 import se.slashat.slashat.fragment.LiveFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -23,10 +24,13 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 public class MainActivity extends SherlockFragmentActivity implements
 		ActionBar.TabListener {
 
-	private static final String TAG = "Slashat";
+	public static final String TAG = "Slashat";
+	private static Context context;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		MainActivity.context = getApplicationContext();
 		// initiate our fragments
 		setContentView(R.layout.activity_main);
 		FragmentSwitcher.initalize(getSupportFragmentManager());
@@ -50,6 +54,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 		getSupportActionBar().addTab(archiveTab);
 		getSupportActionBar().addTab(aboutTab);
 
+	}
+	
+	public static Context getContext() {
+		return context;
 	}
 
 	@Override

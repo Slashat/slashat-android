@@ -10,6 +10,9 @@ import java.util.Locale;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import se.slashat.slashat.MainActivity;
+
+import android.util.Log;
 import android.util.Xml;
 
 /**
@@ -24,6 +27,7 @@ public class FeedburnerParser {
 	private Itemcallback itemcallback;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat(
 			"E, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+	private boolean interrupt;
 
 	/**
 	 * 
@@ -61,7 +65,7 @@ public class FeedburnerParser {
 
 		parser.nextTag();
 
-		while (parser.next() != XmlPullParser.END_DOCUMENT) {
+		while (parser.next() != XmlPullParser.END_DOCUMENT && !interrupt) {
 			if (parser.getEventType() != XmlPullParser.START_TAG) {
 				continue;
 			}
@@ -71,6 +75,10 @@ public class FeedburnerParser {
 				readEntry(parser);
 			}
 
+		}
+		
+		if (interrupt){
+			Log.i(MainActivity.TAG, "Loading episodes interrupted");
 		}
 	}
 
@@ -182,5 +190,10 @@ public class FeedburnerParser {
 				break;
 			}
 		}
+	}
+
+	public void interrupt() {
+		this.interrupt = true;
+		
 	}
 }

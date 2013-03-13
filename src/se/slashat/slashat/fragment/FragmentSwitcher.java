@@ -6,15 +6,12 @@ import se.slashat.slashat.R;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 
 public class FragmentSwitcher implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private FragmentManager fragmentManager;
 	private static FragmentSwitcher instance;
-	private static View fragmentView;
-
 	public static FragmentSwitcher getInstance() {
 		return instance;
 	}
