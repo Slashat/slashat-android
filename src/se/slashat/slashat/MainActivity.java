@@ -1,21 +1,36 @@
 package se.slashat.slashat;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import se.slashat.slashat.androidservice.EpisodePlayer;
 import se.slashat.slashat.androidservice.EpisodePlayer.PlayerInterface;
 import se.slashat.slashat.fragment.AboutFragment;
 import se.slashat.slashat.fragment.ArchiveFragment;
 import se.slashat.slashat.fragment.FragmentSwitcher;
 import se.slashat.slashat.fragment.LiveFragment;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.method.DateTimeKeyListener;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -127,8 +142,13 @@ public class MainActivity extends SherlockFragmentActivity implements
 		SeekBar seekBar = (SeekBar) findViewById(R.id.seekbar);
 		ImageButton button = (ImageButton) findViewById(R.id.playPauseButton);
 		private int newPosition;
+		private Dialog seekbarOverlay;
+		private SimpleDateFormat dateFormat = new SimpleDateFormat(
+				"HH:mm:ss", Locale.ENGLISH);
+		private TextView textView;
 
 		public PlayerInterfaceImpl() {
+			dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
 			seekBar.setOnSeekBarChangeListener(this);
 			button.setOnClickListener(this);
 		}
@@ -147,20 +167,42 @@ public class MainActivity extends SherlockFragmentActivity implements
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress,
 				boolean fromUser) {
-			if (fromUser == false)
+			if (seekbarOverlay != null && seekbarOverlay.isShowing() && textView != null){
+				updateOverlaySeekProgress(progress);
+				updateOverlayPosition(seekBar, progress);
+			}
+			if (!fromUser){
 				return;
+			}				
 			newPosition = progress;
 		}
 
 		@Override
 		public void onStartTrackingTouch(SeekBar seekBar) {
-
+			createAndShowSeekOverlay(seekBar);			
 		}
 
+		private void createAndShowSeekOverlay(SeekBar seekBar) {
+			seekbarOverlay = new Dialog(MainActivity.this);
+			seekbarOverlay.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			seekbarOverlay.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+			seekbarOverlay.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+			LayoutParams overlayParams = seekbarOverlay.getWindow().getAttributes();
+			overlayParams.gravity = Gravity.TOP | Gravity.LEFT;
+			overlayParams.x = (int) (seekBar.getLeft() + ((float) seekBar.getProgress() / (float) seekBar.getMax()) * seekBar.getWidth());
+			int[] location = new int[2];
+			seekBar.getLocationOnScreen(location);
+			overlayParams.y = location[1]-100;
+			seekbarOverlay.setCancelable(false);
+			seekbarOverlay.setContentView(R.layout.player_overlay);
+			seekbarOverlay.show();
+			textView = (TextView) seekbarOverlay.findViewById(R.id.playeroverlay);
+		}
+		
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {
 			EpisodePlayer.getEpisodePlayer().seek(newPosition);
-
+			seekbarOverlay.hide();
 		}
 
 		@Override
@@ -190,7 +232,19 @@ public class MainActivity extends SherlockFragmentActivity implements
 				EpisodePlayer.getEpisodePlayer().resume();
 				onMediaPlaying();
 			}
+		}
+		
+		private void updateOverlayPosition(SeekBar seekBar, int progress) {
+			LayoutParams overlayParams = seekbarOverlay.getWindow().getAttributes();
+			Integer newX = (int) (seekBar.getLeft() + ((float) progress / (float) seekBar.getMax()) * seekBar.getWidth());
+			overlayParams.x = newX;
+			seekbarOverlay.getWindow().setAttributes(overlayParams);
+		}
 
+		private void updateOverlaySeekProgress(int progress) {
+			Date date = new Date(progress);
+			String newPosition = dateFormat.format(date);
+			textView.setText(newPosition);
 		}
 	}
 }
