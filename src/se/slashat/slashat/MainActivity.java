@@ -162,6 +162,10 @@ public class MainActivity extends SherlockFragmentActivity implements
 					seekBar.setMax(seekMax);
 					seekBar.setProgress(seek);
 					onMediaPlaying();
+					TextView durationTextView = (TextView) findViewById(R.id.durationTextView);
+					if (durationTextView != null){
+						durationTextView.setText(dateFormat.format(new Date(seek)));
+					}
 				}
 			});
 		}
