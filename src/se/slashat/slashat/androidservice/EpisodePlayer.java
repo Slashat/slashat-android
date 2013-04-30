@@ -20,6 +20,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 /**
  * EpisodePlayerService that plays a selected episode in the background. TODO:
@@ -42,7 +43,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	private String episodeName;
 	private ProgressDialog progressDialog;
 	private static PlayerInterface playerInterface;
-	private DurationUpdaterThread durationUpdaterThread;
+	private static DurationUpdaterThread durationUpdaterThread;
 	private static boolean paused = false;
 
 	public class EpisodePlayerBinder extends Binder implements Serializable {
@@ -85,8 +86,8 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	 */
 	public static void initalize(Context context,
 			PlayerInterface playerInterface) {
-		EpisodePlayer.playerInterface = playerInterface;
-		new EpisodePlayer().bindToEpisodePlayerService(context);
+		//EpisodePlayer.playerInterface = playerInterface;
+		new EpisodePlayer().bindToEpisodePlayerService(context,playerInterface);
 	}
 
 	/**
@@ -240,11 +241,15 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		return paused;
 	}
 
-	private void bindToEpisodePlayerService(Context context) {
+	private void bindToEpisodePlayerService(Context context, PlayerInterface pi) {
 		Intent intent = new Intent(context, EpisodePlayer.class);
+		EpisodePlayer.playerInterface = pi;
 		if (isEpisodePlayerRunning(context)) {
 			context.bindService(intent, episodePlayerConnection,
 					Context.BIND_AUTO_CREATE);
+			if (durationUpdaterThread != null){
+				durationUpdaterThread.setPlayerInterface(pi);
+			}
 		} else {
 			context.startService(intent);
 			context.bindService(intent, episodePlayerConnection,
@@ -262,7 +267,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 				.getSystemService(ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager
 				.getRunningServices(Integer.MAX_VALUE)) {
-			if ("se.slashat.slashat.slashat.androidservice.EpisodePlayer"
+			if (this.getClass().getName()
 					.equals(service.service.getClassName())) {
 				return true;
 			}
@@ -317,6 +322,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		private PlayerInterface playerInterface;
 		private MediaPlayer mediaPlayer;
 		private boolean interupt;
+		private Object sync = new Object(); // Sync the player interface to prevent that we don't update it while it's being updated.
 
 		public DurationUpdaterThread(MediaPlayer mediaPlayer,
 				PlayerInterface playerInterface) {
@@ -326,6 +332,12 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		
 		public void interupt(){
 			interupt = true;
+		}
+		
+		public void setPlayerInterface(PlayerInterface pi){
+			synchronized (sync) {
+				this.playerInterface = pi;
+			}
 		}
 
 		@Override
@@ -337,19 +349,21 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 						interupt = true;
 					}
 					if (playerInterface != null) {
+						synchronized (sync){
 						playerInterface.durationUpdate(
 								mediaPlayer.getDuration(),
 								mediaPlayer.getCurrentPosition());
+					}
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			if (playerInterface != null) {
-				playerInterface.durationUpdate(0, 0);
+			synchronized (sync){
+				if (playerInterface != null) {
+					playerInterface.durationUpdate(0, 0);
+				}
 			}
 		}
 	}
-
-
 }

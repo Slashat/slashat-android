@@ -71,6 +71,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 
 	}
 	
+	
 	public static Context getContext() {
 		return context;
 	}
@@ -160,6 +161,7 @@ public class MainActivity extends SherlockFragmentActivity implements
 				public void run() {
 					seekBar.setMax(seekMax);
 					seekBar.setProgress(seek);
+					onMediaPlaying();
 				}
 			});
 		}
