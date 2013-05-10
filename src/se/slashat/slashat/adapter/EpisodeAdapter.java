@@ -49,7 +49,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 			 */
 			@Override
 			public void onClick(View v) {
-				episodeCallback.call(episode.getStreamUrl(),"Avsnitt "+episode.getEpisodeNumber()+" - "+episode.getName());
+				episodeCallback.call(episode.getStreamUrl(),episode.getFullEpisodeName());
 			}
 		};
 	}

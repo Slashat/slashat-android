@@ -67,11 +67,11 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	public interface PlayerInterface {
 		public void durationUpdate(int seekMax, int seek);
 
-		public void onMediaPaused();
+		public void onMediaPaused(String episodeName);
 
-		public void onMediaStopped();
+		public void onMediaStopped(String episodeName,boolean EOF);
 
-		public void onMediaPlaying();
+		public void onMediaPlaying(String episodeName);
 	}
 
 	public EpisodePlayer() {
@@ -159,7 +159,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	@Override
 	public void onCompletion(MediaPlayer mp) {
 		durationUpdaterThread.interupt();
-		playerInterface.onMediaStopped();
+		playerInterface.onMediaStopped(episodeName,true);
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 				playerInterface);
 		durationUpdaterThread.start();
 
-		playerInterface.onMediaPlaying();
+		playerInterface.onMediaPlaying(episodeName);
 
 	}
 
@@ -190,7 +190,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 			unsetNotification();
 		}
 		paused = false;
-		playerInterface.onMediaStopped();
+		playerInterface.onMediaStopped(episodeName,false);
 	}
 
 	public void seek(int position) {
@@ -348,7 +348,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 					if (!mediaPlayer.isPlaying() && !paused) {
 						interupt = true;
 					}
-					if (playerInterface != null) {
+					if (playerInterface != null && !paused) {
 						synchronized (sync){
 						playerInterface.durationUpdate(
 								mediaPlayer.getDuration(),
