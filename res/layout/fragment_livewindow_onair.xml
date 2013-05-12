@@ -2,7 +2,8 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
->
+    android:background="@android:color/white"
+	>
 
     <Button
         android:id="@+id/moveonbutton"
