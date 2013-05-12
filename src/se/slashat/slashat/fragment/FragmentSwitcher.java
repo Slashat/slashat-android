@@ -37,7 +37,7 @@ public class FragmentSwitcher implements Serializable {
 	public void switchFragment(Fragment fragment, boolean addToBackstack) {
 		FragmentTransaction beginTransaction = fragmentManager
 				.beginTransaction();
-		beginTransaction.replace(R.id.fragment_container, fragment);
+		beginTransaction.add(R.id.fragment_container, fragment);
 		if (addToBackstack){
 			beginTransaction.setCustomAnimations(R.anim.slider_in,R.anim.noanimation,R.anim.noanimation,R.anim.slider_out);
 		}else{

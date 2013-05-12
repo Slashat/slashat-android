@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="2dp" >
+    android:padding="2dp"
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
