@@ -10,16 +10,17 @@ import se.slashat.slashat.model.Episode;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
-	private CallbackPair<String,String> episodeCallback;
+	private CallbackPair<Episode,Boolean> episodeCallback;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("sv"));
 
-	public EpisodeAdapter(Context context, int layoutResourceId, Episode[] data,CallbackPair<String,String> episodeCallback) {
+	public EpisodeAdapter(Context context, int layoutResourceId, Episode[] data,CallbackPair<Episode,Boolean> episodeCallback) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
@@ -30,6 +31,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 	public static class EpisodeHolder extends Holder{
 		TextView episodeNumber;
 		TextView txtTitle;
+
 	}
 	
 	@Override
@@ -49,7 +51,8 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 			 */
 			@Override
 			public void onClick(View v) {
-				episodeCallback.call(episode.getStreamUrl(),episode.getFullEpisodeName());
+				//episodeCallback.call(episode.getStreamUrl(),episode.getFullEpisodeName());
+				episodeCallback.call(episode, true);
 			}
 		};
 	}
@@ -60,10 +63,9 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 	}
 
 	@Override
-	public void setDataOnHolder(Holder holder, Episode episode) {
+	public void setDataOnHolder(Holder holder, final Episode episode) {
 		EpisodeHolder eh = (EpisodeHolder) holder;
 		eh.episodeNumber.setText("#"+episode.getEpisodeNumber()+" - "+episode.getName());
 		eh.txtTitle.setText(dateFormat.format(episode.getPublished())+" - "+episode.getDuration());
-
 	}
 }

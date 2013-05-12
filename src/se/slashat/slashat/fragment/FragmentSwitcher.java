@@ -38,13 +38,18 @@ public class FragmentSwitcher implements Serializable {
 		FragmentTransaction beginTransaction = fragmentManager
 				.beginTransaction();
 		beginTransaction.replace(R.id.fragment_container, fragment);
+		if (addToBackstack){
+			beginTransaction.setCustomAnimations(R.anim.slider_in,R.anim.noanimation,R.anim.noanimation,R.anim.slider_out);
+		}else{
+			beginTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		}
+		beginTransaction.show(fragment);
+		
 		if (addToBackstack) {
 			beginTransaction.addToBackStack(null);
 		} else {
 			fragmentManager.popBackStack();
 		}
-		beginTransaction
-				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 
 		beginTransaction.commit();
 	}

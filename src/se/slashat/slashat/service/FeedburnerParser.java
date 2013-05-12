@@ -37,7 +37,7 @@ public class FeedburnerParser {
 	 * 
 	 */
 	public interface Itemcallback {
-		public void callback(String title, String url, String duration,
+		public void callback(String title, String url, String duration, String itunesSubtitle,
 				Date published);
 
 		public void setCount(int attributeCount);
@@ -87,6 +87,7 @@ public class FeedburnerParser {
 		parser.require(XmlPullParser.START_TAG, "", "item");
 		String title = null;
 		String url = null;
+		String itunesSubtitle = null;
 		Date date = null;
 		String duration = null;
 
@@ -103,6 +104,8 @@ public class FeedburnerParser {
 				date = getDate(parser);
 			} else if (name.equals("itunes:duration")) {
 				duration = getDuration(parser);
+			} else if (name.equals("itunes:subtitle")){
+				itunesSubtitle = readItunesSubtitle(parser);
 			} else {
 				skip(parser);
 			}
@@ -111,7 +114,7 @@ public class FeedburnerParser {
 		// For every episode item found in the feedburner xml file call the
 		// callers callback with title and url so it
 		// can creates the internal models for each episode.
-		itemcallback.callback(title, url, duration, date);
+		itemcallback.callback(title, url, duration, itunesSubtitle, date);
 
 	}
 
@@ -152,6 +155,14 @@ public class FeedburnerParser {
 		String title = readText(parser);
 		parser.require(XmlPullParser.END_TAG, "", "title");
 		return title;
+	}
+	
+	private String readItunesSubtitle(XmlPullParser parser)
+			throws XmlPullParserException, IOException {
+		parser.require(XmlPullParser.START_TAG, "", "itunes:subtitle");
+		String itunesSubtitle = readText(parser);
+		parser.require(XmlPullParser.END_TAG, "", "itunes:subtitle");
+		return itunesSubtitle;
 	}
 
 	private String readText(XmlPullParser parser) throws IOException,

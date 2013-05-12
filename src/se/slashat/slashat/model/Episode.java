@@ -9,17 +9,19 @@ public class Episode implements Serializable, Comparable<Episode> {
 	private final String name;
 	private final String streamUrl;
 	private final String duration;
+	private final String description;
 	private final Date published;
 	private final int episodeNumber;
 	private String fullEpisodeName;
 
 	public Episode(String name, int episodeNumber, String streamUrl,
-			String duration, Date published) {
+			String duration, Date published, String description) {
 		this.name = name;
 		this.episodeNumber = episodeNumber;
 		this.streamUrl = streamUrl;
 		this.duration = duration;
 		this.published = published;
+		this.description = description;
 		this.fullEpisodeName = generateFullEpisodeName();
 	}
 
@@ -45,6 +47,10 @@ public class Episode implements Serializable, Comparable<Episode> {
 
 	public Date getPublished() {
 		return published;
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 	
 	public String getFullEpisodeName() {
