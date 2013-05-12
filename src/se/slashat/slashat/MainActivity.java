@@ -27,6 +27,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -39,6 +40,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -102,6 +104,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			// live
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-live");
 			switchFragment(new LiveFragment(), false);
+			LinearLayout playerLayout = (LinearLayout) findViewById(R.layout.playerLayout);
+			playerLayout.setVisibility(View.GONE);
 		} else if (tab.getPosition() == 1) {
 			// archive
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-archive");
@@ -111,6 +115,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			ArchiveFragment archiveFragment = new ArchiveFragment();
 			archiveFragment.setArguments(bundle);
 			switchFragment(archiveFragment, false);
+			LinearLayout playerLayout = (LinearLayout) findViewById(R.layout.playerLayout);
+			playerLayout.setVisibility(View.VISIBLE);
 		} else if (tab.getPosition() == 2) {
 			// about
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-about");
@@ -119,6 +125,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			AboutFragment aboutFragment = new AboutFragment();
 			aboutFragment.setArguments(bundle);
 			switchFragment(aboutFragment, false);
+			LinearLayout playerLayout = (LinearLayout) findViewById(R.layout.playerLayout);
+			playerLayout.setVisibility(View.VISIBLE);			
 		}
 	}
 
