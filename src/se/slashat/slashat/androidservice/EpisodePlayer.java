@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import se.slashat.slashat.MainActivity;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -14,12 +15,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
@@ -34,6 +39,10 @@ import android.util.Log;
 public class EpisodePlayer extends Service implements OnPreparedListener, OnCompletionListener,
 		Serializable {
 
+	private static final String PREF_LAST_PLAYED_POSITION = "lastPlayedPosition";
+	private static final String PREF_LAST_PLAYED_STREAM_URL = "lastPlayedStreamUrl";
+	private static final String PREF_LAST_PLAYED_EPISODE_NAME = "lastPlayedEpisodeName";
+	private static final String PREF_EPISODE_PLAYER = "EpisodePlayer";
 	private static final long serialVersionUID = 1L;
 	private MediaPlayer mediaPlayer;
 	private EpisodePlayerBinder binder;
@@ -45,6 +54,12 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	private static PlayerInterface playerInterface;
 	private static DurationUpdaterThread durationUpdaterThread;
 	private static boolean paused = false;
+	private static String lastPlayedEpisodeName;
+	private static String lastPlayedStreamUrl;
+	private static int lastPlayedPosition;
+	private String streamUrl;
+	private int startposition;
+	private static Context callingContext;
 
 	public class EpisodePlayerBinder extends Binder implements Serializable {
 		/**
@@ -75,7 +90,6 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	}
 
 	public EpisodePlayer() {
-
 	}
 
 	/**
@@ -88,6 +102,16 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 			PlayerInterface playerInterface) {
 		//EpisodePlayer.playerInterface = playerInterface;
 		new EpisodePlayer().bindToEpisodePlayerService(context,playerInterface);
+		callingContext = context;
+		setupLastPlayed();
+	}
+
+	private static void setupLastPlayed() {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(callingContext);
+		lastPlayedEpisodeName = sharedPreferences.getString(PREF_LAST_PLAYED_EPISODE_NAME, "");
+		lastPlayedStreamUrl = sharedPreferences.getString(PREF_LAST_PLAYED_STREAM_URL, "");
+		lastPlayedPosition = sharedPreferences.getInt(PREF_LAST_PLAYED_POSITION, 0);
+		
 	}
 
 	/**
@@ -114,11 +138,14 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	 * 
 	 * @param streamUrl
 	 * @param episodeName
+	 * @param position
 	 */
-	public void initializePlayer(String streamUrl, String episodeName,
+	public void initializePlayer(String streamUrl, String episodeName, int position,
 			ProgressDialog progressDialog) {
 		this.episodeName = episodeName;
+		this.streamUrl = streamUrl;
 		this.progressDialog = progressDialog;
+		this.startposition = position;
 
 		mediaPlayer = new MediaPlayer();
 		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -177,6 +204,9 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		durationUpdaterThread.start();
 
 		playerInterface.onMediaPlaying(episodeName);
+		if (startposition >0){
+			mediaPlayer.seekTo(startposition);
+		}
 
 	}
 
@@ -191,6 +221,20 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		}
 		paused = false;
 		playerInterface.onMediaStopped(episodeName,false);
+		
+
+		saveLastPlayerPrefs();
+		
+	}
+
+	private void saveLastPlayerPrefs() {
+		if (callingContext != null && mediaPlayer != null){
+		Editor edit = PreferenceManager.getDefaultSharedPreferences(callingContext).edit();
+		edit.putString(PREF_LAST_PLAYED_STREAM_URL, streamUrl);
+		edit.putString(PREF_LAST_PLAYED_EPISODE_NAME, episodeName);
+		edit.putInt(PREF_LAST_PLAYED_POSITION, mediaPlayer.getCurrentPosition());
+		edit.commit();
+		}
 	}
 
 	public void seek(int position) {
@@ -201,6 +245,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		paused = true;
 		if (mediaPlayer != null) {
 			mediaPlayer.pause();
+			saveLastPlayerPrefs();
 			unsetNotification();
 		}
 	}
@@ -234,11 +279,27 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	}
 
 	public boolean isPlaying() {
-		return mediaPlayer.isPlaying();
+		return (mediaPlayer == null) ? false : mediaPlayer.isPlaying();
 	}
 
 	public boolean isPaused() {
 		return paused;
+	}
+	
+	public boolean isMediaInitalized() {
+		return mediaPlayer != null;
+	}
+	
+	public String getLastPlayedEpisodeName() {
+		return lastPlayedEpisodeName;
+	}
+	
+	public int getLastPlayedPosition() {
+		return lastPlayedPosition;
+	}
+	
+	public String getLastPlayedStreamUrl() {
+		return lastPlayedStreamUrl;
 	}
 
 	private void bindToEpisodePlayerService(Context context, PlayerInterface pi) {

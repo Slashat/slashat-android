@@ -72,7 +72,7 @@ public class ArchiveFragment extends ListFragment implements CallbackPair<Episod
 			progressDialog.setMessage(episode.getFullEpisodeName());
 			progressDialog.show();
 			EpisodePlayer.getEpisodePlayer().stopPlay();
-			EpisodePlayer.getEpisodePlayer().initializePlayer(episode.getStreamUrl(), episode.getFullEpisodeName(), progressDialog);
+			EpisodePlayer.getEpisodePlayer().initializePlayer(episode.getStreamUrl(), episode.getFullEpisodeName(), 0, progressDialog);
 
 		}
 	}

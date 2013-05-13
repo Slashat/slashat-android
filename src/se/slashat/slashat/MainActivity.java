@@ -13,6 +13,7 @@ import java.util.TimeZone;
 
 import se.slashat.slashat.androidservice.EpisodePlayer;
 import se.slashat.slashat.androidservice.EpisodePlayer.PlayerInterface;
+import se.slashat.slashat.async.EpisodeLoaderAsyncTask;
 import se.slashat.slashat.async.EpisodeLoaderAsyncTask.UpdateCallback;
 import se.slashat.slashat.fragment.AboutFragment;
 import se.slashat.slashat.fragment.ArchiveFragment;
@@ -61,8 +62,6 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		// initiate our fragments
 		setContentView(R.layout.activity_main);
 		FragmentSwitcher.initalize(getSupportFragmentManager());
-		EpisodePlayer.initalize(getApplicationContext(), new PlayerInterfaceImpl(this));
-
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		ActionBar.Tab liveTab = getSupportActionBar().newTab();
@@ -89,6 +88,8 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	@Override
 	protected void onStart() {
 		super.onStart();
+
+		EpisodePlayer.initalize(getApplicationContext(), new PlayerInterfaceImpl(this));
 	}
 
 	public void switchFragment(Fragment fragment, boolean addToBackstack) {
@@ -244,13 +245,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			// maybe use setDrawable instead
 			Log.i(MainActivity.TAG,"Current: "+episodeName);
 			if (EOF && episodeName != null && !episodeName.equals("")) {
-				List<Episode> episodes = Arrays.asList(ArchiveService.getEpisodes(new UpdateCallback() {
-
-					@Override
-					public void onUpdate() {
-
-					}
-				}));
+				List<Episode> episodes = Arrays.asList(ArchiveService.getEpisodes(EpisodeLoaderAsyncTask.getVoidCallback()));
 				
 				Episode newEpisode = null;
 				EPISODELOOP: for (Iterator<Episode> iterator = episodes.iterator(); iterator.hasNext();) {
@@ -270,7 +265,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 					progressDialog.setMessage(newEpisode.getFullEpisodeName());
 					progressDialog.show();
 					EpisodePlayer.getEpisodePlayer().initializePlayer(newEpisode.getStreamUrl(),
-							newEpisode.getFullEpisodeName(), progressDialog);
+							newEpisode.getFullEpisodeName(), 0, progressDialog);
 				}	
 			}
 
@@ -284,6 +279,22 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 		@Override
 		public void onClick(View v) {
+			if (!EpisodePlayer.getEpisodePlayer().isMediaInitalized()) {
+
+				String lastPlayedEpisodeName = EpisodePlayer.getEpisodePlayer().getLastPlayedEpisodeName();
+				int lastPlayedPosition = EpisodePlayer.getEpisodePlayer().getLastPlayedPosition();
+				String lastPlayedStreamUrl = EpisodePlayer.getEpisodePlayer().getLastPlayedStreamUrl();
+				if (lastPlayedStreamUrl != null && !lastPlayedStreamUrl.equals("")) {
+					// DRY ftw.. plz fix me...
+					ProgressDialog progressDialog = new ProgressDialog(callingActivity);
+					progressDialog.setTitle("Buffrar avsnitt");
+					progressDialog.setMessage(lastPlayedEpisodeName);
+					progressDialog.show();
+					EpisodePlayer.getEpisodePlayer().initializePlayer(lastPlayedStreamUrl, lastPlayedEpisodeName, lastPlayedPosition, progressDialog);
+					onMediaPlaying("");
+				}
+				return;
+			}
 			if (EpisodePlayer.getEpisodePlayer().isPlaying()) {
 				EpisodePlayer.getEpisodePlayer().pause();
 				onMediaPaused("");

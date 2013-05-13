@@ -26,6 +26,16 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 	public interface UpdateCallback {
 		public void onUpdate();
 	}
+	
+	public static UpdateCallback getVoidCallback(){
+		return new UpdateCallback() {
+			
+			@Override
+			public void onUpdate() {
+				
+			}
+		};
+	}
 
 	@Override
 	protected Episode[] doInBackground(Void... params) {
