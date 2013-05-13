@@ -1,5 +1,7 @@
 package se.slashat.slashat.fragment;
 
+import java.io.Serializable;
+
 import se.slashat.slashat.CallbackPair;
 import se.slashat.slashat.R;
 import se.slashat.slashat.adapter.EpisodeDetailAdapter;
@@ -18,8 +20,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-public class ArchiveFragment extends ListFragment implements CallbackPair<Episode, Boolean> {
+public class ArchiveFragment extends ListFragment implements CallbackPair<Episode, Boolean>, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public final static String EPISODEPLAYER = "episodePlayer";
 	public static final String ADAPTER = "adapter";
 
