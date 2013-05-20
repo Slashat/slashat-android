@@ -6,17 +6,17 @@
     android:orientation="horizontal" >
 
     <fragment
-        android:id="@+id/listFragment1"
-        android:name="se.slashat.slashat.fragment.ArchiveListFragment"
+        android:id="@+id/fragment1"
+        android:name="se.slashat.slashat.fragment.AboutListFragment"
         android:layout_width="350dp"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_archivelist" />
+        tools:layout="@layout/fragment_aboutlist" />
 
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="se.slashat.slashat.fragment.ArchiveDetailFragment"
+        android:id="@+id/aboutDetailFragment"
+        android:name="se.slashat.slashat.fragment.AboutDetailFragment"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        tools:layout="@layout/archive_item_details" />
+        tools:layout="@layout/about_detail" />
 
 </LinearLayout>
