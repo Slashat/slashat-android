@@ -172,6 +172,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
 			seekBar.setOnSeekBarChangeListener(this);
 			button.setOnClickListener(this);
+			seekBar.setEnabled(false);
 		}
 
 		@Override
@@ -182,6 +183,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
+					seekBar.setEnabled(true);
 					seekBar.setMax(seekMax);
 					seekBar.setProgress(seek);
 					onMediaPlaying("");
@@ -195,6 +197,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 		@Override
 		public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+			seekBar.setEnabled(true);
 			if (seekbarOverlay != null && seekbarOverlay.isShowing() && textView != null) {
 				updateOverlaySeekProgress(progress);
 				updateOverlayPosition(seekBar, progress);
@@ -243,6 +246,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 		@Override
 		public void onMediaStopped(String episodeName, boolean EOF) {
+			seekBar.setEnabled(false);
 			button.setImageResource(android.R.drawable.ic_media_play);
 			// maybe use setDrawable instead
 			Log.i(MainActivity.TAG,"Current: "+episodeName);
@@ -276,6 +280,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		@Override
 		public void onMediaPlaying(String episodeName) {
 			button.setImageResource(android.R.drawable.ic_media_pause);
+			seekBar.setEnabled(true);
 			// maybe use setDrawable instead
 		}
 
