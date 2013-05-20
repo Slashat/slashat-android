@@ -26,6 +26,10 @@ public class FragmentSwitcher implements Serializable {
 		instance = new FragmentSwitcher();
 		instance.fragmentManager = fragmentManager;
 	}
+	
+	public void switchFragment(Fragment fragment, boolean addToBackstack){
+		switchFragment(fragment, addToBackstack, 0);
+	}
 
 	/**
 	 * Switch to a new fragment. If addToBackstack is true it's possible to go
@@ -33,11 +37,15 @@ public class FragmentSwitcher implements Serializable {
 	 * 
 	 * @param fragment
 	 * @param addToBackstack
+	 * @param switch fragment in this container view, if 0 switch in the main container view.
 	 */
-	public void switchFragment(Fragment fragment, boolean addToBackstack) {
+	public void switchFragment(Fragment fragment, boolean addToBackstack, int container) {
 		FragmentTransaction beginTransaction = fragmentManager
 				.beginTransaction();
-		beginTransaction.add(R.id.fragment_container, fragment);
+		if (container == 0){
+			container = R.id.fragment_container;
+		}
+		beginTransaction.add(container, fragment);
 		if (addToBackstack){
 			beginTransaction.setCustomAnimations(R.anim.slider_in,R.anim.noanimation,R.anim.noanimation,R.anim.slider_out);
 		}else{

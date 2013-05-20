@@ -2,7 +2,7 @@ package se.slashat.slashat.async;
 
 import se.slashat.slashat.R;
 import se.slashat.slashat.adapter.EpisodeAdapter;
-import se.slashat.slashat.fragment.ArchiveFragment;
+import se.slashat.slashat.fragment.ArchiveListFragment;
 import se.slashat.slashat.model.Episode;
 import se.slashat.slashat.service.ArchiveService;
 import android.app.ProgressDialog;
@@ -16,10 +16,10 @@ import android.os.AsyncTask;
  */
 public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 
-	private ArchiveFragment archiveFragment;
+	private ArchiveListFragment archiveFragment;
 	private ProgressDialog progressDialog;
 
-	public EpisodeLoaderAsyncTask(ArchiveFragment archiveFragment) {
+	public EpisodeLoaderAsyncTask(ArchiveListFragment archiveFragment) {
 		this.archiveFragment = archiveFragment;
 	}
 

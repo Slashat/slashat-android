@@ -18,6 +18,7 @@ import se.slashat.slashat.async.EpisodeLoaderAsyncTask;
 import se.slashat.slashat.async.EpisodeLoaderAsyncTask.UpdateCallback;
 import se.slashat.slashat.fragment.AboutFragment;
 import se.slashat.slashat.fragment.ArchiveFragment;
+import se.slashat.slashat.fragment.ArchiveListFragment;
 import se.slashat.slashat.fragment.FragmentSwitcher;
 import se.slashat.slashat.fragment.LiveFragment;
 import se.slashat.slashat.model.Episode;
