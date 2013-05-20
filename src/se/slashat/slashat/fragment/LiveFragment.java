@@ -1,6 +1,17 @@
 package se.slashat.slashat.fragment;
 
+import java.util.Collection;
+import java.util.Date;
+
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+
+import se.slashat.slashat.Callback;
 import se.slashat.slashat.R;
+import se.slashat.slashat.async.CalendarLoaderAsyncTask;
+import se.slashat.slashat.model.LiveEvent;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -14,63 +25,104 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.TextView;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class LiveFragment extends Fragment {
+public class LiveFragment extends Fragment implements Callback<Collection<LiveEvent>> {
 
 	private static final int BUTTON_TIMEOUT = 3;
-	private static final Boolean ForceLive = true;
+	private static final Boolean ForceLive = false;
 	private static final String TAG = "Slashat-LiveFragment";
+	private CountDownTimer countDownTimer;
 	WebView mWebView;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		/*
-		 * Decide which layout to use - if we're on a Tuesday between 19.00 and
-		 * 22.00 we show fragment_onlive other times we show fragment_live
-		 */
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		Integer fragment;
-
-		if (ForceLive) { // or matches time, to be added
-			fragment = R.layout.fragment_livewindow_onair;
-		} else {
-			fragment = R.layout.fragment_livewindow_offair;
-		}
-
-		return inflater.inflate(fragment, container, false);
+		return inflater.inflate(R.layout.fragment_livewindow_offair, container, false);
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		final Button moveonButton = (Button) getView().findViewById(
-				R.id.moveonbutton);
+		CalendarLoaderAsyncTask calendarLoaderAsyncTask = new CalendarLoaderAsyncTask(this);
+		calendarLoaderAsyncTask.execute();
 
-		moveonButton.setOnClickListener(new MoveonButtonListener(moveonButton));
+		/**
+		 * final Button moveonButton = (Button) getView().findViewById(
+		 * R.id.moveonbutton);
+		 * 
+		 * moveonButton.setOnClickListener(new
+		 * MoveonButtonListener(moveonButton));
+		 * 
+		 * mWebView = (WebView) getView().findViewById(R.id.webView1);
+		 * 
+		 * // load our webclient mWebView.setWebViewClient(new
+		 * SlashatWebViewClient());
+		 * 
+		 * // settings mWebView.getSettings().setJavaScriptEnabled(true);
+		 * mWebView.getSettings().setPluginsEnabled(true);
+		 * mWebView.getSettings().setDomStorageEnabled(true);
+		 * 
+		 * // load bambuser // we should probably bounce this via the website,
+		 * in case we change // streaming-partner // eg
+		 * http://slashat.se/mobile/livestream.php try { mWebView.loadUrl(
+		 * "http://embed.bambuser.com/channel/slashat?autoplay=1&chat=0"); }
+		 * catch (Exception e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 **/
 
-		mWebView = (WebView) getView().findViewById(R.id.webView1);
+	}
 
-		// load our webclient
-		mWebView.setWebViewClient(new SlashatWebViewClient());
+	@Override
+	public void call(Collection<LiveEvent> result) {
 
-		// settings
-		mWebView.getSettings().setJavaScriptEnabled(true);
-		mWebView.getSettings().setPluginsEnabled(true);
-		mWebView.getSettings().setDomStorageEnabled(true);
+		Date now = new Date();
+		LIVEEVENTLOOP: for (LiveEvent liveEvent : result) {
 
-		// load bambuser
-		// we should probably bounce this via the website, in case we change
-		// streaming-partner
-		// eg http://slashat.se/mobile/livestream.php
-		try {
-			mWebView.loadUrl("http://embed.bambuser.com/channel/slashat?autoplay=1&chat=0");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (liveEvent.getStart().getTime() > now.getTime()) {
+				startLiveCountDown(liveEvent, now, liveEvent.getStart());
+				final TextView summaryTextView = (TextView) getView().findViewById(R.id.counterSummary);
+				summaryTextView.setText(liveEvent.getSummary());
+				break LIVEEVENTLOOP;
+			}
 		}
+	}
+
+	private void startLiveCountDown(final LiveEvent liveEvent, final Date now, final Date start) {
+		final TextView textView = (TextView) getView().findViewById(R.id.counterTextView);
+		final PeriodFormatter formatter = 
+				new PeriodFormatterBuilder()
+				.appendDays()
+				.appendSeparator(" dagar och ")
+				.printZeroAlways()
+				.minimumPrintedDigits(2)
+				.appendHours()
+				.appendSeparator(":")
+				.appendMinutes()
+				.appendSeparator(":")
+				.appendSeconds()
+				.toFormatter();
+		
+		countDownTimer = new CountDownTimer(start.getTime() - now.getTime(), 1000) {
+
+			@Override
+			public void onTick(long millisUntilFinished) {
+				DateTime now = new DateTime();
+				DateTime nextLive = new DateTime(start);
+				Period period = new Period(now, nextLive);
+
+
+				textView.setText(formatter.print(period.normalizedStandard()));
+			}
+
+			@Override
+			public void onFinish() {
+
+			}
+		};
+		countDownTimer.start();
 
 	}
 
@@ -94,14 +146,12 @@ public class LiveFragment extends Fragment {
 			moveonButton.setEnabled(false);
 
 			// Countdowntimer to prevent button being spam clicked.
-			countDownTimer = new CountDownTimer(BUTTON_TIMEOUT * 60 * 1000,
-					1000) {
+			countDownTimer = new CountDownTimer(BUTTON_TIMEOUT * 60 * 1000, 1000) {
 
 				@Override
 				public void onTick(long millisUntilFinished) {
 					long timeLeftInSeconds = millisUntilFinished / 1000;
-					moveonButton.setText("Move on skickat! ("
-							+ timeLeftInSeconds + " sekunder till nästa)");
+					moveonButton.setText("Move on skickat! (" + timeLeftInSeconds + " sekunder till nästa)");
 				}
 
 				@Override
@@ -127,8 +177,7 @@ public class LiveFragment extends Fragment {
 		}
 
 		@Override
-		public void onReceivedError(WebView view, int errorCode,
-				String description, String failingUrl) {
+		public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 			Log.d(TAG, "Browser Error: " + errorCode + " - " + description);
 		}
 

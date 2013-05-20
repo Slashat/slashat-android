@@ -13,6 +13,7 @@ import java.util.TimeZone;
 
 import se.slashat.slashat.androidservice.EpisodePlayer;
 import se.slashat.slashat.androidservice.EpisodePlayer.PlayerInterface;
+import se.slashat.slashat.async.CalendarLoaderAsyncTask;
 import se.slashat.slashat.async.EpisodeLoaderAsyncTask;
 import se.slashat.slashat.async.EpisodeLoaderAsyncTask.UpdateCallback;
 import se.slashat.slashat.fragment.AboutFragment;
@@ -21,6 +22,7 @@ import se.slashat.slashat.fragment.FragmentSwitcher;
 import se.slashat.slashat.fragment.LiveFragment;
 import se.slashat.slashat.model.Episode;
 import se.slashat.slashat.service.ArchiveService;
+import se.slashat.slashat.service.CalendarService;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -78,7 +80,6 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		getSupportActionBar().addTab(liveTab);
 		getSupportActionBar().addTab(archiveTab);
 		getSupportActionBar().addTab(aboutTab);
-
 	}
 
 	public static Context getContext() {
