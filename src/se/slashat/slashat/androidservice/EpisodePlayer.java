@@ -290,6 +290,10 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		return mediaPlayer != null;
 	}
 	
+	public String getCurrentPlayingEpisodeName() {
+		return episodeName;
+	}
+	
 	public String getLastPlayedEpisodeName() {
 		return lastPlayedEpisodeName;
 	}

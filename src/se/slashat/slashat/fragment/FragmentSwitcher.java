@@ -62,4 +62,9 @@ public class FragmentSwitcher implements Serializable {
 		beginTransaction.commit();
 	}
 
+	public Fragment findFragmentByTag(String tag) {
+		return fragmentManager.findFragmentByTag(tag);
+		
+	}
+
 }

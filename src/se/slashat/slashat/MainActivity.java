@@ -1,10 +1,7 @@
 package se.slashat.slashat;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -13,30 +10,22 @@ import java.util.TimeZone;
 
 import se.slashat.slashat.androidservice.EpisodePlayer;
 import se.slashat.slashat.androidservice.EpisodePlayer.PlayerInterface;
-import se.slashat.slashat.async.CalendarLoaderAsyncTask;
 import se.slashat.slashat.async.EpisodeLoaderAsyncTask;
-import se.slashat.slashat.async.EpisodeLoaderAsyncTask.UpdateCallback;
 import se.slashat.slashat.fragment.AboutFragment;
-import se.slashat.slashat.fragment.AboutListFragment;
 import se.slashat.slashat.fragment.ArchiveFragment;
-import se.slashat.slashat.fragment.ArchiveListFragment;
 import se.slashat.slashat.fragment.FragmentSwitcher;
 import se.slashat.slashat.fragment.LiveFragment;
 import se.slashat.slashat.model.Episode;
 import se.slashat.slashat.service.ArchiveService;
-import se.slashat.slashat.service.CalendarService;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.method.DateTimeKeyListener;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -52,7 +41,9 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
 
 public class MainActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
 
@@ -98,12 +89,21 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void switchFragment(Fragment fragment, boolean addToBackstack) {
 		FragmentSwitcher.getInstance().switchFragment(fragment, addToBackstack);
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu);
+		return true;
+	}
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 		// TODO: Rewrite this section to a fragment-container and call fragments
 		// based on their classnames and tab ids
 
+		supportInvalidateOptionsMenu();
+		
 		if (tab.getPosition() == 0) {
 			// live
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-live");
@@ -117,6 +117,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			// bundle.putSerializable(ArchiveFragment.EPISODEPLAYER,
 			// episodePlayer);
 			ArchiveFragment archiveFragment = new ArchiveFragment();
+			archiveFragment.setHasOptionsMenu(true);
 			archiveFragment.setArguments(bundle);
 			switchFragment(archiveFragment, false);
 			LinearLayout playerLayout = (LinearLayout) findViewById(R.layout.playerLayout);
@@ -252,7 +253,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			// maybe use setDrawable instead
 			Log.i(MainActivity.TAG,"Current: "+episodeName);
 			if (EOF && episodeName != null && !episodeName.equals("")) {
-				List<Episode> episodes = Arrays.asList(ArchiveService.getEpisodes(EpisodeLoaderAsyncTask.getVoidCallback()));
+				List<Episode> episodes = Arrays.asList(ArchiveService.getEpisodes(EpisodeLoaderAsyncTask.getVoidCallback(),false));
 				
 				Episode newEpisode = null;
 				EPISODELOOP: for (Iterator<Episode> iterator = episodes.iterator(); iterator.hasNext();) {

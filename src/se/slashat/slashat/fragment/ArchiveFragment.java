@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 public class ArchiveFragment extends Fragment{
 	
 	private static View view;
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (view != null) {
@@ -32,6 +32,8 @@ public class ArchiveFragment extends Fragment{
 	    }
 		
 		// Inflate the layout for this fragment
+		
+		setMenuVisibility(true);
 		return view;
 	}
 }

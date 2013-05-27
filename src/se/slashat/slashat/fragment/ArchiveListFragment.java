@@ -5,22 +5,20 @@ import java.io.Serializable;
 import se.slashat.slashat.CallbackPair;
 import se.slashat.slashat.R;
 import se.slashat.slashat.adapter.EpisodeDetailAdapter;
-import se.slashat.slashat.adapter.PersonAdapter;
-import se.slashat.slashat.adapter.PersonalAdapter;
 import se.slashat.slashat.androidservice.EpisodePlayer;
 import se.slashat.slashat.async.EpisodeLoaderAsyncTask;
 import se.slashat.slashat.model.Episode;
-import se.slashat.slashat.model.Personal;
-import se.slashat.slashat.service.PersonalService;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-public class ArchiveListFragment extends ListFragment implements CallbackPair<Episode, Boolean>, Serializable {
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+
+public class ArchiveListFragment extends SherlockListFragment implements CallbackPair<Episode, Boolean>, Serializable {
 
 	/**
 	 * 
@@ -32,8 +30,26 @@ public class ArchiveListFragment extends ListFragment implements CallbackPair<Ep
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
+		setHasOptionsMenu(true);
+		setMenuVisibility(true);
 		return inflater.inflate(R.layout.fragment_archivelist, container, false);
 	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, com.actionbarsherlock.view.MenuInflater inflater) {
+		inflater.inflate(R.menu.reload_menu, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+		switch (item.getItemId()){
+		case R.id.reload:
+			populate(true);
+	}
+	
+	return true;
+	}
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,16 +66,20 @@ public class ArchiveListFragment extends ListFragment implements CallbackPair<Ep
 		}
 		
 		// If no adapter is found in the bundle create a new one with all
-		// people.
+		// episodes.
 		if (adapter == null) {
-			EpisodeLoaderAsyncTask episodeLoaderAsyncTask = new EpisodeLoaderAsyncTask(this);
-			episodeLoaderAsyncTask.execute();
+			populate(false);
 		}else{
 		setListAdapter(adapter);
 		}
 		
+		setHasOptionsMenu(true);
 
+	}
 
+	public void populate(boolean fullRefresh) {
+		EpisodeLoaderAsyncTask episodeLoaderAsyncTask = new EpisodeLoaderAsyncTask(this,fullRefresh);
+		episodeLoaderAsyncTask.execute();
 	}
 
 	/**

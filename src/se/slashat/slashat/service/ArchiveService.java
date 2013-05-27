@@ -55,14 +55,18 @@ public class ArchiveService {
 		return episodeCount;
 	}
 
-	public static Episode[] getEpisodes(final UpdateCallback updateCallback) {
+	public static Episode[] getEpisodes(final UpdateCallback updateCallback, final boolean fullRefresh) {
 
 		// If we already have parsed the Episodes return that cached list.
-		if (!episodes.isEmpty()) {
+		if (!episodes.isEmpty() && !fullRefresh) {
 			return compileEpisodes();
 		}
 		// Load serialized episodes.
-		loadEpisodes();
+		if (!fullRefresh) {
+			loadEpisodes();
+		}else{
+			episodes.clear();
+		}
 
 		InputStream inputStream = null;
 		// Start parse the feed. When an episode already exists in our list stop
@@ -103,7 +107,7 @@ public class ArchiveService {
 						}
 
 						Episode episode = new Episode(episodeTitle, episodeNumber, url, duration, published, itunesSubtitle);
-						if (episodes.contains(episode)) {
+						if (episodes.contains(episode) && !fullRefresh) {
 							feedburnerParser.interrupt();
 						} else {
 							episodes.add(episode);

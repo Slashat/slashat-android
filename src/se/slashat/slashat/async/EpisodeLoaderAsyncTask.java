@@ -18,9 +18,11 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 
 	private ArchiveListFragment archiveFragment;
 	private ProgressDialog progressDialog;
+	private boolean fullRefresh;
 
-	public EpisodeLoaderAsyncTask(ArchiveListFragment archiveFragment) {
+	public EpisodeLoaderAsyncTask(ArchiveListFragment archiveFragment, boolean fullRefresh) {
 		this.archiveFragment = archiveFragment;
+		this.fullRefresh = fullRefresh;
 	}
 
 	public interface UpdateCallback {
@@ -45,7 +47,7 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 			public void onUpdate() {
 				publishProgress();
 			}
-		});
+		},fullRefresh);
 
 		return episodes;
 	}
