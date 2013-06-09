@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:padding="2dp" >
-	
-        <TextView
-        android:id="@+id/episodeNumberAndTitle"
-        android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
-        android:gravity="center_vertical"
-        android:text="#199 - Vi CES och hörs"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        />
-    
+        android:orientation="vertical"
+        android:padding="2dp" >
+
+        <TextView
+            android:id="@+id/episodeNumberAndTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:text="#199 - Vi CES och hörs"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dateAndLength"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:text="22 jan 2013 - 1:07:45"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/dateAndLength"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="2dp"
-        android:gravity="center_vertical"
-        android:text="22 jan 2013 - 1:07:45"
-        android:textColor="#000000"
-        android:textSize="15sp"
-        />
-</LinearLayout>
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textSize="20sp" 
+        android:textStyle="bold"
+        android:text=">" />
+
+</RelativeLayout>
