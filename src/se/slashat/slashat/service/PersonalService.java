@@ -12,6 +12,7 @@ public class PersonalService {
 
 		personal[0] = new Personal(
 				"Jezper Söderlund",
+				"PROGRAMLEDARE",
 				R.drawable.jezper,
 				"kontakt@jezper.se",
 				"jezperse",
@@ -23,6 +24,7 @@ public class PersonalService {
 
 		personal[1] = new Personal(
 				"Tommie Podzemski",
+				"PROGRAMLEDARE",
 				R.drawable.tommie,
 				"tommie@tommie.nu",
 				"tommienu",
@@ -34,6 +36,7 @@ public class PersonalService {
 
 		personal[2] = new Personal(
 				"Magnus Jonasson",
+				"FORUMGENERAL",
 				R.drawable.magnus,
 				"magnus@magnusjonasson.com",
 				"magnusjonasson",
@@ -44,6 +47,7 @@ public class PersonalService {
 						+ "\n\nFörutom teknik så har en kärlek till matlagning har funnits länge och inte mycket slår hemlagat med en kall öl till. Eller två.");
 		personal[3] = new Personal(
 				"Johan Larsson",
+				"KOTTRAGEARE",
 				R.drawable.johan,
 				"johan@johanl.se",
 				"kottkrig",
@@ -53,6 +57,7 @@ public class PersonalService {
 						+ "\n\nArbetar hellre i OS X och Linux än i Windows när jag vill vara produktiv. Använder hellre Windows än annat när det kommer till lek & spel.");
 		personal[4] = new Personal(
 				"Team Slashat Development",
+				"devs",
 				R.drawable.ic_launcher,
 				"no@email.com",
 				"slashatse",

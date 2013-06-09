@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/card_bg"
     android:orientation="vertical"
-    android:padding="2dp"
-    android:background="@android:color/white">
+    android:padding="10dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,12 +29,23 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
                 android:text="Tommie Podzemski"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:text="PROGRAMLEDARE"
+                android:textColor="#888888"
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -42,17 +54,23 @@
 
                 <ImageView
                     android:id="@+id/twitter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:maxHeight="20dp"
+                    android:maxWidth="20dp"
                     android:layout_marginBottom="2dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="2dp"
+
+                    android:scaleType="fitXY"
                     android:src="@drawable/twitter" />
 
                 <ImageView
                     android:id="@+id/email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:maxHeight="20dp"
+                    android:maxWidth="20dp"
                     android:layout_marginBottom="2dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="2dp"
@@ -60,8 +78,10 @@
 
                 <ImageView
                     android:id="@+id/browser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:maxHeight="20dp"
+                    android:maxWidth="20dp"
                     android:layout_marginBottom="2dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="2dp"
@@ -78,6 +98,6 @@
         android:layout_marginTop="5dp"
         android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         android:textColor="#000000"
-        android:textSize="17sp"/>
+        android:textSize="17sp" />
 
 </LinearLayout>

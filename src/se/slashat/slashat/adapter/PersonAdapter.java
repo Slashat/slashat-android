@@ -27,6 +27,7 @@ public class PersonAdapter extends AbstractArrayAdapter<Personal> implements Ser
 
 	static class PersonHolder extends Holder {
 		TextView name;
+		TextView title;
 		ImageView email;
 		ImageView twitter;
 		ImageView homepage;
@@ -39,6 +40,7 @@ public class PersonAdapter extends AbstractArrayAdapter<Personal> implements Ser
 		PersonHolder holder = new PersonHolder();
 		holder.photo = (ImageView) row.findViewById(R.id.photo);
 		holder.name = (TextView) row.findViewById(R.id.name);
+		holder.title = (TextView) row.findViewById(R.id.title);
 		holder.email = (ImageView) row.findViewById(R.id.email);
 		holder.twitter = (ImageView) row.findViewById(R.id.twitter);
 		holder.homepage = (ImageView) row.findViewById(R.id.browser);
@@ -64,6 +66,7 @@ public class PersonAdapter extends AbstractArrayAdapter<Personal> implements Ser
 	public void setDataOnHolder(Holder holder, final Personal t) {
 		PersonHolder ph = (PersonHolder) holder;
 		ph.name.setText(person.getName());
+		ph.title.setText(person.getTitle());
 		setTwitterClickListener(t, ph);
 		setEmailClickListener(t, ph);
 		setHomepageClickListener(t, ph);

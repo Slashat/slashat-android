@@ -27,6 +27,7 @@ public class PersonalAdapter extends AbstractArrayAdapter<Personal> implements S
 	}
 
 	public static class PersonalHolder extends Holder {
+		TextView txtName;
 		TextView txtTitle;
 		ImageView imgView;
 	}
@@ -35,6 +36,7 @@ public class PersonalAdapter extends AbstractArrayAdapter<Personal> implements S
 	public Holder createHolder(View row) {
 		PersonalHolder holder = new PersonalHolder();
 		holder.imgView = (ImageView) row.findViewById(R.id.imgIcon);
+		holder.txtName = (TextView) row.findViewById(R.id.txtName);
 		holder.txtTitle = (TextView) row.findViewById(R.id.txtTitle);
 		return holder;
 	}
@@ -57,7 +59,8 @@ public class PersonalAdapter extends AbstractArrayAdapter<Personal> implements S
 	@Override
 	public void setDataOnHolder(Holder holder, Personal personal) {
 		PersonalHolder ph = (PersonalHolder) holder;
-		ph.txtTitle.setText(personal.getName());
+		ph.txtName.setText(personal.getName());
 		ph.imgView.setImageResource(personal.getImg());
+		ph.txtTitle.setText(personal.getTitle());
 	}
 }
