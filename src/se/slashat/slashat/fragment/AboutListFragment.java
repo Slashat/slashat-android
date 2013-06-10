@@ -49,9 +49,9 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
 	@Override
 	public void call(Personal personal) {
 		
-		if (personal.getName().equals("Team Slashat Development")){
+		if (personal.getName().equals("Team Slashat Development")){ // This is ugly but will do for now.
 			ArrayAdapter<Personal> adapter = new PersonalAdapter(getActivity(), R.layout.about_item_row, PersonalService.getPersonal(Type.DEV), this);
-			setListAdapter(adapter);
+			setListAdapter(adapter); // need to add a new fragment instead.
 		}else{
 		
 			PersonAdapter p = new PersonAdapter(getActivity(), R.layout.about_detail, new Personal[] { personal });
