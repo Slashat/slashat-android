@@ -25,8 +25,7 @@ import android.util.Xml;
 
 public class FeedburnerParser {
 	private Itemcallback itemcallback;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat(
-			"E, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 	private boolean interrupt;
 
 	/**
@@ -37,14 +36,12 @@ public class FeedburnerParser {
 	 * 
 	 */
 	public interface Itemcallback {
-		public void callback(String title, String url, String duration, String itunesSubtitle,
-				Date published);
+		public void callback(String title, String url, String duration, String itunesSubtitle, Date published);
 
 		public void setCount(int attributeCount);
 	}
 
-	public void parseFeed(InputStream inputStream, Itemcallback itemcallback)
-			throws XmlPullParserException, IOException, ParseException {
+	public void parseFeed(InputStream inputStream, Itemcallback itemcallback) throws XmlPullParserException, IOException, ParseException {
 
 		this.itemcallback = itemcallback;
 		itemcallback.setCount(205); // Figure out how to get the correct count
@@ -58,8 +55,7 @@ public class FeedburnerParser {
 
 	}
 
-	private void readFeed(XmlPullParser parser) throws XmlPullParserException,
-			IOException, ParseException {
+	private void readFeed(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
 
 		parser.require(XmlPullParser.START_TAG, "", "rss");
 
@@ -76,14 +72,13 @@ public class FeedburnerParser {
 			}
 
 		}
-		
-		if (interrupt){
+
+		if (interrupt) {
 			Log.i(MainActivity.TAG, "Loading episodes interrupted");
 		}
 	}
 
-	private void readEntry(XmlPullParser parser) throws XmlPullParserException,
-			IOException, ParseException {
+	private void readEntry(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
 		parser.require(XmlPullParser.START_TAG, "", "item");
 		String title = null;
 		String url = null;
@@ -104,7 +99,7 @@ public class FeedburnerParser {
 				date = getDate(parser);
 			} else if (name.equals("itunes:duration")) {
 				duration = getDuration(parser);
-			} else if (name.equals("itunes:subtitle")){
+			} else if (name.equals("itunes:subtitle")) {
 				itunesSubtitle = readItunesSubtitle(parser);
 			} else {
 				skip(parser);
@@ -118,24 +113,21 @@ public class FeedburnerParser {
 
 	}
 
-	private String getDuration(XmlPullParser parser)
-			throws XmlPullParserException, IOException {
+	private String getDuration(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, "", "itunes:duration");
 		String duration = readText(parser);
 		parser.require(XmlPullParser.END_TAG, "", "itunes:duration");
 		return duration;
 	}
 
-	private Date getDate(XmlPullParser parser) throws XmlPullParserException,
-			IOException, ParseException {
+	private Date getDate(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
 		parser.require(XmlPullParser.START_TAG, "", "pubDate");
 		Date duration = readDate(parser);
 		parser.require(XmlPullParser.END_TAG, "", "pubDate");
 		return duration;
 	}
 
-	private String getMediaReadUrl(XmlPullParser parser)
-			throws XmlPullParserException, IOException {
+	private String getMediaReadUrl(XmlPullParser parser) throws XmlPullParserException, IOException {
 		String url = null;
 		parser.require(XmlPullParser.START_TAG, "", "media:content");
 		String tag = parser.getName();
@@ -149,24 +141,21 @@ public class FeedburnerParser {
 		return url;
 	}
 
-	private String readTitle(XmlPullParser parser)
-			throws XmlPullParserException, IOException {
+	private String readTitle(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, "", "title");
 		String title = readText(parser);
 		parser.require(XmlPullParser.END_TAG, "", "title");
 		return title;
 	}
-	
-	private String readItunesSubtitle(XmlPullParser parser)
-			throws XmlPullParserException, IOException {
+
+	private String readItunesSubtitle(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, "", "itunes:subtitle");
 		String itunesSubtitle = readText(parser);
 		parser.require(XmlPullParser.END_TAG, "", "itunes:subtitle");
 		return itunesSubtitle;
 	}
 
-	private String readText(XmlPullParser parser) throws IOException,
-			XmlPullParserException {
+	private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
 		String result = "";
 		if (parser.next() == XmlPullParser.TEXT) {
 			result = parser.getText();
@@ -175,8 +164,7 @@ public class FeedburnerParser {
 		return result;
 	}
 
-	private Date readDate(XmlPullParser parser) throws XmlPullParserException,
-			IOException, ParseException {
+	private Date readDate(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
 		Date result = null;
 		if (parser.next() == XmlPullParser.TEXT) {
 			result = dateFormat.parse(parser.getText());
@@ -185,8 +173,7 @@ public class FeedburnerParser {
 		return result;
 	}
 
-	private void skip(XmlPullParser parser) throws XmlPullParserException,
-			IOException {
+	private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
 		if (parser.getEventType() != XmlPullParser.START_TAG) {
 			throw new IllegalStateException();
 		}
@@ -205,6 +192,6 @@ public class FeedburnerParser {
 
 	public void interrupt() {
 		this.interrupt = true;
-		
+
 	}
 }

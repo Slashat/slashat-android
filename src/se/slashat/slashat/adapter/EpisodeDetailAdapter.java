@@ -19,16 +19,15 @@ public class EpisodeDetailAdapter extends AbstractArrayAdapter<Episode> implemen
 	private static final long serialVersionUID = 1L;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("sv"));
 	private CallbackPair<Episode, Boolean> episodeCallback;
-	
-	
-	public EpisodeDetailAdapter(Context context, int layoutResourceId, Episode[] data, CallbackPair<Episode,Boolean> episodeCallback) {
+
+	public EpisodeDetailAdapter(Context context, int layoutResourceId, Episode[] data, CallbackPair<Episode, Boolean> episodeCallback) {
 		super(context, layoutResourceId, data);
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
 		this.episodeCallback = episodeCallback;
 		this.episode = data[0];
 	}
-	
+
 	static class EpisodeDetailsHolder extends Holder {
 		TextView episodeNumberAndTitle;
 		TextView dateAndLength;
@@ -65,18 +64,18 @@ public class EpisodeDetailAdapter extends AbstractArrayAdapter<Episode> implemen
 	@Override
 	public void setDataOnHolder(AbstractArrayAdapter.Holder holder, Episode t) {
 		EpisodeDetailsHolder edh = (EpisodeDetailsHolder) holder;
-		edh.episodeNumberAndTitle.setText("#"+episode.getEpisodeNumber()+" - "+episode.getName());
-		edh.dateAndLength.setText(dateFormat.format(episode.getPublished())+" - "+episode.getDuration());
+		edh.episodeNumberAndTitle.setText("#" + episode.getEpisodeNumber() + " - " + episode.getName());
+		edh.dateAndLength.setText(dateFormat.format(episode.getPublished()) + " - " + episode.getDuration());
 		edh.description.setText(t.getDescription());
 		edh.listenButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				episodeCallback.call(episode, false);
 			}
 		});
-		
+
 		edh.viewButton.setEnabled(false);
 
 	}

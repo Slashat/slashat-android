@@ -12,6 +12,7 @@ public class FragmentSwitcher implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private FragmentManager fragmentManager;
 	private static FragmentSwitcher instance;
+
 	public static FragmentSwitcher getInstance() {
 		return instance;
 	}
@@ -26,8 +27,8 @@ public class FragmentSwitcher implements Serializable {
 		instance = new FragmentSwitcher();
 		instance.fragmentManager = fragmentManager;
 	}
-	
-	public void switchFragment(Fragment fragment, boolean addToBackstack){
+
+	public void switchFragment(Fragment fragment, boolean addToBackstack) {
 		switchFragment(fragment, addToBackstack, 0);
 	}
 
@@ -37,22 +38,22 @@ public class FragmentSwitcher implements Serializable {
 	 * 
 	 * @param fragment
 	 * @param addToBackstack
-	 * @param switch fragment in this container view, if 0 switch in the main container view.
+	 * @param switch fragment in this container view, if 0 switch in the main
+	 *        container view.
 	 */
 	public void switchFragment(Fragment fragment, boolean addToBackstack, int container) {
-		FragmentTransaction beginTransaction = fragmentManager
-				.beginTransaction();
-		if (container == 0){
+		FragmentTransaction beginTransaction = fragmentManager.beginTransaction();
+		if (container == 0) {
 			container = R.id.fragment_container;
 		}
 		beginTransaction.add(container, fragment);
-		if (addToBackstack){
-			beginTransaction.setCustomAnimations(R.anim.slider_in,R.anim.noanimation,R.anim.noanimation,R.anim.slider_out);
-		}else{
+		if (addToBackstack) {
+			beginTransaction.setCustomAnimations(R.anim.slider_in, R.anim.noanimation, R.anim.noanimation, R.anim.slider_out);
+		} else {
 			beginTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		}
 		beginTransaction.show(fragment);
-		
+
 		if (addToBackstack) {
 			beginTransaction.addToBackStack(null);
 		} else {
@@ -64,7 +65,7 @@ public class FragmentSwitcher implements Serializable {
 
 	public Fragment findFragmentByTag(String tag) {
 		return fragmentManager.findFragmentByTag(tag);
-		
+
 	}
 
 }

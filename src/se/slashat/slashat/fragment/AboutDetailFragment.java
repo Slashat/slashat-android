@@ -22,34 +22,31 @@ public class AboutDetailFragment extends ListFragment implements Callback<Person
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Bundle bundle = savedInstanceState == null ? getArguments()
-				: savedInstanceState;
+		Bundle bundle = savedInstanceState == null ? getArguments() : savedInstanceState;
 
 		ArrayAdapter<Personal> adapter = null;
-		
-		if (bundle != null){
+
+		if (bundle != null) {
 			adapter = (ArrayAdapter<Personal>) bundle.getSerializable(ADAPTER);
 		}
-		
+
 		// If no adapter is found in the bundle create a new one with all
 		// people.
 		if (adapter != null) {
 			setListAdapter(adapter);
 		}
-		
+
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.fragment_aboutlist, container, false);
 	}
 
 	@Override
 	public void call(Personal personal) {
-		PersonAdapter p = new PersonAdapter(getActivity(),
-				R.layout.about_detail, new Personal[] { personal });
+		PersonAdapter p = new PersonAdapter(getActivity(), R.layout.about_detail, new Personal[] { personal });
 
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(ADAPTER, p);

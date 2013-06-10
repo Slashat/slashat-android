@@ -2,7 +2,7 @@ package se.slashat.slashat.model;
 
 import java.util.Date;
 
-public class LiveEvent implements Comparable<LiveEvent>{
+public class LiveEvent implements Comparable<LiveEvent> {
 	private final Date start;
 	private final Date end;
 	private final String summary;
@@ -25,9 +25,7 @@ public class LiveEvent implements Comparable<LiveEvent>{
 	public String getSummary() {
 		return summary;
 	}
-	
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

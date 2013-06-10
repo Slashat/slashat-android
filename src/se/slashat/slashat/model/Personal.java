@@ -4,19 +4,26 @@ import java.io.Serializable;
 
 public class Personal implements Serializable{
 	
+	public enum Type {
+		CREW,
+		DEV
+	}
+	
 	private static final long serialVersionUID = 1L;
 	private final String name;
 	private final String title;
+	private final Type type;
 	private final String email;
 	private final String twitter;
 	private final String homepage;
 	private final String bio;
 	private final int img;
 
-	public Personal(String name, String title, int img, String email, String twitter, String homepage, String bio) {
+	public Personal(String name, String title, Type type, int img, String email, String twitter, String homepage, String bio) {
 		super();
 		this.name = name;
 		this.title = title;
+		this.type = type;
 		this.img = img;
 		this.email = email;
 		this.twitter = twitter;
@@ -30,6 +37,10 @@ public class Personal implements Serializable{
 	
 	public String getTitle() {
 		return title;
+	}
+	
+	public Type getType() {
+		return type;
 	}
 	
 	public int getImg() {

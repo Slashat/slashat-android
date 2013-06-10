@@ -15,12 +15,11 @@ import android.widget.TextView;
 
 public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-	private CallbackPair<Episode,Boolean> episodeCallback;
+	private CallbackPair<Episode, Boolean> episodeCallback;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("sv"));
 
-	public EpisodeAdapter(Context context, int layoutResourceId, Episode[] data,CallbackPair<Episode,Boolean> episodeCallback) {
+	public EpisodeAdapter(Context context, int layoutResourceId, Episode[] data, CallbackPair<Episode, Boolean> episodeCallback) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
@@ -28,17 +27,16 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 		this.episodeCallback = episodeCallback;
 	}
 
-	public static class EpisodeHolder extends Holder{
+	public static class EpisodeHolder extends Holder {
 		TextView episodeNumber;
 		TextView txtTitle;
 
 	}
-	
+
 	@Override
-	
 	public Holder createHolder(View row) {
 		EpisodeHolder holder = new EpisodeHolder();
-		holder.episodeNumber = (TextView) row.findViewById(R.id.episodeNumberAndTitle);		
+		holder.episodeNumber = (TextView) row.findViewById(R.id.episodeNumberAndTitle);
 		holder.txtTitle = (TextView) row.findViewById(R.id.dateAndLength);
 		return holder;
 	}
@@ -47,11 +45,12 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 	public OnClickListener createOnClickListener(final Episode episode) {
 		return new OnClickListener() {
 			/**
-			 * Pass the selected episode details to the Fragment that will start playing it.
+			 * Pass the selected episode details to the Fragment that will start
+			 * playing it.
 			 */
 			@Override
 			public void onClick(View v) {
-				//episodeCallback.call(episode.getStreamUrl(),episode.getFullEpisodeName());
+				// episodeCallback.call(episode.getStreamUrl(),episode.getFullEpisodeName());
 				episodeCallback.call(episode, true);
 			}
 		};
@@ -65,7 +64,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 	@Override
 	public void setDataOnHolder(Holder holder, final Episode episode) {
 		EpisodeHolder eh = (EpisodeHolder) holder;
-		eh.episodeNumber.setText("#"+episode.getEpisodeNumber()+" - "+episode.getName());
-		eh.txtTitle.setText(dateFormat.format(episode.getPublished())+" - "+episode.getDuration());
+		eh.episodeNumber.setText("#" + episode.getEpisodeNumber() + " - " + episode.getName());
+		eh.txtTitle.setText(dateFormat.format(episode.getPublished()) + " - " + episode.getDuration());
 	}
 }

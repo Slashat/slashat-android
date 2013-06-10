@@ -39,7 +39,7 @@ public class CalendarService {
 
 			List<LiveEvent> events = new ArrayList<LiveEvent>();
 
-			//TODO replace with propertyname getters instead of loops.
+			// TODO replace with propertyname getters instead of loops.
 			for (Iterator i = calendar.getComponents().iterator(); i.hasNext();) {
 				Component component = (Component) i.next();
 				if (component.getName().equals("VEVENT")) {
@@ -50,7 +50,7 @@ public class CalendarService {
 						try {
 							Property property = (Property) j.next();
 							if (property.getName().equals("DTSTART")) {
-								
+
 								start = dateFormat.parse(property.getValue().replace("Z", ""));
 								System.out.println(property.getValue().replace("Z", ""));
 							}
@@ -72,8 +72,7 @@ public class CalendarService {
 			for (LiveEvent liveEvent : events) {
 				System.out.println(liveEvent.getStart());
 			}
-			
-			
+
 			Collections.sort(events);
 			Collections.reverse(events);
 			System.out.println("After:");

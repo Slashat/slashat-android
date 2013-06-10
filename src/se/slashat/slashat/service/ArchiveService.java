@@ -64,7 +64,7 @@ public class ArchiveService {
 		// Load serialized episodes.
 		if (!fullRefresh) {
 			loadEpisodes();
-		}else{
+		} else {
 			episodes.clear();
 		}
 
@@ -152,7 +152,7 @@ public class ArchiveService {
 
 	private static Episode[] compileEpisodes() {
 		if (episodes.isEmpty()) {
-			episodes.add(new Episode("Kunde inte ladda några avsnitt", 000, null, "", new Date(),""));
+			episodes.add(new Episode("Kunde inte ladda några avsnitt", 000, null, "", new Date(), ""));
 		}
 		ArrayList<Episode> episodeArray = new ArrayList<Episode>(episodes);
 		Collections.sort(episodeArray);

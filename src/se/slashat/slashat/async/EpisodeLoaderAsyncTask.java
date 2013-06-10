@@ -28,13 +28,13 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 	public interface UpdateCallback {
 		public void onUpdate();
 	}
-	
-	public static UpdateCallback getVoidCallback(){
+
+	public static UpdateCallback getVoidCallback() {
 		return new UpdateCallback() {
-			
+
 			@Override
 			public void onUpdate() {
-				
+
 			}
 		};
 	}
@@ -47,7 +47,7 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 			public void onUpdate() {
 				publishProgress();
 			}
-		},fullRefresh);
+		}, fullRefresh);
 
 		return episodes;
 	}
@@ -71,8 +71,7 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 		if (progressDialog.getMax() != numberOfEpisodes) {
 			progressDialog.setMax(numberOfEpisodes);
 		}
-		progressDialog.incrementProgressBy(ArchiveService.getProcessedNumbers()
-				- progressDialog.getProgress());
+		progressDialog.incrementProgressBy(ArchiveService.getProcessedNumbers() - progressDialog.getProgress());
 
 	}
 
@@ -80,9 +79,7 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 	protected void onPostExecute(Episode[] result) {
 		super.onPostExecute(result);
 		progressDialog.dismiss();
-		archiveFragment.setListAdapter(new EpisodeAdapter(archiveFragment
-				.getActivity(), R.layout.archive_item_row, result,
-				archiveFragment));
+		archiveFragment.setListAdapter(new EpisodeAdapter(archiveFragment.getActivity(), R.layout.archive_item_row, result, archiveFragment));
 	}
 
 }

@@ -34,21 +34,17 @@ public class ArchiveDetailFragment extends ListFragment implements CallbackPair<
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Bundle bundle = savedInstanceState == null ? getArguments()
-				: savedInstanceState;
+		Bundle bundle = savedInstanceState == null ? getArguments() : savedInstanceState;
 
 		ArrayAdapter<Episode> adapter = null;
-		
-		
-		if (bundle != null){
-		adapter = (ArrayAdapter<Episode>) bundle.getSerializable(ADAPTER);
-		}
-		
-		if (adapter != null) {
-		setListAdapter(adapter);
-		}
-		
 
+		if (bundle != null) {
+			adapter = (ArrayAdapter<Episode>) bundle.getSerializable(ADAPTER);
+		}
+
+		if (adapter != null) {
+			setListAdapter(adapter);
+		}
 
 	}
 
@@ -58,7 +54,7 @@ public class ArchiveDetailFragment extends ListFragment implements CallbackPair<
 	@Override
 	public void call(Episode episode, Boolean showDetails) {
 		if (showDetails) {
-			EpisodeDetailAdapter p = new EpisodeDetailAdapter(getActivity(), R.layout.archive_item_details, new Episode[] { episode },this);
+			EpisodeDetailAdapter p = new EpisodeDetailAdapter(getActivity(), R.layout.archive_item_details, new Episode[] { episode }, this);
 
 			Bundle bundle = new Bundle();
 			bundle.putSerializable(ADAPTER, p);

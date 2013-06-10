@@ -89,7 +89,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 	public void switchFragment(Fragment fragment, boolean addToBackstack) {
 		FragmentSwitcher.getInstance().switchFragment(fragment, addToBackstack);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
@@ -103,7 +103,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		// based on their classnames and tab ids
 
 		supportInvalidateOptionsMenu();
-		
+
 		if (tab.getPosition() == 0) {
 			// live
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-live");
@@ -131,7 +131,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			aboutFragment.setArguments(bundle);
 			switchFragment(aboutFragment, false);
 			LinearLayout playerLayout = (LinearLayout) findViewById(R.layout.playerLayout);
-			playerLayout.setVisibility(View.VISIBLE);			
+			playerLayout.setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -179,7 +179,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 
 		@Override
 		public void durationUpdate(final int seekMax, final int seek) {
-			if (seekbarOverlayShowing){
+			if (seekbarOverlayShowing) {
 				return;
 			}
 			runOnUiThread(new Runnable() {
@@ -251,30 +251,29 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			seekBar.setEnabled(false);
 			button.setImageResource(android.R.drawable.ic_media_play);
 			// maybe use setDrawable instead
-			Log.i(MainActivity.TAG,"Current: "+episodeName);
+			Log.i(MainActivity.TAG, "Current: " + episodeName);
 			if (EOF && episodeName != null && !episodeName.equals("")) {
-				List<Episode> episodes = Arrays.asList(ArchiveService.getEpisodes(EpisodeLoaderAsyncTask.getVoidCallback(),false));
-				
+				List<Episode> episodes = Arrays.asList(ArchiveService.getEpisodes(EpisodeLoaderAsyncTask.getVoidCallback(), false));
+
 				Episode newEpisode = null;
 				EPISODELOOP: for (Iterator<Episode> iterator = episodes.iterator(); iterator.hasNext();) {
 					Episode e = iterator.next();
 					Log.i(MainActivity.TAG, e.getName());
 					String fullName = e.getFullEpisodeName();
-					if (fullName.equals(episodeName)){
+					if (fullName.equals(episodeName)) {
 						newEpisode = iterator.next();
 						break EPISODELOOP;
 					}
-					
+
 				}
-				
-				if (newEpisode != null){
+
+				if (newEpisode != null) {
 					ProgressDialog progressDialog = new ProgressDialog(callingActivity);
 					progressDialog.setTitle("Buffrar avsnitt");
 					progressDialog.setMessage(newEpisode.getFullEpisodeName());
 					progressDialog.show();
-					EpisodePlayer.getEpisodePlayer().initializePlayer(newEpisode.getStreamUrl(),
-							newEpisode.getFullEpisodeName(), 0, progressDialog);
-				}	
+					EpisodePlayer.getEpisodePlayer().initializePlayer(newEpisode.getStreamUrl(), newEpisode.getFullEpisodeName(), 0, progressDialog);
+				}
 			}
 
 		}

@@ -5,6 +5,7 @@ import se.slashat.slashat.R;
 import se.slashat.slashat.adapter.PersonAdapter;
 import se.slashat.slashat.adapter.PersonalAdapter;
 import se.slashat.slashat.model.Personal;
+import se.slashat.slashat.model.Personal.Type;
 import se.slashat.slashat.service.PersonalService;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -22,42 +23,45 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Bundle bundle = savedInstanceState == null ? getArguments()
-				: savedInstanceState;
+		Bundle bundle = savedInstanceState == null ? getArguments() : savedInstanceState;
 
 		ArrayAdapter<Personal> adapter = null;
-		
-		if (bundle != null){
+
+		if (bundle != null) {
 			adapter = (ArrayAdapter<Personal>) bundle.getSerializable(ADAPTER);
 		}
-		
+
 		// If no adapter is found in the bundle create a new one with all
 		// people.
 		if (adapter == null) {
-			adapter = new PersonalAdapter(getActivity(),
-					R.layout.about_item_row, PersonalService.getPersonal(),
-					this);
+
+			adapter = new PersonalAdapter(getActivity(), R.layout.about_item_row, PersonalService.getPersonal(Type.CREW), this);
 		}
 		setListAdapter(adapter);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.fragment_aboutlist, container, false);
 	}
 
 	@Override
 	public void call(Personal personal) {
-		PersonAdapter p = new PersonAdapter(getActivity(),
-				R.layout.about_detail, new Personal[] { personal });
-
-		Bundle bundle = new Bundle();
-		bundle.putSerializable(ADAPTER, p);
-
-		AboutDetailFragment aboutFragment = new AboutDetailFragment();
-		aboutFragment.setArguments(bundle);
-		FragmentSwitcher.getInstance().switchFragment(aboutFragment, true,R.id.aboutDetailFragment);
+		
+		if (personal.getName().equals("Team Slashat Development")){
+			ArrayAdapter<Personal> adapter = new PersonalAdapter(getActivity(), R.layout.about_item_row, PersonalService.getPersonal(Type.DEV), this);
+			setListAdapter(adapter);
+		}else{
+		
+			PersonAdapter p = new PersonAdapter(getActivity(), R.layout.about_detail, new Personal[] { personal });
+	
+			Bundle bundle = new Bundle();
+			bundle.putSerializable(ADAPTER, p);
+	
+			AboutDetailFragment aboutFragment = new AboutDetailFragment();
+			aboutFragment.setArguments(bundle);
+			FragmentSwitcher.getInstance().switchFragment(aboutFragment, true, R.id.aboutDetailFragment);
+		}
 	}
 }

@@ -92,19 +92,9 @@ public class LiveFragment extends Fragment implements Callback<Collection<LiveEv
 
 	private void startLiveCountDown(final LiveEvent liveEvent, final Date now, final Date start) {
 		final TextView textView = (TextView) getView().findViewById(R.id.counterTextView);
-		final PeriodFormatter formatter = 
-				new PeriodFormatterBuilder()
-				.appendDays()
-				.appendSeparator(" dagar och ")
-				.printZeroAlways()
-				.minimumPrintedDigits(2)
-				.appendHours()
-				.appendSeparator(":")
-				.appendMinutes()
-				.appendSeparator(":")
-				.appendSeconds()
-				.toFormatter();
-		
+		final PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays().appendSeparator(" dagar och ").printZeroAlways().minimumPrintedDigits(2).appendHours().appendSeparator(":")
+				.appendMinutes().appendSeparator(":").appendSeconds().toFormatter();
+
 		countDownTimer = new CountDownTimer(start.getTime() - now.getTime(), 1000) {
 
 			@Override
@@ -112,7 +102,6 @@ public class LiveFragment extends Fragment implements Callback<Collection<LiveEv
 				DateTime now = new DateTime();
 				DateTime nextLive = new DateTime(start);
 				Period period = new Period(now, nextLive);
-
 
 				textView.setText(formatter.print(period.normalizedStandard()));
 			}

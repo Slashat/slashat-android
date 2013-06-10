@@ -14,8 +14,7 @@ public class Episode implements Serializable, Comparable<Episode> {
 	private final int episodeNumber;
 	private String fullEpisodeName;
 
-	public Episode(String name, int episodeNumber, String streamUrl,
-			String duration, Date published, String description) {
+	public Episode(String name, int episodeNumber, String streamUrl, String duration, Date published, String description) {
 		this.name = name;
 		this.episodeNumber = episodeNumber;
 		this.streamUrl = streamUrl;
@@ -26,7 +25,7 @@ public class Episode implements Serializable, Comparable<Episode> {
 	}
 
 	private String generateFullEpisodeName() {
-		return "Avsnitt "+episodeNumber+" - "+name;
+		return "Avsnitt " + episodeNumber + " - " + name;
 	}
 
 	public String getName() {
@@ -48,13 +47,13 @@ public class Episode implements Serializable, Comparable<Episode> {
 	public Date getPublished() {
 		return published;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public String getFullEpisodeName() {
-		if (fullEpisodeName == null || fullEpisodeName.equals("")){
+		if (fullEpisodeName == null || fullEpisodeName.equals("")) {
 			fullEpisodeName = generateFullEpisodeName();
 		}
 		return fullEpisodeName;
@@ -66,8 +65,7 @@ public class Episode implements Serializable, Comparable<Episode> {
 		int result = 1;
 		result = prime * result + episodeNumber;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((streamUrl == null) ? 0 : streamUrl.hashCode());
+		result = prime * result + ((streamUrl == null) ? 0 : streamUrl.hashCode());
 		return result;
 	}
 

@@ -108,32 +108,26 @@ public class PersonAdapter extends AbstractArrayAdapter<Personal> implements Ser
 			// correctly. Tried with twitter:// but got errors that no
 			// application was found.
 
-			context.getPackageManager()
-					.getPackageInfo("com.twitter.android", 0);
+			context.getPackageManager().getPackageInfo("com.twitter.android", 0);
 			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setClassName("com.twitter.android",
-					"com.twitter.android.ProfileActivity");
+			intent.setClassName("com.twitter.android", "com.twitter.android.ProfileActivity");
 			intent.putExtra("screen_name", t.getTwitter());
 			context.startActivity(intent);
 		} catch (NameNotFoundException e) {
 			// Fall back to browser
-			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-					.parse("https://twitter.com/" + t.getTwitter())));
+			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + t.getTwitter())));
 		}
 	}
 
 	private void openEmailIntent(final Personal t) {
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		intent.putExtra(android.content.Intent.EXTRA_EMAIL,
-				new String[] { t.getEmail() });
+		intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { t.getEmail() });
 		// TODO: The chooser shows more than just email clients.
-		context.startActivity(Intent.createChooser(intent,
-				"Välj applikation att skicka mail med"));
+		context.startActivity(Intent.createChooser(intent, "Välj applikation att skicka mail med"));
 	}
 
 	private void openBrowserIntent(Personal t) {
-		context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(t
-				.getHomepage())));
+		context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(t.getHomepage())));
 	}
 }

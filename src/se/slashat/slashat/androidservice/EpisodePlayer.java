@@ -36,8 +36,7 @@ import android.util.Log;
  * 
  */
 
-public class EpisodePlayer extends Service implements OnPreparedListener, OnCompletionListener,
-		Serializable {
+public class EpisodePlayer extends Service implements OnPreparedListener, OnCompletionListener, Serializable {
 
 	private static final String PREF_LAST_PLAYED_POSITION = "lastPlayedPosition";
 	private static final String PREF_LAST_PLAYED_STREAM_URL = "lastPlayedStreamUrl";
@@ -84,7 +83,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 
 		public void onMediaPaused(String episodeName);
 
-		public void onMediaStopped(String episodeName,boolean EOF);
+		public void onMediaStopped(String episodeName, boolean EOF);
 
 		public void onMediaPlaying(String episodeName);
 	}
@@ -98,10 +97,9 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	 * 
 	 * @param context
 	 */
-	public static void initalize(Context context,
-			PlayerInterface playerInterface) {
-		//EpisodePlayer.playerInterface = playerInterface;
-		new EpisodePlayer().bindToEpisodePlayerService(context,playerInterface);
+	public static void initalize(Context context, PlayerInterface playerInterface) {
+		// EpisodePlayer.playerInterface = playerInterface;
+		new EpisodePlayer().bindToEpisodePlayerService(context, playerInterface);
 		callingContext = context;
 		setupLastPlayed();
 	}
@@ -111,7 +109,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		lastPlayedEpisodeName = sharedPreferences.getString(PREF_LAST_PLAYED_EPISODE_NAME, "");
 		lastPlayedStreamUrl = sharedPreferences.getString(PREF_LAST_PLAYED_STREAM_URL, "");
 		lastPlayedPosition = sharedPreferences.getInt(PREF_LAST_PLAYED_POSITION, 0);
-		
+
 	}
 
 	/**
@@ -121,8 +119,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	 */
 	public static EpisodePlayer getEpisodePlayer() {
 		if (episodePlayer == null) {
-			throw new IllegalStateException(
-					"Please initalize the EpisodePlayer service before trying to use it");
+			throw new IllegalStateException("Please initalize the EpisodePlayer service before trying to use it");
 		}
 		return episodePlayer;
 	}
@@ -140,8 +137,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	 * @param episodeName
 	 * @param position
 	 */
-	public void initializePlayer(String streamUrl, String episodeName, int position,
-			ProgressDialog progressDialog) {
+	public void initializePlayer(String streamUrl, String episodeName, int position, ProgressDialog progressDialog) {
 		this.episodeName = episodeName;
 		this.streamUrl = streamUrl;
 		this.progressDialog = progressDialog;
@@ -182,11 +178,11 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	public void onPrepared(MediaPlayer mp) {
 		startPlay();
 	}
-	
+
 	@Override
 	public void onCompletion(MediaPlayer mp) {
 		durationUpdaterThread.interupt();
-		playerInterface.onMediaStopped(episodeName,true);
+		playerInterface.onMediaStopped(episodeName, true);
 	}
 
 	/**
@@ -199,12 +195,11 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		mediaPlayer.start();
 		progressDialog.dismiss();
 
-		durationUpdaterThread = new DurationUpdaterThread(mediaPlayer,
-				playerInterface);
+		durationUpdaterThread = new DurationUpdaterThread(mediaPlayer, playerInterface);
 		durationUpdaterThread.start();
 
 		playerInterface.onMediaPlaying(episodeName);
-		if (startposition >0){
+		if (startposition > 0) {
 			mediaPlayer.seekTo(startposition);
 		}
 
@@ -220,20 +215,19 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 			unsetNotification();
 		}
 		paused = false;
-		playerInterface.onMediaStopped(episodeName,false);
-		
+		playerInterface.onMediaStopped(episodeName, false);
 
 		saveLastPlayerPrefs();
-		
+
 	}
 
 	private void saveLastPlayerPrefs() {
-		if (callingContext != null && mediaPlayer != null){
-		Editor edit = PreferenceManager.getDefaultSharedPreferences(callingContext).edit();
-		edit.putString(PREF_LAST_PLAYED_STREAM_URL, streamUrl);
-		edit.putString(PREF_LAST_PLAYED_EPISODE_NAME, episodeName);
-		edit.putInt(PREF_LAST_PLAYED_POSITION, mediaPlayer.getCurrentPosition());
-		edit.commit();
+		if (callingContext != null && mediaPlayer != null) {
+			Editor edit = PreferenceManager.getDefaultSharedPreferences(callingContext).edit();
+			edit.putString(PREF_LAST_PLAYED_STREAM_URL, streamUrl);
+			edit.putString(PREF_LAST_PLAYED_EPISODE_NAME, episodeName);
+			edit.putInt(PREF_LAST_PLAYED_POSITION, mediaPlayer.getCurrentPosition());
+			edit.commit();
 		}
 	}
 
@@ -255,26 +249,23 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		setNotification();
 		mediaPlayer.start();
 	}
-	
-	private void setNotification(){
+
+	private void setNotification() {
 		// TODO Replace with Non deprecated way to create notifications
-		notification = new Notification(android.R.drawable.ic_media_play,
-				"slashat.se", System.currentTimeMillis());
+		notification = new Notification(android.R.drawable.ic_media_play, "slashat.se", System.currentTimeMillis());
 		Intent notificationIntent = new Intent(this, MainActivity.class);
 		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-				notificationIntent, 0);
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
 		CharSequence contentTitle = "slashat.se spelar nu";
 		CharSequence contentText = episodeName;
 
-		notification.setLatestEventInfo(getApplicationContext(), contentTitle,
-				contentText, pendingIntent);
+		notification.setLatestEventInfo(getApplicationContext(), contentTitle, contentText, pendingIntent);
 
 		startForeground(1, notification);
 	}
-	
-	private void unsetNotification(){
+
+	private void unsetNotification() {
 		stopForeground(true);
 	}
 
@@ -285,23 +276,23 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	public boolean isPaused() {
 		return paused;
 	}
-	
+
 	public boolean isMediaInitalized() {
 		return mediaPlayer != null;
 	}
-	
+
 	public String getCurrentPlayingEpisodeName() {
 		return episodeName;
 	}
-	
+
 	public String getLastPlayedEpisodeName() {
 		return lastPlayedEpisodeName;
 	}
-	
+
 	public int getLastPlayedPosition() {
 		return lastPlayedPosition;
 	}
-	
+
 	public String getLastPlayedStreamUrl() {
 		return lastPlayedStreamUrl;
 	}
@@ -310,15 +301,13 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		Intent intent = new Intent(context, EpisodePlayer.class);
 		EpisodePlayer.playerInterface = pi;
 		if (isEpisodePlayerRunning(context)) {
-			context.bindService(intent, episodePlayerConnection,
-					Context.BIND_AUTO_CREATE);
-			if (durationUpdaterThread != null){
+			context.bindService(intent, episodePlayerConnection, Context.BIND_AUTO_CREATE);
+			if (durationUpdaterThread != null) {
 				durationUpdaterThread.setPlayerInterface(pi);
 			}
 		} else {
 			context.startService(intent);
-			context.bindService(intent, episodePlayerConnection,
-					Context.BIND_AUTO_CREATE);
+			context.bindService(intent, episodePlayerConnection, Context.BIND_AUTO_CREATE);
 		}
 	}
 
@@ -328,12 +317,9 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	 * @return
 	 */
 	private boolean isEpisodePlayerRunning(Context context) {
-		ActivityManager manager = (ActivityManager) context
-				.getSystemService(ACTIVITY_SERVICE);
-		for (RunningServiceInfo service : manager
-				.getRunningServices(Integer.MAX_VALUE)) {
-			if (this.getClass().getName()
-					.equals(service.service.getClassName())) {
+		ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+			if (this.getClass().getName().equals(service.service.getClassName())) {
 				return true;
 			}
 		}
@@ -387,19 +373,20 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		private PlayerInterface playerInterface;
 		private MediaPlayer mediaPlayer;
 		private boolean interupt;
-		private Object sync = new Object(); // Sync the player interface to prevent that we don't update it while it's being updated.
+		private Object sync = new Object(); // Sync the player interface to
+											// prevent that we don't update it
+											// while it's being updated.
 
-		public DurationUpdaterThread(MediaPlayer mediaPlayer,
-				PlayerInterface playerInterface) {
+		public DurationUpdaterThread(MediaPlayer mediaPlayer, PlayerInterface playerInterface) {
 			this.mediaPlayer = mediaPlayer;
 			this.playerInterface = playerInterface;
 		}
-		
-		public void interupt(){
+
+		public void interupt() {
 			interupt = true;
 		}
-		
-		public void setPlayerInterface(PlayerInterface pi){
+
+		public void setPlayerInterface(PlayerInterface pi) {
 			synchronized (sync) {
 				this.playerInterface = pi;
 			}
@@ -414,17 +401,15 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 						interupt = true;
 					}
 					if (playerInterface != null && !paused) {
-						synchronized (sync){
-						playerInterface.durationUpdate(
-								mediaPlayer.getDuration(),
-								mediaPlayer.getCurrentPosition());
-					}
+						synchronized (sync) {
+							playerInterface.durationUpdate(mediaPlayer.getDuration(), mediaPlayer.getCurrentPosition());
+						}
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			synchronized (sync){
+			synchronized (sync) {
 				if (playerInterface != null) {
 					playerInterface.durationUpdate(0, 0);
 				}
