@@ -1,15 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal"
-    android:background="#D5D5D5">
+    android:background="#D5D5D5"
+    android:orientation="horizontal" >
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:divider="@android:color/transparent"
-        android:dividerHeight="10dp"
-            android:layout_margin="10dp" />
+        android:dividerHeight="10dp" />
 
 </LinearLayout>

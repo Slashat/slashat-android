@@ -1,10 +1,13 @@
 package se.slashat.slashat.async;
 
+import java.util.ArrayList;
+
 import se.slashat.slashat.R;
 import se.slashat.slashat.adapter.EpisodeAdapter;
 import se.slashat.slashat.fragment.ArchiveListFragment;
 import se.slashat.slashat.model.Episode;
 import se.slashat.slashat.service.ArchiveService;
+import se.slashat.slashat.viewmodel.EpisodeViewModel;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
@@ -79,7 +82,13 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 	protected void onPostExecute(Episode[] result) {
 		super.onPostExecute(result);
 		progressDialog.dismiss();
-		archiveFragment.setListAdapter(new EpisodeAdapter(archiveFragment.getActivity(), R.layout.archive_item_row, result, archiveFragment));
+		
+		ArrayList<EpisodeViewModel> arrayList = new ArrayList<EpisodeViewModel>();
+		for (int i = 0; i < result.length; i++) {
+			arrayList.add(new EpisodeViewModel(result[i],""));
+		}
+		
+		archiveFragment.setListAdapter(new EpisodeAdapter(archiveFragment.getActivity(), R.layout.archive_item_row, arrayList.toArray(new EpisodeViewModel[arrayList.size()]), archiveFragment));
 	}
 
 }

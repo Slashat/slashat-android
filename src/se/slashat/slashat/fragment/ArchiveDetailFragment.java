@@ -7,6 +7,7 @@ import se.slashat.slashat.R;
 import se.slashat.slashat.adapter.EpisodeDetailAdapter;
 import se.slashat.slashat.androidservice.EpisodePlayer;
 import se.slashat.slashat.model.Episode;
+import se.slashat.slashat.viewmodel.EpisodeViewModel;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -18,6 +19,8 @@ import android.widget.ArrayAdapter;
 public class ArchiveDetailFragment extends ListFragment implements CallbackPair<Episode, Boolean>, Serializable {
 
 	/**
+	 * 
+	 * @author Nicklas Löf
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -54,7 +57,7 @@ public class ArchiveDetailFragment extends ListFragment implements CallbackPair<
 	@Override
 	public void call(Episode episode, Boolean showDetails) {
 		if (showDetails) {
-			EpisodeDetailAdapter p = new EpisodeDetailAdapter(getActivity(), R.layout.archive_item_details, new Episode[] { episode }, this);
+			EpisodeDetailAdapter p = new EpisodeDetailAdapter(getActivity(), R.layout.archive_item_details, new EpisodeViewModel[] { new EpisodeViewModel(episode,"") }, this);
 
 			Bundle bundle = new Bundle();
 			bundle.putSerializable(ADAPTER, p);

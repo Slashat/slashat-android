@@ -7,25 +7,30 @@ import java.util.Locale;
 import se.slashat.slashat.CallbackPair;
 import se.slashat.slashat.R;
 import se.slashat.slashat.model.Episode;
+import se.slashat.slashat.viewmodel.EpisodeViewModel;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class EpisodeDetailAdapter extends AbstractArrayAdapter<Episode> implements Serializable {
-
+public class EpisodeDetailAdapter extends AbstractArrayAdapter<EpisodeViewModel> implements Serializable {
+	/**
+	 * 
+	 * @author Nicklas Löf
+	 * 
+	 */
 	private Episode episode;
 	private static final long serialVersionUID = 1L;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("sv"));
 	private CallbackPair<Episode, Boolean> episodeCallback;
 
-	public EpisodeDetailAdapter(Context context, int layoutResourceId, Episode[] data, CallbackPair<Episode, Boolean> episodeCallback) {
-		super(context, layoutResourceId, data);
+	public EpisodeDetailAdapter(Context context, int layoutResourceId, EpisodeViewModel[] data, CallbackPair<Episode, Boolean> episodeCallback) {
+		super(context, layoutResourceId, 0, data);
 		this.context = context;
 		this.layoutResourceId = layoutResourceId;
 		this.episodeCallback = episodeCallback;
-		this.episode = data[0];
+		this.episode = data[0].getModel();
 	}
 
 	static class EpisodeDetailsHolder extends Holder {
@@ -48,7 +53,7 @@ public class EpisodeDetailAdapter extends AbstractArrayAdapter<Episode> implemen
 	}
 
 	@Override
-	public OnClickListener createOnClickListener(Episode t) {
+	public OnClickListener createOnClickListener(EpisodeViewModel t) {
 		return new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -62,11 +67,11 @@ public class EpisodeDetailAdapter extends AbstractArrayAdapter<Episode> implemen
 	}
 
 	@Override
-	public void setDataOnHolder(AbstractArrayAdapter.Holder holder, Episode t) {
+	public void setDataOnHolder(AbstractArrayAdapter.Holder holder, EpisodeViewModel t) {
 		EpisodeDetailsHolder edh = (EpisodeDetailsHolder) holder;
 		edh.episodeNumberAndTitle.setText("#" + episode.getEpisodeNumber() + " - " + episode.getName());
 		edh.dateAndLength.setText(dateFormat.format(episode.getPublished()) + " - " + episode.getDuration());
-		edh.description.setText(t.getDescription());
+		edh.description.setText(episode.getDescription());
 		edh.listenButton.setOnClickListener(new OnClickListener() {
 
 			@Override

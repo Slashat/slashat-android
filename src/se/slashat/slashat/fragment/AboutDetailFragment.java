@@ -2,7 +2,6 @@ package se.slashat.slashat.fragment;
 
 import se.slashat.slashat.Callback;
 import se.slashat.slashat.R;
-import se.slashat.slashat.adapter.PersonAdapter;
 import se.slashat.slashat.adapter.PersonalAdapter;
 import se.slashat.slashat.model.Personal;
 import se.slashat.slashat.service.PersonalService;
@@ -46,13 +45,13 @@ public class AboutDetailFragment extends ListFragment implements Callback<Person
 
 	@Override
 	public void call(Personal personal) {
-		PersonAdapter p = new PersonAdapter(getActivity(), R.layout.about_detail, new Personal[] { personal });
+		/*PersonAdapter p = new PersonAdapter(getActivity(), R.layout.about_detail, new Personal[] { personal });
 
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(ADAPTER, p);
 
 		AboutDetailFragment aboutFragment = new AboutDetailFragment();
 		aboutFragment.setArguments(bundle);
-		FragmentSwitcher.getInstance().switchFragment(aboutFragment, true);
+		FragmentSwitcher.getInstance().switchFragment(aboutFragment, true);*/
 	}
 }

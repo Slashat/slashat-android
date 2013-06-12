@@ -1,5 +1,7 @@
 package se.slashat.slashat.adapter;
 
+import se.slashat.slashat.R;
+import se.slashat.slashat.viewmodel.ViewModelBase;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,43 +9,64 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
-public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T> {
+public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends ArrayAdapter<ViewModelBase<?>> {
 
 	protected int layoutResourceId;
+	protected int sectionLayoutResourceId;
 	protected Context context;
 	protected T[] data;
 
-	public AbstractArrayAdapter(Context context, int layoutResourceId, T[] data) {
+	public AbstractArrayAdapter(Context context, int layoutResourceId, int sectionLayoutResourceId, T[] data) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
+		this.sectionLayoutResourceId = sectionLayoutResourceId;
 		this.data = data;
 	}
 
 	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
 		View row = convertView;
-		Holder holder;
+		Holder holder = null;
 		final T t = data[position];
-		if (row == null) {
+		//if (t instanceof ViewModelBase) {
+			boolean isSection = t.isSection();
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			row = inflater.inflate(layoutResourceId, parent, false);
-			holder = createHolder(row);
+			if (isSection) {
+				if (row == null || !(row.getTag() instanceof SectionHolder) ) {
+					row = inflater.inflate(sectionLayoutResourceId, parent, false);
+				}
+				holder = getSectionHolder(row);
+			} else {
+				if (row == null || (row.getTag() instanceof SectionHolder)) {
+					row = inflater.inflate(layoutResourceId, parent, false);
+				}
+				holder = createHolder(row);
+			}
 			row.setTag(holder);
-
-		} else {
-			holder = (Holder) row.getTag();
-		}
+		//}
 
 		if (isClickable()) {
 			row.setOnClickListener(createOnClickListener(t));
 		} else {
 			row.setClickable(false);
 		}
-
-		setDataOnHolder(holder, t);
+		if (holder != null) {
+			if (holder instanceof SectionHolder) {
+				setDataOnSectionHolder(holder, t);
+			} else {
+				setDataOnHolder(holder, t);
+			}
+		}
 		return row;
+	}
+
+	private void setDataOnSectionHolder(Holder holder, T t) {
+		SectionHolder h = (SectionHolder) holder;
+		h.titleTextView.setText(((ViewModelBase<?>) t).getSectionName());
+
 	}
 
 	/**
@@ -54,6 +77,12 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T> {
 	 * @return
 	 */
 	public abstract Holder createHolder(View row);
+
+	public Holder getSectionHolder(View row) {
+		SectionHolder sectionHolder = new SectionHolder();
+		sectionHolder.titleTextView = (TextView) row.findViewById(R.id.sectiontitle);
+		return sectionHolder;
+	}
 
 	/**
 	 * Returns an OnClickListener that will be executed when the user clicks on
@@ -83,4 +112,9 @@ public abstract class AbstractArrayAdapter<T> extends ArrayAdapter<T> {
 
 	static class Holder {
 	}
+
+	static class SectionHolder extends Holder {
+		private TextView titleTextView;
+	}
+
 }

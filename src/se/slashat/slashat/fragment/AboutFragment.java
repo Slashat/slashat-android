@@ -14,7 +14,11 @@ import android.view.ViewGroup;
  * and then the details are switched on top of it.
  */
 public class AboutFragment extends Fragment {
-
+	/**
+	 * 
+	 * @author Nicklas Löf
+	 * 
+	 */
 	private static View view;
 
 	@Override

@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class Personal implements Serializable{
 	
 	public enum Type {
-		CREW,
+		HOST,
+		ASSISTANT,
 		DEV
 	}
 	

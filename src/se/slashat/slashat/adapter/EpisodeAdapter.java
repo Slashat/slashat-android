@@ -7,20 +7,25 @@ import java.util.Locale;
 import se.slashat.slashat.CallbackPair;
 import se.slashat.slashat.R;
 import se.slashat.slashat.model.Episode;
+import se.slashat.slashat.viewmodel.EpisodeViewModel;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Serializable {
-
+public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> implements Serializable {
+	/**
+	 * 
+	 * @author Nicklas Löf
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private CallbackPair<Episode, Boolean> episodeCallback;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("sv"));
 
-	public EpisodeAdapter(Context context, int layoutResourceId, Episode[] data, CallbackPair<Episode, Boolean> episodeCallback) {
-		super(context, layoutResourceId, data);
+	public EpisodeAdapter(Context context, int layoutResourceId, EpisodeViewModel[] data, CallbackPair<Episode, Boolean> episodeCallback) {
+		super(context, layoutResourceId, 0, data);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
 		this.data = data;
@@ -42,7 +47,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 	}
 
 	@Override
-	public OnClickListener createOnClickListener(final Episode episode) {
+	public OnClickListener createOnClickListener(final EpisodeViewModel episode) {
 		return new OnClickListener() {
 			/**
 			 * Pass the selected episode details to the Fragment that will start
@@ -51,7 +56,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 			@Override
 			public void onClick(View v) {
 				// episodeCallback.call(episode.getStreamUrl(),episode.getFullEpisodeName());
-				episodeCallback.call(episode, true);
+				episodeCallback.call(episode.getModel(), true);
 			}
 		};
 	}
@@ -62,9 +67,9 @@ public class EpisodeAdapter extends AbstractArrayAdapter<Episode> implements Ser
 	}
 
 	@Override
-	public void setDataOnHolder(Holder holder, final Episode episode) {
+	public void setDataOnHolder(Holder holder, final EpisodeViewModel episode) {
 		EpisodeHolder eh = (EpisodeHolder) holder;
-		eh.episodeNumber.setText("#" + episode.getEpisodeNumber() + " - " + episode.getName());
-		eh.txtTitle.setText(dateFormat.format(episode.getPublished()) + " - " + episode.getDuration());
+		eh.episodeNumber.setText("#" + episode.getModel().getEpisodeNumber() + " - " + episode.getModel().getName());
+		eh.txtTitle.setText(dateFormat.format(episode.getModel().getPublished()) + " - " + episode.getModel().getDuration());
 	}
 }

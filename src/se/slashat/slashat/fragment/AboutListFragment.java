@@ -1,20 +1,27 @@
 package se.slashat.slashat.fragment;
 
+import java.util.ArrayList;
+
 import se.slashat.slashat.Callback;
 import se.slashat.slashat.R;
-import se.slashat.slashat.adapter.PersonAdapter;
 import se.slashat.slashat.adapter.PersonalAdapter;
 import se.slashat.slashat.model.Personal;
 import se.slashat.slashat.model.Personal.Type;
 import se.slashat.slashat.service.PersonalService;
+import se.slashat.slashat.viewmodel.PersonalViewModel;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
-public class AboutListFragment extends ListFragment implements Callback<Personal> {
+/**
+ * 
+ * @author Nicklas Löf
+ * 
+ */
+
+public class AboutListFragment extends ListFragment implements Callback<PersonalViewModel> {
 	// ArrayAdapter<Personal> adapter;
 
 	public static final String ADAPTER = "adapter";
@@ -23,21 +30,36 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		Bundle bundle = savedInstanceState == null ? getArguments() : savedInstanceState;
+		PersonalAdapter adapter = null;
 
-		ArrayAdapter<Personal> adapter = null;
+			
+			Personal[] crew = PersonalService.getPersonal(Type.HOST);
+			Personal[] assistant = PersonalService.getPersonal(Type.ASSISTANT);
+			Personal[] dev = PersonalService.getPersonal(Type.DEV);
+			
+			ArrayList<PersonalViewModel> arrayList = new ArrayList<PersonalViewModel>();
+			
+			arrayList.add(new PersonalViewModel(null, "Programledare"));
+			for (int i = 0; i < crew.length; i++) {
+				arrayList.add(new PersonalViewModel(crew[i], ""));
+			}
+			
+			arrayList.add(new PersonalViewModel(null, "Medarbetare"));
+			for (int i = 0; i < assistant.length; i++) {
+				arrayList.add(new PersonalViewModel(assistant[i], ""));
+			}
+			
+			arrayList.add(new PersonalViewModel(null, "Team Slashat Devops"));
+			for (int i = 0; i < dev.length; i++) {
+				arrayList.add(new PersonalViewModel(dev[i], ""));
+			}
+			
+			PersonalViewModel[] array = arrayList.toArray(new PersonalViewModel[arrayList.size()]);
+			
+			
+			adapter = new PersonalAdapter(getActivity(), R.layout.about_item_row, array, this);
 
-		if (bundle != null) {
-			adapter = (ArrayAdapter<Personal>) bundle.getSerializable(ADAPTER);
-		}
-
-		// If no adapter is found in the bundle create a new one with all
-		// people.
-		if (adapter == null) {
-
-			adapter = new PersonalAdapter(getActivity(), R.layout.about_item_row, PersonalService.getPersonal(Type.CREW), this);
-		}
-		setListAdapter(adapter);
+			setListAdapter(adapter);
 	}
 
 	@Override
@@ -47,21 +69,8 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
 	}
 
 	@Override
-	public void call(Personal personal) {
-		
-		if (personal.getName().equals("Team Slashat Development")){ // This is ugly but will do for now.
-			ArrayAdapter<Personal> adapter = new PersonalAdapter(getActivity(), R.layout.about_item_row, PersonalService.getPersonal(Type.DEV), this);
-			setListAdapter(adapter); // need to add a new fragment instead.
-		}else{
-		
-			PersonAdapter p = new PersonAdapter(getActivity(), R.layout.about_detail, new Personal[] { personal });
-	
-			Bundle bundle = new Bundle();
-			bundle.putSerializable(ADAPTER, p);
-	
-			AboutDetailFragment aboutFragment = new AboutDetailFragment();
-			aboutFragment.setArguments(bundle);
-			FragmentSwitcher.getInstance().switchFragment(aboutFragment, true, R.id.aboutDetailFragment);
-		}
+	public void call(PersonalViewModel personal) {
+		// If we want to show something when someone in the list is clicked.
+			
 	}
 }
