@@ -7,8 +7,11 @@ import se.slashat.slashat.R;
 import se.slashat.slashat.adapter.PersonalAdapter;
 import se.slashat.slashat.model.Personal;
 import se.slashat.slashat.model.Personal.Type;
+import se.slashat.slashat.model.SectionModel;
 import se.slashat.slashat.service.PersonalService;
 import se.slashat.slashat.viewmodel.PersonalViewModel;
+import se.slashat.slashat.viewmodel.SectionViewModel;
+import se.slashat.slashat.viewmodel.ViewModelBase;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -37,24 +40,24 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
 			Personal[] assistant = PersonalService.getPersonal(Type.ASSISTANT);
 			Personal[] dev = PersonalService.getPersonal(Type.DEV);
 			
-			ArrayList<PersonalViewModel> arrayList = new ArrayList<PersonalViewModel>();
+			ArrayList<ViewModelBase> arrayList = new ArrayList<ViewModelBase>();
 			
-			arrayList.add(new PersonalViewModel(null, "Programledare"));
+			arrayList.add(new SectionViewModel(new SectionModel("Programledare")));
 			for (int i = 0; i < crew.length; i++) {
-				arrayList.add(new PersonalViewModel(crew[i], ""));
+				arrayList.add(new PersonalViewModel(crew[i]));
 			}
 			
-			arrayList.add(new PersonalViewModel(null, "Medarbetare"));
+			arrayList.add(new SectionViewModel(new SectionModel("Medarbetare")));
 			for (int i = 0; i < assistant.length; i++) {
-				arrayList.add(new PersonalViewModel(assistant[i], ""));
+				arrayList.add(new PersonalViewModel(assistant[i]));
 			}
 			
-			arrayList.add(new PersonalViewModel(null, "Team Slashat Devops"));
+			arrayList.add(new SectionViewModel(new SectionModel("Team Slashat Devops")));
 			for (int i = 0; i < dev.length; i++) {
-				arrayList.add(new PersonalViewModel(dev[i], ""));
+				arrayList.add(new PersonalViewModel(dev[i]));
 			}
 			
-			PersonalViewModel[] array = arrayList.toArray(new PersonalViewModel[arrayList.size()]);
+			ViewModelBase[] array = arrayList.toArray(new ViewModelBase[arrayList.size()]);
 			
 			
 			adapter = new PersonalAdapter(getActivity(), R.layout.about_item_row, array, this);

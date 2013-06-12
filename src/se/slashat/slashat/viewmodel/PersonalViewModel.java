@@ -4,8 +4,7 @@ import se.slashat.slashat.model.Personal;
 
 public class PersonalViewModel extends ViewModelBase<Personal> {
 
-	public PersonalViewModel(Personal p, String sectionName) {
-		super(p,sectionName);
+	public PersonalViewModel(Personal p) {
+		super(p);
 	}
-
 }

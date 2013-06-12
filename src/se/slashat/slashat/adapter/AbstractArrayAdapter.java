@@ -1,6 +1,7 @@
 package se.slashat.slashat.adapter;
 
 import se.slashat.slashat.R;
+import se.slashat.slashat.viewmodel.SectionViewModel;
 import se.slashat.slashat.viewmodel.ViewModelBase;
 import android.app.Activity;
 import android.content.Context;
@@ -32,7 +33,11 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 		Holder holder = null;
 		final T t = data[position];
 		//if (t instanceof ViewModelBase) {
-			boolean isSection = t.isSection();
+			boolean isSection = false;
+			
+			if (t instanceof SectionViewModel){
+				isSection = true;
+			}
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			if (isSection) {
 				if (row == null || !(row.getTag() instanceof SectionHolder) ) {
@@ -55,7 +60,7 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 		}
 		if (holder != null) {
 			if (holder instanceof SectionHolder) {
-				setDataOnSectionHolder(holder, t);
+				setDataOnSectionHolder(holder, (SectionViewModel) t);
 			} else {
 				setDataOnHolder(holder, t);
 			}
@@ -63,9 +68,9 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 		return row;
 	}
 
-	private void setDataOnSectionHolder(Holder holder, T t) {
+	private void setDataOnSectionHolder(Holder holder, SectionViewModel t) {
 		SectionHolder h = (SectionHolder) holder;
-		h.titleTextView.setText(((ViewModelBase<?>) t).getSectionName());
+		h.titleTextView.setText(((SectionViewModel) t).getModel().getSectionName());
 
 	}
 

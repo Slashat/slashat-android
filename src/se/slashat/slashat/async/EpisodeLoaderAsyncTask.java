@@ -85,7 +85,7 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 		
 		ArrayList<EpisodeViewModel> arrayList = new ArrayList<EpisodeViewModel>();
 		for (int i = 0; i < result.length; i++) {
-			arrayList.add(new EpisodeViewModel(result[i],""));
+			arrayList.add(new EpisodeViewModel(result[i]));
 		}
 		
 		archiveFragment.setListAdapter(new EpisodeAdapter(archiveFragment.getActivity(), R.layout.archive_item_row, arrayList.toArray(new EpisodeViewModel[arrayList.size()]), archiveFragment));

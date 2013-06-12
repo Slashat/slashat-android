@@ -6,6 +6,7 @@ import se.slashat.slashat.Callback;
 import se.slashat.slashat.R;
 import se.slashat.slashat.model.Personal;
 import se.slashat.slashat.viewmodel.PersonalViewModel;
+import se.slashat.slashat.viewmodel.ViewModelBase;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -15,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PersonalAdapter extends AbstractArrayAdapter<PersonalViewModel> implements Serializable {
+public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase> implements Serializable {
 	/**
 	 * 
 	 * @author Nicklas Löf
@@ -25,7 +26,7 @@ public class PersonalAdapter extends AbstractArrayAdapter<PersonalViewModel> imp
 	private Callback<PersonalViewModel> callback;
 
 	public PersonalAdapter(Context context, int layoutResourceId,
-			PersonalViewModel[] data, Callback<PersonalViewModel> callback) {
+			ViewModelBase[] data, Callback<PersonalViewModel> callback) {
 		super(context, layoutResourceId, R.layout.section, data);
 
 		this.layoutResourceId = layoutResourceId;
@@ -59,7 +60,7 @@ public class PersonalAdapter extends AbstractArrayAdapter<PersonalViewModel> imp
 	}
 
 	@Override
-	public OnClickListener createOnClickListener(final PersonalViewModel personal) {
+	public OnClickListener createOnClickListener(final ViewModelBase personal) {
 		return new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -69,9 +70,9 @@ public class PersonalAdapter extends AbstractArrayAdapter<PersonalViewModel> imp
 	}
 
 	@Override
-	public void setDataOnHolder(Holder holder, PersonalViewModel personal) {
+	public void setDataOnHolder(Holder holder, ViewModelBase personal) {
 		PersonalHolder ph = (PersonalHolder) holder;
-		Personal model = personal.getModel();
+		Personal model = (Personal) personal.getModel();
 		ph.txtName.setText(model.getName());
 		ph.imgView.setImageResource(model.getImg());
 		setTwitterClickListener(model, ph);

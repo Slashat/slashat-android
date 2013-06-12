@@ -88,7 +88,7 @@ public class ArchiveListFragment extends SherlockListFragment implements Callbac
 	@Override
 	public void call(Episode episode, Boolean showDetails) {
 		if (showDetails) {
-			EpisodeDetailAdapter p = new EpisodeDetailAdapter(getActivity(), R.layout.archive_item_details, new EpisodeViewModel[] { new EpisodeViewModel(episode,"") }, this);
+			EpisodeDetailAdapter p = new EpisodeDetailAdapter(getActivity(), R.layout.archive_item_details, new EpisodeViewModel[] { new EpisodeViewModel(episode) }, this);
 
 			Bundle bundle = new Bundle();
 			bundle.putSerializable(ADAPTER, p);
