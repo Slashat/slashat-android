@@ -44,7 +44,7 @@ public class FeedburnerParser {
 	public void parseFeed(InputStream inputStream, Itemcallback itemcallback) throws XmlPullParserException, IOException, ParseException {
 
 		this.itemcallback = itemcallback;
-		itemcallback.setCount(205); // Figure out how to get the correct count
+		itemcallback.setCount(221); // Figure out how to get the correct count
 									// from the XML-file
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
