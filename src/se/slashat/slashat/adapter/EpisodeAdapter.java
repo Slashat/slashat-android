@@ -86,7 +86,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 	@Override
 	public void setDataOnHolder(Holder holder, final EpisodeViewModel episode) {
 		EpisodeHolder eh = (EpisodeHolder) holder;
-		eh.episodeNumber.setText("# "+ episode.getModel().getEpisodeNumber());
+		eh.episodeNumber.setText(String.format("#%03d",episode.getModel().getEpisodeNumber()));
 		eh.txtTitle.setText(episode.getModel().getName());
 		eh.date.setText(dateFormat.format(episode.getModel().getPublished()));
 		
