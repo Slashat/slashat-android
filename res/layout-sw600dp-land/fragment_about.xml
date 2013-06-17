@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="horizontal" >
+
+    <fragment
+        android:id="@+id/fragment1"
+        android:name="se.slashat.slashat.fragment.AboutListFragment"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_aboutlist" />
+
+    <fragment
+        android:id="@+id/aboutDetailFragment"
+        android:name="se.slashat.slashat.fragment.AboutDetailFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        tools:layout="@layout/about_detail" />
+
+</LinearLayout>
