@@ -56,7 +56,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		MainActivity.context = getApplicationContext();
 		// initiate our fragments
 		setContentView(R.layout.activity_main);
-		FragmentSwitcher.initalize(getSupportFragmentManager());
+		FragmentSwitcher.initalize(getSupportFragmentManager(),this);
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		ActionBar.Tab liveTab = getSupportActionBar().newTab();
@@ -102,14 +102,16 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 		// TODO: Rewrite this section to a fragment-container and call fragments
 		// based on their classnames and tab ids
 
-		supportInvalidateOptionsMenu();
+
 
 		if (tab.getPosition() == 0) {
 			// live
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-live");
-			switchFragment(new LiveFragment(), false);
+			LiveFragment liveFragment = new LiveFragment();
+			switchFragment(liveFragment, false);
 			LinearLayout playerLayout = (LinearLayout) findViewById(R.layout.playerLayout);
 			playerLayout.setVisibility(View.GONE);
+			supportInvalidateOptionsMenu();
 		} else if (tab.getPosition() == 1) {
 			// archive
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-archive");
@@ -117,11 +119,11 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			// bundle.putSerializable(ArchiveFragment.EPISODEPLAYER,
 			// episodePlayer);
 			ArchiveFragment archiveFragment = new ArchiveFragment();
-			archiveFragment.setHasOptionsMenu(true);
 			archiveFragment.setArguments(bundle);
 			switchFragment(archiveFragment, false);
 			LinearLayout playerLayout = (LinearLayout) findViewById(R.layout.playerLayout);
 			playerLayout.setVisibility(View.VISIBLE);
+			supportInvalidateOptionsMenu();
 		} else if (tab.getPosition() == 2) {
 			// about
 			Log.d(TAG, "Loading fragment for: " + tab.getPosition() + "-about");
@@ -132,6 +134,7 @@ public class MainActivity extends SherlockFragmentActivity implements ActionBar.
 			switchFragment(aboutFragment, false);
 			LinearLayout playerLayout = (LinearLayout) findViewById(R.layout.playerLayout);
 			playerLayout.setVisibility(View.VISIBLE);
+			supportInvalidateOptionsMenu();
 		}
 	}
 

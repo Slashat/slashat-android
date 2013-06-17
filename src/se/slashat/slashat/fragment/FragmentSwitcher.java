@@ -2,6 +2,9 @@ package se.slashat.slashat.fragment;
 
 import java.io.Serializable;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
+import se.slashat.slashat.MainActivity;
 import se.slashat.slashat.R;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +15,7 @@ public class FragmentSwitcher implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private FragmentManager fragmentManager;
 	private static FragmentSwitcher instance;
+	private SherlockFragmentActivity mainActivity;
 
 	public static FragmentSwitcher getInstance() {
 		return instance;
@@ -22,8 +26,10 @@ public class FragmentSwitcher implements Serializable {
 	 * Fragmentmanager
 	 * 
 	 * @param fragmentManager
+	 * @param mainActivity 
 	 */
-	public static void initalize(FragmentManager fragmentManager) {
+	public static void initalize(FragmentManager fragmentManager, SherlockFragmentActivity mainActivity) {
+		mainActivity = mainActivity;
 		instance = new FragmentSwitcher();
 		instance.fragmentManager = fragmentManager;
 	}
@@ -42,6 +48,9 @@ public class FragmentSwitcher implements Serializable {
 	 *        container view.
 	 */
 	public void switchFragment(Fragment fragment, boolean addToBackstack, int container) {
+		if (mainActivity != null){
+			mainActivity.supportInvalidateOptionsMenu();
+		}
 		FragmentTransaction beginTransaction = fragmentManager.beginTransaction();
 		if (container == 0) {
 			container = R.id.fragment_container;
@@ -60,7 +69,8 @@ public class FragmentSwitcher implements Serializable {
 			fragmentManager.popBackStack();
 		}
 
-		beginTransaction.commit();
+		beginTransaction.commitAllowingStateLoss();
+		fragmentManager.executePendingTransactions();
 	}
 
 	public Fragment findFragmentByTag(String tag) {

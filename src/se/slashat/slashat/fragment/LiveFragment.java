@@ -38,7 +38,8 @@ public class LiveFragment extends Fragment implements Callback<Collection<LiveEv
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+		setHasOptionsMenu(false);
+		setMenuVisibility(false);
 		return inflater.inflate(R.layout.fragment_livewindow_offair, container, false);
 	}
 

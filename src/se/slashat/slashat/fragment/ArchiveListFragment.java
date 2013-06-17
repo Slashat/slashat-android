@@ -40,6 +40,7 @@ public class ArchiveListFragment extends SherlockListFragment implements Callbac
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, com.actionbarsherlock.view.MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.reload_menu, menu);
 	}
 
