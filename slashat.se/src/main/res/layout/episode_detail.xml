@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="32dp"
+            android:paddingBottom="16dp"
             android:background="#e76816"
             >
 
@@ -23,9 +23,9 @@
                 android:gravity="center_vertical"
                 android:text="#199 - Vi CES och hörs"
                 android:textColor="#ffffff"
-                android:textSize="26sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif"
+                android:fontFamily="sans-serif-condensed"
 
                 android:layout_marginLeft="12dp"
                 />
@@ -39,7 +39,7 @@
                 android:gravity="center_vertical"
                 android:text="22 jan 2013 - 1:07:45"
                 android:textColor="#ffffff"
-                android:textSize="17sp"
+                android:textSize="14sp"
                 android:layout_marginLeft="12dp"
                 />
     </LinearLayout>
@@ -56,13 +56,16 @@
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_marginLeft="12dp">
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp">
 
         <Button
                 android:id="@+id/listenbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:fontFamily="sans-serif"
                 android:textStyle="bold"
                 android:text="Lyssna!">
@@ -72,6 +75,7 @@
                 android:id="@+id/viewbutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:fontFamily="sans-serif"
                 android:textStyle="bold"
                 android:text="Titta!">

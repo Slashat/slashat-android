@@ -24,9 +24,9 @@
                 android:gravity="center_vertical"
                 android:text="#199 - Vi CES och hörs"
                 android:textColor="#ffffff"
-                android:textSize="26sp"
+                android:textSize="36sp"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif"
+                android:fontFamily="sans-serif-condensed"
 
                 android:layout_marginLeft="12dp"
                 />
@@ -39,8 +39,9 @@
                 android:layout_marginTop="2dp"
                 android:gravity="center_vertical"
                 android:text="22 jan 2013 - 1:07:45"
-                android:textColor="#ffffff"
-                android:textSize="17sp"
+                android:textColor="#dddddd"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="23sp"
                 android:layout_marginLeft="12dp"
                 />
     </LinearLayout>
