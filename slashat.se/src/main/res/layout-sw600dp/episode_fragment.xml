@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <fragment
+            android:layout_width="280dp"
+            android:layout_height="fill_parent"
+            android:name="se.slashat.slashapp.fragments.episode.EpisodeListFragment"
+            android:id="@+id/listfragment"
+            android:layout_gravity="left|center_vertical"
+            tools:layout="@layout/episode_list"/>
+    <fragment
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:name="se.slashat.slashapp.fragments.episode.EpisodeDetailFragment"
+            android:id="@+id/detailfragment"
+            tools:layout="@layout/episode_detail"/>
+
+</LinearLayout>

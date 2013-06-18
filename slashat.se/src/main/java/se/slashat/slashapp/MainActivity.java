@@ -9,15 +9,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import se.slashat.slashapp.fragments.AboutFragment;
+import se.slashat.slashapp.fragments.episode.EpisodeFragment;
+import se.slashat.slashapp.fragments.LiveFragment;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -35,6 +36,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    private LiveFragment mLiveFragment;
+    private EpisodeFragment mEpisodeFragment;
+    private AboutFragment mAboutFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +115,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
+
+            switch (position){
+                case 0:
+
+                    return (mLiveFragment = new LiveFragment());
+
+                case 1:
+
+                    return (mEpisodeFragment = new EpisodeFragment());
+                case 2:
+
+                    return (mAboutFragment = new AboutFragment());
+            }
+
+
             // Return a DummySectionFragment (defined as a static inner class
             // below) with the page number as its lone argument.
             Fragment fragment = new DummySectionFragment();
