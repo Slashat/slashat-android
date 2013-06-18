@@ -9,6 +9,7 @@
 *.class
 
 # generated files
+.gradle
 bin/
 gen/
 slashat.se/build/
@@ -20,4 +21,6 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+# Android studio project  files
 .idea
