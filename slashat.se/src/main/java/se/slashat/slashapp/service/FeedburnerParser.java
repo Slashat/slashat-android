@@ -24,6 +24,7 @@ import android.util.Xml;
  */
 
 public class FeedburnerParser {
+    private final static String TAG = "FeedburnerParser";
 	private Itemcallback itemcallback;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 	private boolean interrupt;
@@ -74,7 +75,7 @@ public class FeedburnerParser {
 		}
 
 		if (interrupt) {
-			Log.i(MainActivity.TAG, "Loading episodes interrupted");
+			Log.i(TAG, "Loading episodes interrupted");
 		}
 	}
 

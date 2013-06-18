@@ -36,6 +36,7 @@ import se.slashat.slashapp.model.Episode;
  */
 
 public class ArchiveService {
+    private final static String TAG = "ArchiveService";
 	private static Pattern episodeNumberPattern = Pattern.compile("#[0-9]*");
 	private static Pattern episodeNamePattern = Pattern.compile("-.*");
 	private static String progressMessage = "";
@@ -190,9 +191,9 @@ public class ArchiveService {
 			objectInputStream = new ObjectInputStream(fileInputStream);
 			episodes = (HashSet<Episode>) objectInputStream.readObject();
 		} catch (FileNotFoundException e1) {
-			Log.i(MainActivity.TAG, "No old episode list found on device. Will reparse the rss feed");
+			Log.i(TAG, "No old episode list found on device. Will reparse the rss feed");
 		} catch (IOException e) {
-			Log.i(MainActivity.TAG, "No old episode list found on device. Will reparse the rss feed");
+			Log.i(TAG, "No old episode list found on device. Will reparse the rss feed");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} finally {

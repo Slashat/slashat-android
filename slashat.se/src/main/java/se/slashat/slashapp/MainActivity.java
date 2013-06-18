@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -39,6 +40,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private LiveFragment mLiveFragment;
     private EpisodeFragment mEpisodeFragment;
     private AboutFragment mAboutFragment;
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+        this.context = this;
     }
 
     @Override
@@ -158,6 +161,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
             return null;
         }
+    }
+
+
+    public static Context getContext() {
+        return context;
     }
 
     /**

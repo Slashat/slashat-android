@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.adapter.EpisodeAdapter;
-import se.slashat.slashapp.fragment.ArchiveListFragment;
+import se.slashat.slashapp.fragments.episode.EpisodeListFragment;
 import se.slashat.slashapp.model.Episode;
 import se.slashat.slashapp.service.ArchiveService;
 import se.slashat.slashapp.viewmodel.EpisodeViewModel;
@@ -19,11 +19,11 @@ import android.os.AsyncTask;
  */
 public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 
-	private ArchiveListFragment archiveFragment;
+	private EpisodeListFragment archiveFragment;
 	private ProgressDialog progressDialog;
 	private boolean fullRefresh;
 
-	public EpisodeLoaderAsyncTask(ArchiveListFragment archiveFragment, boolean fullRefresh) {
+	public EpisodeLoaderAsyncTask(EpisodeListFragment archiveFragment, boolean fullRefresh) {
 		this.archiveFragment = archiveFragment;
 		this.fullRefresh = fullRefresh;
 	}
@@ -58,12 +58,12 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		progressDialog = new ProgressDialog(archiveFragment.getActivity());
+		progressDialog = new ProgressDialog(archiveFragment.getActivity().getApplicationContext());
 		progressDialog.setTitle("Laddar avsnitt");
 		progressDialog.setMessage("Laddar");
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		progressDialog.setProgress(0);
-		progressDialog.show();
+		//progressDialog.show();
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 			arrayList.add(new EpisodeViewModel(result[i]));
 		}
 		
-		archiveFragment.setListAdapter(new EpisodeAdapter(archiveFragment.getActivity(), R.layout.archive_item_row, arrayList.toArray(new EpisodeViewModel[arrayList.size()]), archiveFragment));
+		archiveFragment.setListAdapter(new EpisodeAdapter(archiveFragment.getActivity(), R.layout.episode_list_item_row, arrayList.toArray(new EpisodeViewModel[arrayList.size()]), archiveFragment));
 	}
 
 }

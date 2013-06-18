@@ -1,6 +1,6 @@
 package se.slashat.slashapp.async;
 
-import java.util.Collection;
+/*import java.util.Collection;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.model.Episode;
@@ -31,4 +31,4 @@ public class CalendarLoaderAsyncTask extends AsyncTask<Void, Void, Collection<Li
 		callback.call(result);
 
 	}
-}
+}*/

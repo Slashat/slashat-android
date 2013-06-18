@@ -1,6 +1,6 @@
 package se.slashat.slashapp.adapter;
 
-import java.io.Serializable;
+/*import java.io.Serializable;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
@@ -17,11 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase> implements Serializable {
-	/**
-	 * 
-	 * @author Nicklas Löf
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private Callback<PersonalViewModel> callback;
 
@@ -136,4 +132,4 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase> impleme
 	private void openBrowserIntent(Personal t) {
 		context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(t.getHomepage())));
 	}
-}
+}*/

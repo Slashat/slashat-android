@@ -9,13 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import se.slashat.slashapp.CallbackPair;
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.async.EpisodeLoaderAsyncTask;
 import se.slashat.slashapp.dummy.DummyContent;
+import se.slashat.slashapp.model.Episode;
 
 /**
  * Created by nicklas on 6/18/13.
  */
-public class EpisodeListFragment extends ListFragment {
+public class EpisodeListFragment extends ListFragment implements CallbackPair<Episode, Boolean> {
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -43,14 +46,20 @@ public class EpisodeListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
+        /*setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
                 getActivity(),
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
-                DummyContent.ITEMS));
+                DummyContent.ITEMS));*/
+        populate(false);
 
     }
 
+
+    public void populate(boolean fullRefresh) {
+        EpisodeLoaderAsyncTask episodeLoaderAsyncTask = new EpisodeLoaderAsyncTask(this, fullRefresh);
+        episodeLoaderAsyncTask.execute();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -69,5 +78,10 @@ public class EpisodeListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
+    }
+
+    @Override
+    public void call(Episode result, Boolean pairResult) {
+
     }
 }
