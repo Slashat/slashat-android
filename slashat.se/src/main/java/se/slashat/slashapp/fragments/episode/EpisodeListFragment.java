@@ -44,15 +44,7 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // TODO: replace with a real list adapter.
-        /*setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));*/
         populate(false);
-
     }
 
 
@@ -83,5 +75,11 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     @Override
     public void call(Episode result, Boolean pairResult) {
 
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("episode",result);
+
+        EpisodeDetailFragment episodeDetailFragment = new EpisodeDetailFragment();
+        episodeDetailFragment.setArguments(bundle);
+        getFragmentManager().beginTransaction().replace(R.id.detailfragment,episodeDetailFragment).commit();
     }
 }
