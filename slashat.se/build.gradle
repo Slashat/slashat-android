@@ -8,19 +8,8 @@ buildscript {
 }
 apply plugin: 'android'
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-        url "https://oss.sonatype.org/content/repositories/snapshots"
-    }
-}
-
-
 dependencies {
-    //compile files('libs/android-support-v4.jar')
-    compile 'com.novoda:actionbarsherlock:4.3.2-SNAPSHOT'
-    compile 'joda-time:joda-time:2.2'
+    compile files('libs/android-support-v4.jar')
 }
 
 android {
@@ -28,7 +17,7 @@ android {
     buildToolsVersion "17.0.0"
 
     defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 17
+        minSdkVersion 11
+        targetSdkVersion 16
     }
 }

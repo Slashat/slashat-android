@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -19,7 +17,7 @@ import se.slashat.slashapp.model.Episode;
 /**
  * Created by nicklas on 6/18/13.
  */
-public class EpisodeDetailFragment extends SherlockFragment {
+public class EpisodeDetailFragment extends Fragment {
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("sv"));
     private Episode episode;
 
