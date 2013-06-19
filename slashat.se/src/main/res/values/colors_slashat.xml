@@ -18,5 +18,6 @@
 -->
 
 <resources>
-    <color name="pressed_slashat">#CCDE5214</color>
+    <color name="pressed_slashat">#CCE76816</color>
+    <color name="subtitle_grey">#888888</color>
 </resources>
