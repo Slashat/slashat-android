@@ -11,7 +11,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:name="se.slashat.slashapp.fragments.episode.EpisodeListFragment"
-            android:id="@+id/fragment"
+            android:id="@+id/detailfragment"
             android:layout_gravity="left|center_vertical"
             tools:layout="@layout/episode_list"/>
 </LinearLayout>

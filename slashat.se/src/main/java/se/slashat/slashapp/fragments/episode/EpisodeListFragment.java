@@ -25,6 +25,13 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
+
+    /**
+     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
+     * device.
+     */
+    private boolean mTwoPane;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.episode_list,null);
@@ -44,6 +51,9 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getActivity().findViewById(R.layout.dualpanefinder) != null){
+            mTwoPane = true;
+        }
         populate(false);
     }
 
@@ -80,6 +90,10 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
 
         EpisodeDetailFragment episodeDetailFragment = new EpisodeDetailFragment();
         episodeDetailFragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().replace(R.id.detailfragment,episodeDetailFragment).commit();
+        if (mTwoPane){
+            getFragmentManager().beginTransaction().replace(R.id.detailfragment,episodeDetailFragment).commit();
+        }else{
+            getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.detailfragment,episodeDetailFragment).commit();
+        }
     }
 }
