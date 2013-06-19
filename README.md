@@ -2,8 +2,6 @@ Slashapp för Android
 
 Experimentbranch för Android Studio.
 
-Förnärvarande bara för 3.0 Honeycomb och senare i väntan på maven/gradle-kompatibel release av Actionbarsherlock eller actionbar/fragmentcompat från Google.
-
 Efter checkout och pull så kan man öppna projektet i Android studio genom att köra import project och välja gradle och gradle wrapper.
 
 Om Android Studio inte skapar local.properties själv så ska den innehålla:
