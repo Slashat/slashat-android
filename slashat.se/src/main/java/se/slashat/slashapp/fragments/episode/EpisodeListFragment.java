@@ -7,7 +7,9 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import se.slashat.slashapp.CallbackPair;
@@ -52,7 +54,7 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getActivity().findViewById(R.layout.dualpanefinder) != null){
+        if (getActivity().findViewById(R.id.dualpane) != null){
             mTwoPane = true;
         }
         populate(false);
@@ -60,8 +62,15 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
 
 
     public void populate(boolean fullRefresh) {
+        getActivity().setProgressBarIndeterminateVisibility(true);
         EpisodeLoaderAsyncTask episodeLoaderAsyncTask = new EpisodeLoaderAsyncTask(this, fullRefresh);
         episodeLoaderAsyncTask.execute();
+    }
+
+    @Override
+    public void setListAdapter(ListAdapter adapter) {
+        super.setListAdapter(adapter);
+        getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override

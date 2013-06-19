@@ -81,7 +81,12 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 	@Override
 	protected void onPostExecute(Episode[] result) {
 		super.onPostExecute(result);
-		progressDialog.dismiss();
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        progressDialog.dismiss();
 		
 		ArrayList<EpisodeViewModel> arrayList = new ArrayList<EpisodeViewModel>();
 		for (int i = 0; i < result.length; i++) {
