@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-/*import org.joda.time.Duration;
+import org.joda.time.Duration;
 import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;*/
+import org.joda.time.format.PeriodFormatterBuilder;
 
 import se.slashat.slashapp.CallbackPair;
 import se.slashat.slashapp.R;
@@ -28,13 +28,13 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 	private static final long serialVersionUID = 1L;
 	private CallbackPair<Episode, Boolean> episodeCallback;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", new Locale("sv"));
-	/*private PeriodFormatter durationFormatter = new PeriodFormatterBuilder()
+	private PeriodFormatter durationFormatter = new PeriodFormatterBuilder()
     .appendHours()
     .appendSeparator(":")
     .appendMinutes()
     .appendSeparator(":")
     .appendSeconds()
-    .toFormatter();*/
+    .toFormatter();
 
 	public EpisodeAdapter(Context context, int layoutResourceId, EpisodeViewModel[] data, CallbackPair<Episode, Boolean> episodeCallback) {
 		super(context, layoutResourceId, 0, data);
@@ -95,9 +95,9 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 		}
 		
 		
-		//Period period = durationFormatter.parsePeriod(duration).normalizedStandard(PeriodType.minutes());
-		//String periodString = String.valueOf(period.getMinutes())+"m";
-		eh.length.setText("101m");
+		Period period = durationFormatter.parsePeriod(duration).normalizedStandard(PeriodType.minutes());
+		String periodString = String.valueOf(period.getMinutes())+"m";
+		eh.length.setText(periodString);
 
 		
 	}

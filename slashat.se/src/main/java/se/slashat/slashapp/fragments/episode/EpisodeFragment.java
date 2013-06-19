@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 import se.slashat.slashapp.R;
 
 /**
  * Created by nicklas on 6/18/13.
  */
-public class EpisodeFragment extends Fragment {
+public class EpisodeFragment extends SherlockFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

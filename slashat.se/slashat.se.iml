@@ -64,6 +64,9 @@
     <orderEntry type="jdk" jdkName="Android 4.2.2" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="android-support-v4" level="project" />
+    <orderEntry type="library" name="support-v4-r7" level="project" />
+    <orderEntry type="library" name="joda-time-2.2" level="project" />
+    <orderEntry type="library" name="actionbarsherlock-4.3.2-SNAPSHOT.aar" level="project" />
   </component>
 </module>
 
