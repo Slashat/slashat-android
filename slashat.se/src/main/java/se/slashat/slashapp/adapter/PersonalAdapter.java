@@ -1,12 +1,13 @@
 package se.slashat.slashapp.adapter;
 
-/*import java.io.Serializable;
+import java.io.Serializable;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.model.Personal;
 import se.slashat.slashapp.viewmodel.PersonalViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -16,7 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase> implements Serializable {
+public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Callback<PersonalViewModel> callback;
@@ -132,4 +133,4 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase> impleme
 	private void openBrowserIntent(Personal t) {
 		context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(t.getHomepage())));
 	}
-}*/
+}

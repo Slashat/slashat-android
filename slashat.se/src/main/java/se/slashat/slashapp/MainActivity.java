@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-import se.slashat.slashapp.fragments.AboutFragment;
+import se.slashat.slashapp.fragments.about.AboutFragment;
 import se.slashat.slashapp.fragments.episode.EpisodeFragment;
 import se.slashat.slashapp.fragments.LiveFragment;
 
