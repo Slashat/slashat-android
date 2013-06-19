@@ -2,6 +2,7 @@ package se.slashat.slashapp.fragments.episode;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,9 +92,9 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
         EpisodeDetailFragment episodeDetailFragment = new EpisodeDetailFragment();
         episodeDetailFragment.setArguments(bundle);
         if (mTwoPane){
-            getFragmentManager().beginTransaction().replace(R.id.detailfragment,episodeDetailFragment).commit();
+            getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.detailfragment, episodeDetailFragment).commit();
         }else{
-            getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.detailfragment,episodeDetailFragment).commit();
+            getFragmentManager().beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.slider_in, R.anim.noanimation, R.anim.noanimation, R.anim.slider_out).replace(R.id.detailfragment, episodeDetailFragment).commit();
         }
     }
 }
