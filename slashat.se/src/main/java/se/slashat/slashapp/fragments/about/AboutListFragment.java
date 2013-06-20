@@ -1,6 +1,7 @@
 package se.slashat.slashapp.fragments.about;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.adapter.PersonalAdapter;
+import se.slashat.slashapp.fragments.episode.EpisodeDetailFragment;
 import se.slashat.slashapp.model.Personal;
 import se.slashat.slashapp.model.SectionModel;
 import se.slashat.slashapp.service.PersonalService;
@@ -21,7 +24,7 @@ import se.slashat.slashapp.viewmodel.ViewModelBase;
 /**
  * Created by nicklas on 6/19/13.
  */
-public class AboutListFragment extends ListFragment {
+public class AboutListFragment extends ListFragment implements Callback<Personal> {
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -87,7 +90,7 @@ public class AboutListFragment extends ListFragment {
         ViewModelBase<?>[] array = arrayList.toArray(new ViewModelBase<?>[arrayList.size()]);
 
 
-        adapter = new PersonalAdapter(getActivity(), R.layout.about_list_item_row, array, null);
+        adapter = new PersonalAdapter(getActivity(), R.layout.about_list_item_row, array, this);
 
         setListAdapter(adapter);
 
@@ -113,4 +116,17 @@ public class AboutListFragment extends ListFragment {
         mActivatedPosition = position;
     }
 
+    @Override
+    public void call(Personal result) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("person",result);
+
+        AboutDetailFragment aboutDetailFragment = new AboutDetailFragment();
+        aboutDetailFragment.setArguments(bundle);
+        if (mTwoPane){
+            getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.aboutdetailfragment, aboutDetailFragment).commit();
+        }else{
+            getFragmentManager().beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.slider_in, R.anim.noanimation, R.anim.noanimation, R.anim.slider_out).replace(R.id.aboutdetailfragment, aboutDetailFragment).commit();
+        }
+    }
 }

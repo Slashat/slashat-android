@@ -5,13 +5,25 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:weightSum="1"
               android:padding="12dp">
 
     <fragment
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
             android:name="se.slashat.slashapp.fragments.about.AboutListFragment"
-            android:id="@+id/aboutdetailfragment"
+            android:id="@+id/aboutlistfragment"
+            android:layout_marginBottom="12dp"
             android:layout_gravity="left|center_vertical"
             tools:layout="@layout/about_list"/>
+    <fragment
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:layout_marginTop="12dp"
+            android:name="se.slashat.slashapp.fragments.about.AboutDetailFragment"
+            android:id="@+id/aboutdetailfragment"
+            tools:layout="@layout/about_detail"/>
+
 </LinearLayout>

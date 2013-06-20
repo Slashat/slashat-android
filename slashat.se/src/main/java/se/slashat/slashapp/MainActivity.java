@@ -124,15 +124,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
             switch (position){
                 case 0:
-
-                    return (mLiveFragment = new LiveFragment());
+                    if (mLiveFragment == null){
+                        mLiveFragment = new LiveFragment();
+                    }
+                    return mLiveFragment;
 
                 case 1:
-
-                    return (mEpisodeFragment = new EpisodeFragment());
+                    if (mEpisodeFragment == null){
+                        mEpisodeFragment = new EpisodeFragment();
+                    }
+                    return mEpisodeFragment;
                 case 2:
+                    if (mAboutFragment == null){
+                        mAboutFragment = new AboutFragment();
+                    }
+                    return mAboutFragment;
 
-                    return (mAboutFragment = new AboutFragment());
             }
 
 

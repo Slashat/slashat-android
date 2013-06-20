@@ -20,10 +20,10 @@ import android.widget.TextView;
 public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private Callback<PersonalViewModel> callback;
+	private Callback<Personal> callback;
 
 	public PersonalAdapter(Context context, int layoutResourceId,
-			ViewModelBase[] data, Callback<PersonalViewModel> callback) {
+			ViewModelBase[] data, Callback<Personal> callback) {
 		super(context, layoutResourceId, R.layout.section, data);
 
 		this.layoutResourceId = layoutResourceId;
@@ -53,7 +53,7 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impl
 
 	@Override
 	public boolean isClickable() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impl
 		return new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//callback.call(personal); if we want to display something when a person is clicked
+				callback.call((Personal) personal.getModel());
 			}
 		};
 	}
