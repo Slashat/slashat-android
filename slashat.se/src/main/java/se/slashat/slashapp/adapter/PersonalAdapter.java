@@ -35,9 +35,10 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impl
 	public static class PersonalHolder extends Holder {
 		TextView txtName;
 		ImageView imgView;
-		ImageView email;
-		ImageView twitter;
-		ImageView homepage;
+		//ImageView email;
+		//ImageView twitter;
+		//ImageView homepage;
+        TextView txtTitle;
 	}
 
 	@Override
@@ -45,9 +46,10 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impl
 		PersonalHolder holder = new PersonalHolder();
 		holder.imgView = (ImageView) row.findViewById(R.id.imgIcon);
 		holder.txtName = (TextView) row.findViewById(R.id.txtName);
-		holder.email = (ImageView) row.findViewById(R.id.email);
-		holder.twitter = (ImageView) row.findViewById(R.id.twitter);
-		holder.homepage = (ImageView) row.findViewById(R.id.browser);
+        holder.txtTitle = (TextView) row.findViewById(R.id.title);
+		//holder.email = (ImageView) row.findViewById(R.id.email);
+		//holder.twitter = (ImageView) row.findViewById(R.id.twitter);
+		//holder.homepage = (ImageView) row.findViewById(R.id.browser);
 		return holder;
 	}
 
@@ -72,12 +74,13 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impl
 		Personal model = (Personal) personal.getModel();
 		ph.txtName.setText(model.getName());
 		ph.imgView.setImageResource(model.getImg());
-		setTwitterClickListener(model, ph);
+        ph.txtTitle.setText(model.getTitle());
+		/*setTwitterClickListener(model, ph);
 		setEmailClickListener(model, ph);
-		setHomepageClickListener(model, ph);
+		setHomepageClickListener(model, ph);*/
 	}
 	
-	private void setHomepageClickListener(final Personal t, PersonalHolder ph) {
+	/*private void setHomepageClickListener(final Personal t, PersonalHolder ph) {
 		ph.homepage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -102,7 +105,7 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impl
 				openTwitterIntent(t);
 			}
 		});
-	}
+	}*/
 
 	private void openTwitterIntent(final Personal t) {
 		try {

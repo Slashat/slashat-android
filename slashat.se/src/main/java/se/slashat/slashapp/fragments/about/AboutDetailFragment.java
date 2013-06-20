@@ -61,8 +61,8 @@ public class AboutDetailFragment extends Fragment {
     }
 
 
-    private void setHomepageClickListener(final Personal t, View imageView) {
-        imageView.setOnClickListener(new View.OnClickListener() {
+    private void setHomepageClickListener(final Personal t, View view) {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openBrowserIntent(t);
@@ -70,8 +70,8 @@ public class AboutDetailFragment extends Fragment {
         });
     }
 
-    private void setEmailClickListener(final Personal t, View imageView) {
-        imageView.setOnClickListener(new View.OnClickListener() {
+    private void setEmailClickListener(final Personal t, View view) {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openEmailIntent(t);
@@ -79,8 +79,8 @@ public class AboutDetailFragment extends Fragment {
         });
     }
 
-    private void setTwitterClickListener(final Personal t, View imageView) {
-        imageView.setOnClickListener(new View.OnClickListener() {
+    private void setTwitterClickListener(final Personal t, View view) {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openTwitterIntent(t);

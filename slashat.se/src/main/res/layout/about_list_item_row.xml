@@ -28,11 +28,23 @@
                 android:layout_marginTop="2dp"
                 android:gravity="top"
                 android:text="Jezper Söderlund"
-                android:textColor="#333333"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-condensed"
+                android:lineSpacingMultiplier="1.2"/>
+        <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:gravity="top"
+                android:text="Programledare"
+                android:textColor="#888888"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-condensed"
+                android:lineSpacingMultiplier="1.2" />
 
-        <LinearLayout
+        <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" >
@@ -70,6 +82,6 @@
                     android:maxHeight="30dp"
                     android:maxWidth="30dp"
                     android:src="@drawable/email" />
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 </LinearLayout>

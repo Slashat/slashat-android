@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:text="Vad är PS Move? Vad är Twitter @anywhere? Vad har förändrat internet? Vad regerar på smartphonemarknaden? Vad ringer Microsoftanställda med? Vad kommer Telia erbjuda? Och vad hände egentligen med Onlive? Det och mer i denna veckan, med Tommie och Jezper!"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="15sp"
                     android:fontFamily="sans-serif"
                     android:layout_marginRight="12dp"
                     android:layout_marginBottom="12dp"
@@ -84,7 +84,7 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="fill_parent"
                       android:layout_marginTop="12dp"
-                      android:textSize="16sp"
+                      android:textSize="15sp"
                       android:fontFamily="sans-serif"
                     android:text="Veckans Forumtråd:
 Hoppade du på Netbook-trenden?

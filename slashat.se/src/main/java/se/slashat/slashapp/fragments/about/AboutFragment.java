@@ -31,11 +31,11 @@ public class AboutFragment extends Fragment {
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        if (view != null) {
+        /*if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null)
                 parent.removeView(view);
         }
-        view = null;
+        view = null;*/
     }
 }
