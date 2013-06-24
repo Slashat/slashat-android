@@ -52,13 +52,14 @@
                     android:textStyle="normal"/>
         </LinearLayout>
     </LinearLayout>
-
+    <ScrollView android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="12dp">
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-
-            android:layout_margin="12dp">
+            >
 
         <TextView
                 android:id="@+id/bio"
@@ -166,5 +167,6 @@
 
         </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
               android:background="@drawable/card_bg"
               android:padding="2dp" >
@@ -98,12 +98,6 @@
               android:layout_marginLeft="12dp"
               android:textSize="16sp"
               android:fontFamily="sans-serif"
-              android:text="Veckans Forumtråd:
-Hoppade du på Netbook-trenden?
-
-Blah blah blah blhablhabl ahb lab hla bhla blhab lab la bhlaahbhl
-ab bhlab lahb a
-
-bahbl ahbl ab halb hlab la bablh alb halbh albh alb halbh lab hla bhlalb hlab hlab alhka b al halb hablalhb"/>
+              android:text=""/>
 
 </LinearLayout>
