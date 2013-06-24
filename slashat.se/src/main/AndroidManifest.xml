@@ -23,6 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name="se.slashat.slashapp.androidservice.EpisodePlayer"
+                 android:label="Episode Player Service" />
     </application>
 
 </manifest>

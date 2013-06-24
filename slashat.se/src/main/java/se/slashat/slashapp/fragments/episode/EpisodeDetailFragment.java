@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.androidservice.EpisodePlayer;
 import se.slashat.slashapp.model.Episode;
 
 /**
@@ -31,7 +32,7 @@ public class EpisodeDetailFragment extends Fragment {
             ((Button) view.findViewById(R.id.listenbutton)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //playEpisode
+                    EpisodePlayer.getEpisodePlayer().initializePlayer(episode.getStreamUrl(),episode.getFullEpisodeName(),0,null);
                 }
             });
             ((Button) view.findViewById(R.id.viewbutton)).setEnabled(false); // Disable view video button for now.

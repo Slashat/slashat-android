@@ -18,9 +18,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
+import se.slashat.slashapp.androidservice.EpisodePlayer;
 import se.slashat.slashapp.fragments.about.AboutFragment;
 import se.slashat.slashapp.fragments.episode.EpisodeFragment;
 import se.slashat.slashapp.fragments.LiveFragment;
+import se.slashat.slashapp.player.PlayerInterfaceImpl;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -42,6 +44,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private EpisodeFragment mEpisodeFragment;
     private AboutFragment mAboutFragment;
     private static Context context;
+    private PlayerInterfaceImpl playerInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setTabListener(this));
         }
         this.context = this;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        playerInterface = new PlayerInterfaceImpl(this);
+        EpisodePlayer.initalize(this,playerInterface);
     }
 
     @Override

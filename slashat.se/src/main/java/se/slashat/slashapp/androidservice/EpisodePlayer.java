@@ -10,9 +10,11 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.Service;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -23,6 +25,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 
 /**
  * EpisodePlayerService that plays a selected episode in the background. TODO:
@@ -40,7 +43,8 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	private static final String PREF_LAST_PLAYED_EPISODE_NAME = "lastPlayedEpisodeName";
 	private static final String PREF_EPISODE_PLAYER = "EpisodePlayer";
 	private static final long serialVersionUID = 1L;
-	private MediaPlayer mediaPlayer;
+    private static BroadcastReceiver broadcastReceiver;
+    private MediaPlayer mediaPlayer;
 	private EpisodePlayerBinder binder;
 	private boolean episodePlayerBound;
 	private static EpisodePlayer episodePlayer;
@@ -96,10 +100,18 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	 */
 	public static void initalize(Context context, PlayerInterface playerInterface) {
 		// EpisodePlayer.playerInterface = playerInterface;
-		new EpisodePlayer().bindToEpisodePlayerService(context, playerInterface);
+        episodePlayer = new EpisodePlayer();
+		episodePlayer.bindToEpisodePlayerService(context, playerInterface);
 		callingContext = context;
 		setupLastPlayed();
-	}
+        /*broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                System.out.println("!!!!!!!!!!!!!hehu!!!!!!!");
+            }
+        };
+        LocalBroadcastManager.getInstance(context).registerReceiver(broadcastReceiver,new IntentFilter("play-audio-episode"));*/
+    }
 
 	private static void setupLastPlayed() {
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(callingContext);
@@ -131,11 +143,19 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	 * Starts a new Mediaplayer for the selected URL.
 	 * 
 	 * @param streamUrl
-	 * @param episodeName
+	 * @param fullEpisodeName
 	 * @param position
 	 */
-	public void initializePlayer(String streamUrl, String episodeName, int position, ProgressDialog progressDialog) {
-		this.episodeName = episodeName;
+	public void initializePlayer(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog) {
+
+        if (progressDialog == null){
+            progressDialog = new ProgressDialog(callingContext);
+            progressDialog.setTitle("Buffrar avsnitt");
+            progressDialog.setMessage(fullEpisodeName);
+            progressDialog.show();
+        }
+
+		this.episodeName = fullEpisodeName;
 		this.streamUrl = streamUrl;
 		this.progressDialog = progressDialog;
 		this.startposition = position;
