@@ -7,9 +7,13 @@ buildscript {
     }
 }
 apply plugin: 'android'
-
+repositories {
+	mavenCentral()
+	mavenLocal()
+}
 dependencies {
     compile files('libs/android-support-v4.jar')
+    compile 'joda-time:joda-time:2.2'
 }
 
 android {

@@ -20,7 +20,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="false"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:background="#ffffff">
 
         <ImageButton
                 android:id="@+id/playPauseButton"
