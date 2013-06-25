@@ -49,7 +49,7 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impl
         holder.txtTitle = (TextView) row.findViewById(R.id.title);
 		//holder.email = (ImageView) row.findViewById(R.id.email);
 		//holder.twitter = (ImageView) row.findViewById(R.id.twitter);
-		//holder.homepage = (ImageView) row.findViewById(R.id.browser);
+		//holder.homepage = (ImageView) row.findViewById(R.id.web);
 		return holder;
 	}
 
@@ -120,7 +120,7 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impl
 			intent.putExtra("screen_name", t.getTwitter());
 			context.startActivity(intent);
 		} catch (NameNotFoundException e) {
-			// Fall back to browser
+			// Fall back to web
 			context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + t.getTwitter())));
 		}
 	}

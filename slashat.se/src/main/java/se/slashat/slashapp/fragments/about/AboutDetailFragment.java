@@ -103,7 +103,7 @@ public class AboutDetailFragment extends Fragment {
             intent.putExtra("screen_name", t.getTwitter());
             getActivity().startActivity(intent);
         } catch (PackageManager.NameNotFoundException e) {
-            // Fall back to browser
+            // Fall back to web
             getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri
                     .parse("https://twitter.com/" + t.getTwitter())));
         }

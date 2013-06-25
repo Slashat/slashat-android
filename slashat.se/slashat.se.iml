@@ -64,7 +64,7 @@
     <orderEntry type="jdk" jdkName="Android 4.2.2" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="android-support-v4" level="project" />
-    <orderEntry type="library" exported="" name="joda-time-2.2" level="project" />
+    <orderEntry type="library" name="joda-time-2.2" level="project" />
   </component>
 </module>
 
