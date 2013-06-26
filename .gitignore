@@ -24,3 +24,6 @@ local.properties
 
 # Android studio project  files
 .idea
+
+# ignore comitting changes to Constants which contains hidden keys.
+slashat.se/src/main/java/se/slashat/slashapp/Constants.java
