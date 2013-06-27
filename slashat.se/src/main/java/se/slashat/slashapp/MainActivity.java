@@ -21,8 +21,7 @@ import android.widget.TextView;
 import se.slashat.slashapp.androidservice.EpisodePlayer;
 import se.slashat.slashapp.fragments.about.AboutFragment;
 import se.slashat.slashapp.fragments.episode.EpisodeFragment;
-import se.slashat.slashapp.fragments.LiveFragment;
-import se.slashat.slashapp.live.BambuserController;
+import se.slashat.slashapp.fragments.live.LiveFragment;
 import se.slashat.slashapp.player.PlayerInterfaceImpl;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -50,8 +49,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        new BambuserController();
 
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);

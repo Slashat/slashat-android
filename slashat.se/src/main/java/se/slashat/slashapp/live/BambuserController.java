@@ -5,6 +5,9 @@ import android.util.Log;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import se.slashat.slashapp.Callback;
+import se.slashat.slashapp.async.TranscodeLoaderAsyncTask;
+
 import static se.slashat.slashapp.Constants.BAMBUSER_TRANSCODE_API_KEY;
 import static se.slashat.slashapp.Constants.BAMBUSER_TRANSCODE_URL;
 
@@ -42,7 +45,19 @@ public class BambuserController {
             URL url = buildTranscodeUrl("abc123", Preset.HLS);
             System.out.println(url.toExternalForm());
         } catch (MalformedURLException e) {
-            Log.e(this.getClass().getName(),"Can't create URL from string. Make sure Constants contains the correct information",e);
+            Log.e(this.getClass().getName(), "Can't create URL from string. Make sure Constants contains the correct information", e);
         }
+    }
+
+    public void startStream(String broadCastId, Callback<String> callback) {
+        try {
+            URL url = buildTranscodeUrl(broadCastId, Preset.HLS);
+            TranscodeLoaderAsyncTask transcodeLoaderAsyncTask = new TranscodeLoaderAsyncTask(callback);
+            transcodeLoaderAsyncTask.execute(url);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
