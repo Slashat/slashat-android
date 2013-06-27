@@ -16,7 +16,8 @@
         android:theme="@style/Theme.Slashat" >
         <activity
             android:name="se.slashat.slashapp.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
