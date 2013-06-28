@@ -7,8 +7,10 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="16" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -16,16 +18,28 @@
         android:theme="@style/Theme.Slashat" >
         <activity
             android:name="se.slashat.slashapp.MainActivity"
-            android:label="@string/app_name"
-            android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="se.slashat.slashapp.androidservice.EpisodePlayer"
-                 android:label="Episode Player Service" />
+
+        <service
+            android:name="se.slashat.slashapp.androidservice.EpisodePlayer"
+            android:label="Episode Player Service" />
+
+        <activity
+            android:name="se.slashat.slashapp.LiveFullscreenActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/title_activity_live_fullscreen"
+            android:parentActivityName="se.slashat.slashapp.MainActivity"
+            android:theme="@style/FullscreenTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="se.slashat.slashapp.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

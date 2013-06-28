@@ -1,5 +1,6 @@
 package se.slashat.slashapp.fragments.live;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,14 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
-import android.widget.RelativeLayout;
 import android.widget.VideoView;
 
 import se.slashat.slashapp.Callback;
+import se.slashat.slashapp.LiveFullscreenActivity;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.live.BambuserController;
+import se.slashat.slashapp.util.DisplaySize;
 
 /**
  * Created by nicklas on 6/18/13.
@@ -32,49 +35,20 @@ public class LiveFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.live_fragment, null);
-    }
+        View view = inflater.inflate(R.layout.live_fragment, null);
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (!livestreamStarted) {
-            videoView = (VideoView) view.findViewById(R.id.livevideoview);
+        Button button = (Button) view.findViewById(R.id.livebutton);
 
-            BambuserController bambuserController = new BambuserController();
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), LiveFullscreenActivity.class);
 
-            // Call the bambuser service and retrive the URL for the stream and
-            // start the videoview with this URL.
-            bambuserController.startStream("3570928", new Callback<String>() {
+                startActivity(intent);
+            }
+        });
 
-                @Override
-                public void call(String result) {
-                    MediaController mediaController = new MediaController(getActivity());
-                    videoView.setMediaController(mediaController);
-                    videoView.setVideoPath(result);
-                    videoView.requestFocus();
-                    videoView.start();
-                    livestreamStarted = true;
-                }
-            });
-        }
-    }
+        return view;
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        /*if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            paramsNotFullscreen = (LinearLayout.LayoutParams) videoView.getLayoutParams();
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(paramsNotFullscreen);
-            params.setMargins(0, 0, 0, 0);
-            params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            params.addRule(RelativeLayout.CENTER_IN_PARENT);
-            videoView.setLayoutParams(params);
-
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            videoView.setLayoutParams(paramsNotFullscreen);
-        }*/
     }
 }
