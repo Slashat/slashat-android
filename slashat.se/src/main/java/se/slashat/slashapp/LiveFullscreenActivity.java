@@ -149,7 +149,7 @@ public class LiveFullscreenActivity extends Activity {
 
         // Call the bambuser service and retrive the URL for the stream and
         // start the videoview with this URL.
-        bambuserController.startStream("3570928", new Callback<String>() {
+        bambuserController.startStream("3113676", new Callback<String>() {
 
             @Override
             public void call(String result) {
@@ -161,10 +161,13 @@ public class LiveFullscreenActivity extends Activity {
                 videoView.start();
             }
         });
-
-
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        videoView.stopPlayback();
+    }
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
