@@ -1,16 +1,20 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_centerInParent="true"
     tools:context=".LiveFullscreenActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
 
     <VideoView android:layout_width="match_parent"
                android:layout_height="match_parent"
+               android:layout_alignParentRight="true"
+               android:layout_alignParentLeft="true"
+               android:layout_alignParentTop="true"
+               android:layout_alignParentBottom="true"
                android:id="@+id/fullscreen_content"
                android:layout_centerInParent="true" />
 
@@ -36,4 +40,4 @@
         </LinearLayout>
     </FrameLayout>
 
-</FrameLayout>
+</RelativeLayout>
