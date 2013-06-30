@@ -36,7 +36,7 @@
                     android:text="Tommie Podzemski"
                     android:textColor="#ffffff"
                     android:fontFamily="sans-serif-condensed"
-                    android:textSize="36dp"
+                    android:textSize="26dp"
                     android:textStyle="bold"/>
 
             <TextView
@@ -48,7 +48,7 @@
                     android:text="PROGRAMLEDARE"
                     android:textColor="#dddddd"
                     android:fontFamily="sans-serif-condensed"
-                    android:textSize="23sp"
+                    android:textSize="17sp"
                     android:textStyle="normal"/>
         </LinearLayout>
     </LinearLayout>
