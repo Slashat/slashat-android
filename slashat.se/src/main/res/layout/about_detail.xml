@@ -137,16 +137,13 @@
 
                     <ImageView
                             android:id="@+id/twitter"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:maxHeight="20dp"
-                            android:maxWidth="20dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
 
-                            android:scaleType="fitXY"
-                            android:src="@drawable/twitter"/>
+
+
+
+                            android:src="@drawable/twitter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -173,14 +170,10 @@
 
                     <ImageView
                             android:id="@+id/email"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:maxHeight="20dp"
-                            android:maxWidth="20dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/web"/>
+
+                            android:src="@drawable/web"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -207,14 +200,10 @@
 
                     <ImageView
                             android:id="@+id/web"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:maxHeight="20dp"
-                            android:maxWidth="20dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="8dp"
-                            android:src="@drawable/email"/>
+
+                            android:src="@drawable/email"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
 
                     <TextView
                             android:layout_width="wrap_content"
