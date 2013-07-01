@@ -9,7 +9,7 @@
     android:id="@+id/pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="50dp"
+    android:layout_marginBottom="40dp"
     tools:context=".MainActivity" />
 
     <LinearLayout
@@ -23,12 +23,12 @@
             android:orientation="horizontal"
             android:background="#ffffff">
 
-        <ImageButton
+        <ImageView
                 android:id="@+id/playPauseButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:contentDescription="Play and pause"
-                android:src="@android:drawable/ic_media_play" />
+                android:src="@drawable/ic_media_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         <TextView
                 android:id="@+id/durationTextView"

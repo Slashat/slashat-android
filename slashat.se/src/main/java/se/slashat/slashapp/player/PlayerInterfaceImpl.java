@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ import se.slashat.slashapp.service.ArchiveService;
  */
 public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekBar.OnSeekBarChangeListener, View.OnClickListener {
     private SeekBar seekBar; //= (SeekBar) findViewById(R.id.seekbar)
-    private ImageButton button; //= (ImageButton) findViewById(R.id.playPauseButton)
+    private ImageView button; //= (ImageButton) findViewById(R.id.playPauseButton)
     private int newPosition;
     private Dialog seekbarOverlay;
     private boolean seekbarOverlayShowing = false;
@@ -44,7 +45,7 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
     public PlayerInterfaceImpl(Activity callingActivity) {
         this.callingActivity = callingActivity;
         seekBar = (SeekBar) callingActivity.findViewById(R.id.seekbar);
-        button = (ImageButton) callingActivity.findViewById(R.id.playPauseButton);
+        button = (ImageView) callingActivity.findViewById(R.id.playPauseButton);
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+0"));
         seekBar.setOnSeekBarChangeListener(this);
         button.setOnClickListener(this);
@@ -116,14 +117,14 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
 
     @Override
     public void onMediaPaused(String episodeName) {
-        button.setImageResource(android.R.drawable.ic_media_play);
+        button.setImageResource(R.drawable.ic_media_play);
         // maybe use setDrawable instead
     }
 
     @Override
     public void onMediaStopped(String episodeName, boolean EOF) {
         seekBar.setEnabled(false);
-        button.setImageResource(android.R.drawable.ic_media_play);
+        button.setImageResource(R.drawable.ic_media_play);
         // maybe use setDrawable instead
         Log.i("PlayerInterfaceImpl", "Current: " + episodeName);
         if (EOF && episodeName != null && !episodeName.equals("")) {
