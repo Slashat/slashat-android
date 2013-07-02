@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:padding="10dp"
+              android:background="@drawable/card_bg">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Slashat.se Försnack"
+            android:layout_gravity="center"/>
+
+
+    <!--<LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/days"
+                    android:text="06"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="60sp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="dagar"
+                    android:textColor="#999999"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/hours"
+                    android:text="21"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="60sp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="timmar"
+                    android:textColor="#999999"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/minutes"
+                    android:text="42"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="60sp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="minuter"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="#999999"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="09"
+                    android:id="@+id/seconds"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="60sp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sekunder"
+                    android:textColor="#999999"
+                    android:fontFamily="sans-serif-condensed"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>-->
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+            android:id="@+id/countdowntext"
+            android:text="0:11:01:36"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="60sp"/>
+    <Button
+            android:id="@+id/livebutton"
+            android:text="Titta live!"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:enabled="false"
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+</LinearLayout>

@@ -12,11 +12,13 @@ import org.joda.time.format.PeriodFormatterBuilder;
 
 import se.slashat.slashapp.CallbackPair;
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.androidservice.EpisodePlayer;
 import se.slashat.slashapp.model.Episode;
 import se.slashat.slashapp.viewmodel.EpisodeViewModel;
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> implements Serializable {
@@ -49,6 +51,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 		TextView txtTitle;
 		TextView date;
 		TextView length;
+        ImageView playButton;
 
 	}
 
@@ -59,6 +62,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 		holder.txtTitle = (TextView) row.findViewById(R.id.episodeTitle);
 		holder.date = (TextView) row.findViewById(R.id.dateAndLength);
 		holder.length = (TextView) row.findViewById(R.id.length);
+        holder.playButton = (ImageView) row.findViewById(R.id.playbutton);
 		return holder;
 	}
 
@@ -98,6 +102,14 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 		Period period = durationFormatter.parsePeriod(duration).normalizedStandard(PeriodType.minutes());
 		String periodString = String.valueOf(period.getMinutes())+"m";
 		eh.length.setText(periodString);
+
+        eh.playButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EpisodePlayer.getEpisodePlayer().initializePlayer(episode.getModel().getStreamUrl(),episode.getModel().getFullEpisodeName(),0,null);
+            }
+        });
+
 
 		
 	}

@@ -1,4 +1,4 @@
-package se.slashat.slashapp.live;
+package se.slashat.slashapp.service;
 
 import android.util.Log;
 
@@ -14,7 +14,7 @@ import static se.slashat.slashapp.Constants.BAMBUSER_TRANSCODE_URL;
 /**
  * Created by nicklas on 6/26/13.
  */
-public class BambuserController {
+public class BambuserService {
 
     private enum Preset {
         THREE_GP("3gp"),
@@ -40,7 +40,7 @@ public class BambuserController {
         return new URL(String.format(TRANSCODE_URL, broadcastId, preset.toString()));
     }
 
-    public BambuserController() {
+    public BambuserService() {
         try {
             URL url = buildTranscodeUrl("abc123", Preset.HLS);
             System.out.println(url.toExternalForm());

@@ -1,6 +1,6 @@
 package se.slashat.slashapp;
 
-import se.slashat.slashapp.live.BambuserController;
+import se.slashat.slashapp.service.BambuserService;
 import se.slashat.slashapp.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 import android.widget.FrameLayout;
-import android.widget.MediaController;
 import android.widget.VideoView;
 
 /**
@@ -145,11 +144,11 @@ public class LiveFullscreenActivity extends Activity {
             }
         });
 
-        BambuserController bambuserController = new BambuserController();
+        BambuserService bambuserService = new BambuserService();
 
         // Call the bambuser service and retrive the URL for the stream and
         // start the videoview with this URL.
-        bambuserController.startStream("3113676", new Callback<String>() {
+        bambuserService.startStream("3113676", new Callback<String>() {
 
             @Override
             public void call(String result) {

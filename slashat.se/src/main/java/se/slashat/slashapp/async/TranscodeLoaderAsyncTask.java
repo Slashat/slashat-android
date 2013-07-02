@@ -6,16 +6,15 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import se.slashat.slashapp.Callback;
+import se.slashat.slashapp.util.IOUtils;
 
 /**
  * Created by nicklas on 6/27/13.
@@ -42,7 +41,7 @@ public class TranscodeLoaderAsyncTask extends AsyncTask<URL, Void, String> {
             out.write("");
             out.close();
 
-            String jsonString = readStringFromStream(connection.getInputStream());
+            String jsonString = IOUtils.readStringFromStream(connection.getInputStream());
             JSONObject jsonObject = new JSONObject(jsonString);
 
             String broadcastLink = jsonObject.getJSONObject("result").getString("url");
@@ -55,7 +54,7 @@ public class TranscodeLoaderAsyncTask extends AsyncTask<URL, Void, String> {
             e.printStackTrace();
             try {
                 if (connection.getResponseCode() > 200) {
-                    Log.e(this.getClass().getName(), readStringFromStream(connection.getErrorStream()));
+                    Log.e(this.getClass().getName(), IOUtils.readStringFromStream(connection.getErrorStream()));
                 }
 
             } catch (IOException e1) {
@@ -69,20 +68,7 @@ public class TranscodeLoaderAsyncTask extends AsyncTask<URL, Void, String> {
     }
 
     private String readStringFromStream(InputStream inputStream) throws IOException {
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-            StringBuilder stringBuilder = new StringBuilder();
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-
-            return stringBuilder.toString();
-        } finally {
-            inputStream.close();
-        }
+        return IOUtils.readStringFromStream(inputStream);
     }
 
     @Override
