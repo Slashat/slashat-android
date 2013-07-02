@@ -126,12 +126,11 @@
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
             android:id="@+id/countdowntext"
-            android:text="0:11:01:36"
             android:fontFamily="sans-serif-condensed"
             android:textSize="60sp"/>
     <Button
             android:id="@+id/livebutton"
-            android:text="Titta live!"
+            android:text="Titta!"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:enabled="false"

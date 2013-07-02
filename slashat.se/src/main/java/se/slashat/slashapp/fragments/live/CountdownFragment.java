@@ -1,6 +1,7 @@
 package se.slashat.slashapp.fragments.live;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -89,7 +90,7 @@ public class CountdownFragment extends Fragment {
                 Interval liveEventInterval = new Interval(start, end);
 
                 if (liveEventInterval.contains(now)) {
-                    button.setEnabled(true);
+                    setLive();
                 } else {
 
                 /*
@@ -118,11 +119,17 @@ public class CountdownFragment extends Fragment {
 
                         @Override
                         public void onFinish() {
-                            button.setEnabled(true);
+                            setLive();
                         }
                     };
                     countDownTimer.start();
                 }
+            }
+
+            private void setLive() {
+                button.setEnabled(true);
+                textView.setText(getString(R.string.now_live));
+                textView.setTextColor(Color.RED);
             }
         });
     }

@@ -9,5 +9,6 @@
     <string name="title_activity_live_fullscreen">Slashat.se - Live</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="now_live">NU LIVE!</string>
 
 </resources>
