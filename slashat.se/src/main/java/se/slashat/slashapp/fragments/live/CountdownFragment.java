@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
+import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
@@ -56,6 +57,18 @@ public class CountdownFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final Button button = (Button) view.findViewById(R.id.livebutton);
+        final TextView textView = (TextView) getView().findViewById(R.id.countdowntext);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), LiveFullscreenActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
 
         GoogleCalendarService googleCalendarService = new GoogleCalendarService();
         googleCalendarService.getCalendarEntries("3om4bg9o7rdij1vuo7of48n910", new Callback<List<LiveEvent>>() {
@@ -70,7 +83,15 @@ public class CountdownFragment extends Fragment {
                 LiveEvent liveEvent = result.get(0);
 
                 final DateTime start = liveEvent.getStart();
+                final DateTime end = liveEvent.getEnd();
                 final DateTime now = new DateTime();
+
+                Interval liveEventInterval = new Interval(start, end);
+
+                if (liveEventInterval.contains(now)) {
+                    button.setEnabled(true);
+                } else {
+
                 /*
                 PeriodType periodType = PeriodType.dayTime().withMillisRemoved();
                 Period period = new Period(now, start, periodType);
@@ -81,41 +102,27 @@ public class CountdownFragment extends Fragment {
                 seconds.setText(String.valueOf(period.getSeconds()));*/
 
 
-                final TextView textView = (TextView) getView().findViewById(R.id.countdowntext);
+                    final PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays().appendSeparator(":").printZeroAlways().minimumPrintedDigits(2).appendHours().appendSeparator(":")
+                            .appendMinutes().appendSeparator(":").appendSeconds().toFormatter();
 
-                final PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays().appendSeparator(":").printZeroAlways().minimumPrintedDigits(2).appendHours().appendSeparator(":")
-                        .appendMinutes().appendSeparator(":").appendSeconds().toFormatter();
+                    countDownTimer = new CountDownTimer(start.getMillis() - now.getMillis(), 1000) {
 
-                countDownTimer = new CountDownTimer(start.getMillis() - now.getMillis(), 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
 
-                    @Override
-                    public void onTick(long millisUntilFinished) {
+                            final DateTime now = new DateTime();
+                            Period period = new Period(now, start);
 
-                        final DateTime now = new DateTime();
-                        Period period = new Period(now, start);
+                            textView.setText(formatter.print(period.normalizedStandard()));
+                        }
 
-                        textView.setText(formatter.print(period.normalizedStandard()));
-                    }
-
-                    @Override
-                    public void onFinish() {
-
-                    }
-                };
-                countDownTimer.start();
-
-
-                Button button = (Button) view.findViewById(R.id.livebutton);
-
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), LiveFullscreenActivity.class);
-
-                        startActivity(intent);
-                    }
-                });
-
+                        @Override
+                        public void onFinish() {
+                            button.setEnabled(true);
+                        }
+                    };
+                    countDownTimer.start();
+                }
             }
         });
     }
