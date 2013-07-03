@@ -19,7 +19,7 @@ import static se.slashat.slashapp.Constants.GOOGLE_CALENDAR_API_KEY;
  */
 public class GoogleCalendarService {
 
-    private final static DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("YYYY-MM-dd'T00:00:00Z'");
+    private final static DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("YYYY-MM-dd'T'HH:mm:ss'Z'");
 
 
     private final static String CALENDAR_URL = "https://www.googleapis.com/calendar/v3/calendars/%s@group.calendar.google.com/events?key=" + GOOGLE_CALENDAR_API_KEY
@@ -36,6 +36,7 @@ public class GoogleCalendarService {
 
         try {
             URL url = buildCalendarUrl(calendarId);
+            System.out.println(url);
             GoogleCalendarLoaderAsyncTask googleCalendarLoaderAsyncTask = new GoogleCalendarLoaderAsyncTask(callback);
             googleCalendarLoaderAsyncTask.execute(url);
         } catch (MalformedURLException e) {
