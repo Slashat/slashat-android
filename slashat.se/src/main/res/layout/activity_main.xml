@@ -4,13 +4,15 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
 
-<android.support.v4.view.ViewPager
+<LinearLayout
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pager"
+    android:orientation="vertical"
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="40dp"
-    tools:context=".MainActivity" />
+    tools:context=".MainActivity"
+    android:gravity="center"/>
 
     <LinearLayout
             android:id="@+id/playerLayout"
