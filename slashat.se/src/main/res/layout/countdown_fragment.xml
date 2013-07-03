@@ -4,14 +4,32 @@
               android:orientation="vertical"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:padding="10dp"
+              android:padding="2dp"
+
               android:background="@drawable/card_bg">
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:background="#e76816"
+            >
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/liveeventtitle"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="Laddar"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
             android:layout_gravity="center"/>
+
+        </LinearLayout>
 
 
     <!--<LinearLayout
@@ -123,9 +141,17 @@
 
 
     </LinearLayout>-->
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:padding="10dp"
+                  android:gravity="center"
+            android:orientation="vertical">
+
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
             android:id="@+id/countdowntext"
+            android:text="Laddar"
             android:fontFamily="sans-serif-condensed"
             android:textSize="60sp"/>
     <Button
@@ -134,8 +160,10 @@
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:enabled="false"
-            android:layout_marginTop="40dp"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
 </LinearLayout>
