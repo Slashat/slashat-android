@@ -151,7 +151,7 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
 
     @Override
     public void onMediaPlaying(String episodeName) {
-        button.setImageResource(android.R.drawable.ic_media_pause);
+        button.setImageResource(R.drawable.ic_media_pause);
         seekBar.setEnabled(true);
         // maybe use setDrawable instead
     }
