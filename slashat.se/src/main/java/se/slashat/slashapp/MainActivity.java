@@ -29,6 +29,7 @@ import se.slashat.slashapp.player.PlayerInterfaceImpl;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
+    public static final String SELECTEDTAB = "selectedtab";
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -54,6 +55,12 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                             .setText(getTabTitle(i))
                             .setTabListener(this));
         }
+        // in case of screen orientation
+        if ( savedInstanceState != null ) {
+            actionBar.setSelectedNavigationItem( savedInstanceState.getInt( SELECTEDTAB, 0 ) );
+        }
+
+
         this.context = this;
     }
 
@@ -62,6 +69,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         super.onStart();
         playerInterface = new PlayerInterfaceImpl(this);
         EpisodePlayer.initalize(this,playerInterface);
+    }
+
+    @Override
+    protected void onSaveInstanceState( Bundle outState )
+    {
+        super.onSaveInstanceState( outState );
+        outState.putInt(SELECTEDTAB, getActionBar().getSelectedNavigationIndex() );
     }
 
     @Override
@@ -96,7 +110,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 break;
         }
         getSupportFragmentManager().popBackStack();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     @Override
