@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
@@ -23,7 +22,9 @@ import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.LiveFullscreenActivity;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.model.LiveEvent;
+import se.slashat.slashapp.service.BambuserService;
 import se.slashat.slashapp.service.GoogleCalendarService;
+import se.slashat.slashapp.util.Strings;
 
 /**
  * Created by nicklas on 7/2/13.
@@ -40,6 +41,9 @@ public class CountdownFragment extends Fragment {
     private TextView seconds;
     private LiveEvent liveEvent;
     private CountDownTimer countDownTimer;
+    private Button button;
+    private TextView countdownText;
+    private TextView eventTitle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,42 +62,45 @@ public class CountdownFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Button button = (Button) view.findViewById(R.id.livebutton);
-        final TextView textView = (TextView) getView().findViewById(R.id.countdowntext);
+        button = (Button) view.findViewById(R.id.livebutton);
+        countdownText = (TextView) view.findViewById(R.id.countdowntext);
+        eventTitle = (TextView) view.findViewById(R.id.liveeventtitle);
+
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), LiveFullscreenActivity.class);
-
                 startActivity(intent);
             }
         });
 
 
+        BambuserService.getLiveStream(new Callback<String>() {
+            @Override
+            public void call(String result) {
+                if (Strings.isNullOrEmpty(result)) { // If no live stream is found at Bambuser start the countdown.
+                    setOffAir();
+                } else {
+                    setOnAir();
+                }
+            }
+        });
+    }
+
+    private void setOffAir() {
         GoogleCalendarService googleCalendarService = new GoogleCalendarService();
         googleCalendarService.getCalendarEntries("3om4bg9o7rdij1vuo7of48n910", new Callback<List<LiveEvent>>() {
             @Override
             public void call(List<LiveEvent> result) {
-                for (LiveEvent liveEvent : result) {
-                    System.out.println(liveEvent.getStart());
-                    System.out.println(liveEvent.getEnd());
-                    System.out.println(liveEvent.getSummary());
-                }
 
                 LiveEvent liveEvent = result.get(0);
 
                 final DateTime start = liveEvent.getStart();
-                final DateTime end = liveEvent.getEnd();
                 final DateTime now = new DateTime();
 
-                Interval liveEventInterval = new Interval(start, end);
 
-                if (liveEventInterval.contains(now)) {
-                    setLive();
-                } else {
-
-                /*
+                /* Enable this for the iOS-app-style counter.
                 PeriodType periodType = PeriodType.dayTime().withMillisRemoved();
                 Period period = new Period(now, start, periodType);
 
@@ -102,35 +109,34 @@ public class CountdownFragment extends Fragment {
                 minutes.setText(String.valueOf(period.getMinutes()));
                 seconds.setText(String.valueOf(period.getSeconds()));*/
 
+                eventTitle.setText(liveEvent.getSummary());
 
-                    final PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays().appendSeparator(":").printZeroAlways().minimumPrintedDigits(2).appendHours().appendSeparator(":")
-                            .appendMinutes().appendSeparator(":").appendSeconds().toFormatter();
+                final PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays().appendSeparator(":").printZeroAlways().minimumPrintedDigits(2).appendHours().appendSeparator(":")
+                        .appendMinutes().appendSeparator(":").appendSeconds().toFormatter();
 
-                    countDownTimer = new CountDownTimer(start.getMillis() - now.getMillis(), 1000) {
+                countDownTimer = new CountDownTimer(start.getMillis() - now.getMillis(), 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
 
-                        @Override
-                        public void onTick(long millisUntilFinished) {
+                        final DateTime now = new DateTime();
+                        Period period = new Period(now, start);
 
-                            final DateTime now = new DateTime();
-                            Period period = new Period(now, start);
+                        countdownText.setText(formatter.print(period.normalizedStandard()));
+                    }
 
-                            textView.setText(formatter.print(period.normalizedStandard()));
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            setLive();
-                        }
-                    };
-                    countDownTimer.start();
-                }
-            }
-
-            private void setLive() {
-                button.setEnabled(true);
-                textView.setText(getString(R.string.now_live));
-                textView.setTextColor(Color.RED);
+                    @Override
+                    public void onFinish() {
+                        setOnAir();
+                    }
+                };
+                countDownTimer.start();
             }
         });
+    }
+
+    private void setOnAir() {
+        button.setEnabled(true);
+        countdownText.setText(getString(R.string.now_live));
+        countdownText.setTextColor(Color.RED);
     }
 }

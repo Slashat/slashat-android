@@ -38,16 +38,16 @@ public class BambuserService {
     private final static String TRANSCODE_URL = BAMBUSER_TRANSCODE_URL + "%s.json?api_key=" + BAMBUSER_TRANSCODE_API_KEY + "&preset=%s";
     private final static String LIVESTREAMS_URL = "http://api.bambuser.com/broadcast.json?username=slashat&type=live&limit=1&api_key="+BAMBUSER_TRANSCODE_API_KEY;
 
-    private URL buildTranscodeUrl(String broadcastId, Preset preset){
+    private static URL buildTranscodeUrl(String broadcastId, Preset preset){
         try{
             return new URL(String.format(TRANSCODE_URL, broadcastId, preset.toString()));
         } catch (MalformedURLException e) {
-            Log.e(this.getClass().getName(), "Can't create URL from string. Make sure Constants contains the correct information", e);
+            Log.e("BambuserService", "Can't create URL from string. Make sure Constants contains the correct information", e);
             return null;
         }
     }
 
-    public void startStream(String broadCastId, final Callback<String> callback) {
+    public static void startStream(String broadCastId, final Callback<String> callback) {
         try {
             if (Strings.isNullOrEmpty(broadCastId)){
                 getLiveStream(new Callback<String>() {
@@ -68,13 +68,13 @@ public class BambuserService {
         }
     }
 
-    private void loadTranscodedUrl(String broadCastId, Callback<String> callback) throws MalformedURLException {
+    private static void loadTranscodedUrl(String broadCastId, Callback<String> callback) throws MalformedURLException {
         URL url = buildTranscodeUrl(broadCastId, Preset.HLS);
         TranscodeLoaderAsyncTask transcodeLoaderAsyncTask = new TranscodeLoaderAsyncTask(callback);
         transcodeLoaderAsyncTask.execute(url);
     }
 
-    public void getLiveStream(Callback<String> callback){
+    public static void getLiveStream(Callback<String> callback){
         LiveStreamLoaderAsyncTask liveStreamLoaderAsyncTask = new LiveStreamLoaderAsyncTask(callback);
         try {
             liveStreamLoaderAsyncTask.execute(new URL(LIVESTREAMS_URL));

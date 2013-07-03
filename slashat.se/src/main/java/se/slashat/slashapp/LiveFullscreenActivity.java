@@ -144,11 +144,9 @@ public class LiveFullscreenActivity extends Activity {
             }
         });
 
-        BambuserService bambuserService = new BambuserService();
-
         // Call the bambuser service and retrive the URL for the stream and
         // start the videoview with this URL.
-        bambuserService.startStream("", new Callback<String>() {
+        BambuserService.startStream("", new Callback<String>() {
 
             @Override
             public void call(String result) {

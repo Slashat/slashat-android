@@ -52,7 +52,7 @@ public class LiveStreamLoaderAsyncTask extends AsyncTask<URL,Void,String> {
 
             }
 
-            return "3113676"; // return archived video for now
+            return "";
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
