@@ -11,7 +11,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:name="se.slashat.slashapp.fragments.about.AboutListFragment"
-            android:id="@+id/aboutdetailfragment"
+            android:id="@+id/about_list_fragment"
             android:layout_gravity="left|center_vertical"
             tools:layout="@layout/about_list"/>
 </LinearLayout>

@@ -1,21 +1,17 @@
 package se.slashat.slashapp.fragments.episode;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import se.slashat.slashapp.CallbackPair;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.async.EpisodeLoaderAsyncTask;
-import se.slashat.slashapp.dummy.DummyContent;
+import se.slashat.slashapp.fragments.FragmentSwitcher;
 import se.slashat.slashapp.model.Episode;
 
 /**
@@ -29,20 +25,16 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.episode_list,null);
+        return inflater.inflate(R.layout.episode_list, null);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         // Restore the previously serialized activated item position.
         if (savedInstanceState != null
@@ -54,9 +46,6 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getActivity().findViewById(R.id.dualpane) != null){
-            mTwoPane = true;
-        }
         populate(false);
     }
 
@@ -96,14 +85,11 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     public void call(Episode result, Boolean pairResult) {
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable("episode",result);
+        bundle.putSerializable("episode", result);
 
         EpisodeDetailFragment episodeDetailFragment = new EpisodeDetailFragment();
         episodeDetailFragment.setArguments(bundle);
-        if (mTwoPane){
-            getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.detailfragment, episodeDetailFragment).commit();
-        }else{
-            getFragmentManager().beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.slider_in, R.anim.noanimation, R.anim.noanimation, R.anim.slider_out).replace(R.id.detailfragment, episodeDetailFragment).commit();
-        }
+
+        FragmentSwitcher.getInstance().switchFragment(episodeDetailFragment, true, R.id.detailfragment);
     }
 }

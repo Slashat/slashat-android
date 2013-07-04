@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.adapter.PersonalAdapter;
+import se.slashat.slashapp.fragments.FragmentSwitcher;
 import se.slashat.slashapp.fragments.episode.EpisodeDetailFragment;
 import se.slashat.slashapp.model.Personal;
 import se.slashat.slashapp.model.SectionModel;
@@ -31,12 +32,6 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
-
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
-     */
-    private boolean mTwoPane;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,9 +52,6 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getActivity().findViewById(R.id.dualpane) != null) {
-            mTwoPane = true;
-        }
         populate();
     }
 
@@ -123,10 +115,7 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
 
         AboutDetailFragment aboutDetailFragment = new AboutDetailFragment();
         aboutDetailFragment.setArguments(bundle);
-        if (mTwoPane){
-            getFragmentManager().beginTransaction().setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).replace(R.id.aboutdetailfragment, aboutDetailFragment).commit();
-        }else{
-            getFragmentManager().beginTransaction().addToBackStack(null).setCustomAnimations(R.anim.slider_in, R.anim.noanimation, R.anim.noanimation, R.anim.slider_out).replace(R.id.aboutdetailfragment, aboutDetailFragment).commit();
-        }
+
+        FragmentSwitcher.getInstance().switchFragment(aboutDetailFragment, true,  R.id.aboutdetailfragment);
     }
 }

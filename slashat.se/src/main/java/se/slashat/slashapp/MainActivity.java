@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import se.slashat.slashapp.androidservice.EpisodePlayer;
+import se.slashat.slashapp.fragments.FragmentSwitcher;
 import se.slashat.slashapp.fragments.about.AboutFragment;
 import se.slashat.slashapp.fragments.episode.EpisodeFragment;
 import se.slashat.slashapp.fragments.live.LiveFragment;
@@ -45,6 +46,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
+
+        FragmentSwitcher.initalize(getSupportFragmentManager(), this);
 
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -109,8 +112,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 fragment = mAboutFragment;
                 break;
         }
-        getSupportFragmentManager().popBackStack();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        //getSupportFragmentManager().popBackStack();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        FragmentSwitcher.getInstance().switchFragment(fragment,false,R.id.fragment_container);
     }
 
     @Override
