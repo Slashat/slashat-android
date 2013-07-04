@@ -26,6 +26,7 @@ public class EpisodeDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.episode_detail, null);
         if (episode != null) {
+            view.findViewById(R.id.episodedetailroot).setVisibility(View.VISIBLE);
             setText(view.findViewById(R.id.episodeNumberAndTitle), "#" + episode.getEpisodeNumber() + " - " + episode.getName());
             setText(view.findViewById(R.id.dateAndLength), dateFormat.format(episode.getPublished()) + " - " + episode.getDuration());
             setText(view.findViewById(R.id.description), episode.getDescription());

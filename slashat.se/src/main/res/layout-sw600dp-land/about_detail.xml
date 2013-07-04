@@ -4,6 +4,8 @@
               android:layout_height="wrap_content"
               android:background="@drawable/card_bg"
               android:orientation="vertical"
+              android:visibility="gone"
+              android:id="@+id/aboutdetailroot">
         >
 
     <LinearLayout

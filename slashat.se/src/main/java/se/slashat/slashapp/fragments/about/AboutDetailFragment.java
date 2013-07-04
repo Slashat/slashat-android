@@ -29,6 +29,7 @@ public class AboutDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.about_detail, null);
 
         if (person != null) {
+            view.findViewById(R.id.aboutdetailroot).setVisibility(View.VISIBLE);
             setText(view.findViewById(R.id.name), person.getName());
             setText(view.findViewById(R.id.title), person.getTitle());
             setText(view.findViewById(R.id.bio), person.getBio());
