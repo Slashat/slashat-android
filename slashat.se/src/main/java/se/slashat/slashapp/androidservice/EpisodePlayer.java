@@ -160,6 +160,10 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		this.progressDialog = progressDialog;
 		this.startposition = position;
 
+        if (mediaPlayer != null && mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+        }
+
 		mediaPlayer = new MediaPlayer();
 		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
