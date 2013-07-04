@@ -11,8 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="40dp"
-    tools:context=".MainActivity"
-    android:gravity="center"/>
+    tools:context=".MainActivity"/>
 
     <LinearLayout
             android:id="@+id/playerLayout"
