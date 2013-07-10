@@ -44,6 +44,7 @@ public class CountdownFragment extends Fragment {
     private Button button;
     private TextView countdownText;
     private TextView eventTitle;
+    private TextView eventDescription;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +66,7 @@ public class CountdownFragment extends Fragment {
         button = (Button) view.findViewById(R.id.livebutton);
         countdownText = (TextView) view.findViewById(R.id.countdowntext);
         eventTitle = (TextView) view.findViewById(R.id.liveeventtitle);
+        eventDescription = (TextView) view.findViewById(R.id.liveeventdescription);
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +112,7 @@ public class CountdownFragment extends Fragment {
                 seconds.setText(String.valueOf(period.getSeconds()));*/
 
                 eventTitle.setText(liveEvent.getSummary());
+                eventDescription.setText(liveEvent.getDescription());
 
                 final PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays().appendSeparator(":").printZeroAlways().minimumPrintedDigits(2).appendHours().appendSeparator(":")
                         .appendMinutes().appendSeparator(":").appendSeconds().toFormatter();
@@ -135,7 +138,7 @@ public class CountdownFragment extends Fragment {
     }
 
     private void setOnAir() {
-        button.setEnabled(true);
+        button.setVisibility(View.VISIBLE);
         countdownText.setText(getString(R.string.now_live));
         countdownText.setTextColor(Color.RED);
     }

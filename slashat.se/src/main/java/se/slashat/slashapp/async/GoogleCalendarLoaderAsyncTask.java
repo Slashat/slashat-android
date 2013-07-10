@@ -109,7 +109,13 @@ public class GoogleCalendarLoaderAsyncTask extends AsyncTask<URL, Void, List<Liv
             summary = summary.replaceFirst("Slashat.se ","");
         }
 
-        return new LiveEvent(start,end,summary);
+        String description = "";
+
+        if (item.has("description")){
+            description = item.getString("description");
+        }
+
+        return new LiveEvent(start,end,summary,description);
     }
 
     @Override

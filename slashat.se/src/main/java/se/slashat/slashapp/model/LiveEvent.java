@@ -6,12 +6,14 @@ public class LiveEvent implements Comparable<LiveEvent> {
     private final DateTime start;
     private final DateTime end;
     private final String summary;
+    private final String description;
 
-    public LiveEvent(DateTime start, DateTime end, String summary) {
+    public LiveEvent(DateTime start, DateTime end, String summary, String description) {
         super();
         this.start = start;
         this.end = end;
         this.summary = summary;
+        this.description = description;
     }
 
     public DateTime getEnd() {
@@ -24,6 +26,10 @@ public class LiveEvent implements Comparable<LiveEvent> {
 
     public String getSummary() {
         return summary;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     @Override
@@ -67,5 +73,4 @@ public class LiveEvent implements Comparable<LiveEvent> {
     public int compareTo(LiveEvent l2) {
         return l2.getStart().compareTo(start);
     }
-
 }
