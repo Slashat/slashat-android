@@ -82,9 +82,32 @@ public class GoogleCalendarLoaderAsyncTask extends AsyncTask<URL, Void, List<Liv
 
     private LiveEvent createEventFromJson(JSONObject item) throws JSONException {
 
-        DateTime start = new DateTime(item.getJSONObject("start").getString("dateTime"));
-        DateTime end = new DateTime(item.getJSONObject("end").getString("dateTime"));
+        DateTime start;
+        JSONObject startJsonObject = item.getJSONObject("start");
+        if (startJsonObject.has("dateTime")){
+            start = new DateTime(startJsonObject.getString("dateTime"));
+        }else{
+            start = new DateTime(startJsonObject.getString("date"));
+        }
+
+
+        DateTime end;
+        JSONObject endJsonObject = item.getJSONObject("end");
+        if (endJsonObject.has("dateTime")){
+            end = new DateTime(endJsonObject.getString("dateTime"));
+        }else{
+            end = new DateTime(endJsonObject.getString("date"));
+        }
+
         String summary = item.getString("summary");
+
+        // Some ugly code to remove redundant data from the summary.
+        // TODO: this should #1 not be needed #2 go into the viewmodel instead
+        if (summary.startsWith("Slashat.se - ")){
+            summary = summary.replaceFirst("Slashat.se - ","");
+        }else if (summary.startsWith("Slashat.se ")){
+            summary = summary.replaceFirst("Slashat.se ","");
+        }
 
         return new LiveEvent(start,end,summary);
     }

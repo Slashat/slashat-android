@@ -36,7 +36,6 @@ public class GoogleCalendarService {
 
         try {
             URL url = buildCalendarUrl(calendarId);
-            System.out.println(url);
             GoogleCalendarLoaderAsyncTask googleCalendarLoaderAsyncTask = new GoogleCalendarLoaderAsyncTask(callback);
             googleCalendarLoaderAsyncTask.execute(url);
         } catch (MalformedURLException e) {
