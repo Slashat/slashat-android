@@ -57,9 +57,12 @@ public class FragmentSwitcher implements Serializable {
         if (container == 0 || targetFragment == null || targetFragment.getActivity().findViewById(container) == null) {
             container = R.id.fragment_container;
         }
-        beginTransaction.add(container, fragment);
+
         if (targetFragment != null){
-            beginTransaction.remove(targetFragment);
+        beginTransaction.remove(targetFragment);
+            beginTransaction.add(container, fragment);
+        }else{
+            beginTransaction.replace(container,fragment);
         }
        /*if (addToBackstack) {
             beginTransaction.setCustomAnimations(R.anim.slider_in, R.anim.noanimation, R.anim.noanimation, R.anim.slider_out);
