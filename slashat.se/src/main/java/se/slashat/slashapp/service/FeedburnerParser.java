@@ -37,7 +37,7 @@ public class FeedburnerParser {
 	 * 
 	 */
 	public interface Itemcallback {
-		public void callback(String title, String url, String duration, String itunesSubtitle, Date published);
+		public void callback(String title, String url, String duration, String itunesSubtitle, String itunesSummary, Date published);
 
 		public void setCount(int attributeCount);
 	}
@@ -84,6 +84,7 @@ public class FeedburnerParser {
 		String title = null;
 		String url = null;
 		String itunesSubtitle = null;
+        String itunesSummary = null;
 		Date date = null;
 		String duration = null;
 
@@ -102,6 +103,8 @@ public class FeedburnerParser {
 				duration = getDuration(parser);
 			} else if (name.equals("itunes:subtitle")) {
 				itunesSubtitle = readItunesSubtitle(parser);
+            } else if (name.equals("itunes:summary")){
+                itunesSummary = readItunesSummary(parser);
 			} else {
 				skip(parser);
 			}
@@ -110,11 +113,13 @@ public class FeedburnerParser {
 		// For every episode item found in the feedburner xml file call the
 		// callers callback with title and url so it
 		// can creates the internal models for each episode.
-		itemcallback.callback(title, url, duration, itunesSubtitle, date);
+		itemcallback.callback(title, url, duration, itunesSubtitle, itunesSummary, date);
 
 	}
 
-	private String getDuration(XmlPullParser parser) throws XmlPullParserException, IOException {
+
+
+    private String getDuration(XmlPullParser parser) throws XmlPullParserException, IOException {
 		parser.require(XmlPullParser.START_TAG, "", "itunes:duration");
 		String duration = readText(parser);
 		parser.require(XmlPullParser.END_TAG, "", "itunes:duration");
@@ -155,6 +160,13 @@ public class FeedburnerParser {
 		parser.require(XmlPullParser.END_TAG, "", "itunes:subtitle");
 		return itunesSubtitle;
 	}
+
+    private String readItunesSummary(XmlPullParser parser) throws XmlPullParserException, IOException {
+        parser.require(XmlPullParser.START_TAG, "", "itunes:summary");
+        String itunesSummary = readText(parser);
+        parser.require(XmlPullParser.END_TAG, "", "itunes:summary");
+        return itunesSummary;
+    }
 
 	private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
 		String result = "";

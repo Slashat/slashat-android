@@ -38,6 +38,12 @@ public class EpisodeDetailFragment extends Fragment {
             });
             ((Button) view.findViewById(R.id.viewbutton)).setEnabled(false); // Disable view video button for now.
 
+            if (episode.getDescription().equals(episode.getShownotes())){
+                setText(view.findViewById(R.id.shownotes), "Inga shownotes");
+            }else{
+                setText(view.findViewById(R.id.shownotes), episode.getShownotes());
+            }
+
         }
         return view;
     }

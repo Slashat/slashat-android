@@ -10,95 +10,119 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="16dp"
-            android:background="#e76816"
-            >
+            android:orientation="vertical">
 
-        <TextView
-                android:id="@+id/episodeNumberAndTitle"
-                android:layout_width="wrap_content"
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
-                android:text="#199 - Vi CES och hörs"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="sans-serif-condensed"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:background="#e76816"
+                >
 
-                android:layout_marginLeft="12dp"
-                />
+            <TextView
+                    android:id="@+id/episodeNumberAndTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:text="#199 - Vi CES och hörs"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
 
-        <TextView
-                android:id="@+id/dateAndLength"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:layout_marginTop="2dp"
-                android:gravity="center_vertical"
-                android:text="22 jan 2013 - 1:07:45"
-                android:textColor="#ffffff"
-                android:textSize="14sp"
-                android:layout_marginLeft="12dp"
-                />
+                    android:layout_marginLeft="12dp"
+                    />
+
+            <TextView
+                    android:id="@+id/dateAndLength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_vertical"
+                    android:text="22 jan 2013 - 1:07:45"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="12dp"
+                    />
+        </LinearLayout>
+
+        <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <TextView
+                        android:id="@+id/description"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Vad är PS Move? Vad är Twitter @anywhere? Vad har förändrat internet? Vad regerar på smartphonemarknaden? Vad ringer Microsoftanställda med? Vad kommer Telia erbjuda? Och vad hände egentligen med Onlive? Det och mer i denna veckan, med Tommie och Jezper!"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif"
+                        android:layout_margin="12dp"
+                        />
+
+                <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp">
+
+                    <Button
+                            android:id="@+id/listenbutton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:text="Lyssna!">
+                    </Button>
+
+                    <Button
+                            android:id="@+id/viewbutton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:fontFamily="sans-serif"
+                            android:textStyle="bold"
+                            android:text="Titta!">
+                    </Button>
+                </LinearLayout>
+
+                <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SHOWNOTES"
+                        android:textColor="#e76816"
+                        android:layout_marginLeft="12dp"/>
+
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:background="#e76816"/>
+
+                <TextView
+                        android:id="@+id/shownotes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:textSize="16sp"
+                        android:fontFamily="sans-serif"
+                        android:text="asdfasdfasdfas df sdfasd f"/>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
-    <TextView
-            android:id="@+id/description"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Vad är PS Move? Vad är Twitter @anywhere? Vad har förändrat internet? Vad regerar på smartphonemarknaden? Vad ringer Microsoftanställda med? Vad kommer Telia erbjuda? Och vad hände egentligen med Onlive? Det och mer i denna veckan, med Tommie och Jezper!"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:fontFamily="sans-serif"
-            android:layout_margin="12dp"
-            />
-    <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
-
-        <Button
-                android:id="@+id/listenbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:text="Lyssna!">
-        </Button>
-
-        <Button
-                android:id="@+id/viewbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:text="Titta!">
-        </Button>
-    </LinearLayout>
-    <TextView android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:text="SHOWNOTES"
-              android:textColor="#e76816"
-              android:layout_marginLeft="12dp"/>
-    <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#e76816"/>
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="12dp"
-              android:layout_marginLeft="12dp"
-              android:textSize="16sp"
-              android:fontFamily="sans-serif"
-              android:text=""/>
-
 </LinearLayout>

@@ -89,7 +89,7 @@ public class ArchiveService {
 					 * that we have an update so it can display the progress.
 					 */
 					@Override
-					public void callback(String title, String url, String duration, String itunesSubtitle, Date published) {
+					public void callback(String title, String url, String duration, String itunesSubtitle, String itunesSummary, Date published) {
 						// This processing is not safe to changes in the
 						// titles in the RSS-feed and might
 						// break in case of an "conflicting" episode
@@ -107,7 +107,7 @@ public class ArchiveService {
 							episodeTitle = matcher.group().replaceFirst("- ", "");
 						}
 
-						Episode episode = new Episode(episodeTitle, episodeNumber, url, duration, published, itunesSubtitle);
+						Episode episode = new Episode(episodeTitle, episodeNumber, url, duration, published, itunesSubtitle, itunesSummary);
 						if (episodes.contains(episode) && !fullRefresh) {
 							feedburnerParser.interrupt();
 						} else {
@@ -153,7 +153,7 @@ public class ArchiveService {
 
 	private static Episode[] compileEpisodes() {
 		if (episodes.isEmpty()) {
-			episodes.add(new Episode("Kunde inte ladda några avsnitt", 000, null, "", new Date(), ""));
+			episodes.add(new Episode("Kunde inte ladda några avsnitt", 000, null, "", new Date(), "", ""));
 		}
 		ArrayList<Episode> episodeArray = new ArrayList<Episode>(episodes);
 		Collections.sort(episodeArray);
