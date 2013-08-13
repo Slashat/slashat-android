@@ -1,5 +1,6 @@
 package se.slashat.slashapp.service;
 
+import android.R;
 import android.util.Log;
 
 import java.net.MalformedURLException;

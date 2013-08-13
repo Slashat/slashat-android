@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        mavenCentral()
         maven { url 'http://repo1.maven.org/maven2' }
     }
     dependencies {
@@ -11,14 +12,17 @@ repositories {
 	mavenCentral()
 	mavenLocal()
 }
-dependencies {
-    compile files('libs/android-support-v4.jar')
+dependencies{
     compile 'joda-time:joda-time:2.2'
+    compile 'com.android.support:support-v4:13.0.+'
+    compile "com.android.support:appcompat-v7:18.0.+"
+    compile "com.android.support:mediarouter-v7:18.0.0"
+    compile files('libs/GoogleCastSdkAndroid-1.0.0.jar')
 }
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "18.0.0"
+    buildToolsVersion "18.0.1"
 
     defaultConfig {
         minSdkVersion 11

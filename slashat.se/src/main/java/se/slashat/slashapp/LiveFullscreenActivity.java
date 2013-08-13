@@ -5,10 +5,14 @@ import se.slashat.slashapp.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.MediaRouteButton;
+import android.support.v7.media.MediaRouter;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
@@ -16,13 +20,26 @@ import android.support.v4.app.NavUtils;
 import android.widget.FrameLayout;
 import android.widget.VideoView;
 
+import com.google.cast.CastContext;
+import com.google.cast.CastDevice;
+import com.google.cast.MediaRouteAdapter;
+import com.google.cast.MediaRouteHelper;
+import com.google.cast.MediaRouteStateChangeListener;
+
+
+
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.MediaRouteButton;
+import android.support.v7.media.MediaRouteSelector;
+import android.support.v7.media.MediaRouter;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  *
  * @see SystemUiHider
  */
-public class LiveFullscreenActivity extends Activity {
+public class LiveFullscreenActivity extends Activity implements MediaRouteAdapter {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -52,6 +69,14 @@ public class LiveFullscreenActivity extends Activity {
     private SystemUiHider mSystemUiHider;
     private VideoView videoView;
     private View videoProgressView;
+
+    private MediaRouteButton mMediaRouteButton;
+    private CastContext mCastContext;
+    private MediaRouter mMediaRouter;
+    private MediaRouteSelector mMediaRouteSelector;
+    private MyMediaRouterCallback mMediaRouterCallback;
+    private CastDevice mSelectedDevice;
+    private MediaRouteStateChangeListener mRouteStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +145,20 @@ public class LiveFullscreenActivity extends Activity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        mMediaRouter.removeCallback(mMediaRouterCallback);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MediaRouteHelper.unregisterMediaRouteProvider(mCastContext);
+        mCastContext.dispose();
     }
 
     @Override
@@ -227,4 +266,59 @@ public class LiveFullscreenActivity extends Activity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        MenuItem mediaRouteItem = menu.findItem( R.id.action_mediaroute );
+        mediaRouteItem.getActionView().setBackgroundColor(Color.GRAY);
+
+        mMediaRouteButton = (MediaRouteButton) mediaRouteItem.getActionView();
+
+        mCastContext = new CastContext( getApplicationContext() );
+        MediaRouteHelper.registerMinimalMediaRouteProvider(mCastContext, this);
+        mMediaRouter = MediaRouter.getInstance(getApplicationContext());
+        mMediaRouteSelector = MediaRouteHelper.buildMediaRouteSelector( MediaRouteHelper.CATEGORY_CAST );
+        mMediaRouteButton.setRouteSelector( mMediaRouteSelector );
+        mMediaRouterCallback = new MyMediaRouterCallback();
+
+        mMediaRouter.addCallback(mMediaRouteSelector, mMediaRouterCallback, MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY);
+
+
+        return true;
+    }
+
+
+
+    @Override
+    public void onDeviceAvailable(CastDevice castDevice, String s, MediaRouteStateChangeListener mediaRouteStateChangeListener) {
+        mSelectedDevice = castDevice;
+        mRouteStateListener = mediaRouteStateChangeListener;
+    }
+
+    @Override
+    public void onSetVolume(double v) {
+
+    }
+
+    @Override
+    public void onUpdateVolume(double v) {
+
+    }
+
+    private class MyMediaRouterCallback extends MediaRouter.Callback {
+        @Override
+        public void onRouteSelected(MediaRouter router, MediaRouter.RouteInfo route) {
+            MediaRouteHelper.requestCastDeviceForRoute(route);
+        }
+
+        @Override
+        public void onRouteUnselected(MediaRouter router, MediaRouter.RouteInfo route) {
+            mSelectedDevice = null;
+            mRouteStateListener = null;
+        }
+    }
+
 }
