@@ -44,6 +44,8 @@ public class EpisodeDetailFragment extends Fragment {
                 setText(view.findViewById(R.id.shownotes), episode.getShownotes());
             }
 
+        }else{
+            view.findViewById(R.id.episodedetailroot).setVisibility(View.GONE);
         }
         return view;
     }
@@ -61,6 +63,4 @@ public class EpisodeDetailFragment extends Fragment {
     private void setText(View view, String text) {
         ((TextView) view).setText(text);
     }
-
-
 }

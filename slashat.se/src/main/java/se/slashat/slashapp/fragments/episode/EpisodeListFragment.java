@@ -24,6 +24,7 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
+    private static EpisodeFragment callback;
 
 
     @Override
@@ -41,26 +42,6 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
                 && savedInstanceState.containsKey(STATE_ACTIVATED_POSITION)) {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -109,12 +90,10 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     @Override
     public void call(Episode result, Boolean pairResult) {
 
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("episode", result);
+        callback.call(result);
+    }
 
-        EpisodeDetailFragment episodeDetailFragment = new EpisodeDetailFragment();
-        episodeDetailFragment.setArguments(bundle);
-
-        FragmentSwitcher.getInstance().switchFragment(episodeDetailFragment, true, R.id.detailfragment);
+    public static void setCallback(EpisodeFragment callback) {
+        EpisodeListFragment.callback = callback;
     }
 }

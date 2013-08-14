@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@drawable/card_bg"
-              android:visibility="gone"
+              android:visibility="visible"
               android:id="@+id/episodedetailroot">
 
 
@@ -48,81 +47,85 @@
                 />
     </LinearLayout>
 
-
-    <LinearLayout
-            android:orientation="horizontal"
+    <ScrollView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:weightSum="1"
             android:layout_margin="12dp">
 
-        <LinearLayout android:layout_width="0dp"
-                      android:layout_height="fill_parent"
-                      android:layout_weight="0.8"
-                      android:orientation="vertical">
-
-            <TextView
-                    android:id="@+id/description"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Vad är PS Move? Vad är Twitter @anywhere? Vad har förändrat internet? Vad regerar på smartphonemarknaden? Vad ringer Microsoftanställda med? Vad kommer Telia erbjuda? Och vad hände egentligen med Onlive? Det och mer i denna veckan, med Tommie och Jezper!"
-                    android:textColor="#000000"
-                    android:textSize="15sp"
-                    android:fontFamily="sans-serif"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginBottom="12dp"
-                    />
-
-            <TextView android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                    android:text="SHOWNOTES"
-                    android:textColor="#e76816"/>
-            <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginRight="12dp"
-                    android:background="#e76816"/>
-
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="fill_parent"
-                      android:layout_marginTop="12dp"
-                      android:textSize="15sp"
-                      android:fontFamily="sans-serif"
-                    android:text="Veckans Forumtråd:
-Hoppade du på Netbook-trenden?
-
-Blah blah blah blhablhabl ahb lab hla bhla blhab lab la bhlaahbhl
-ab bhlab lahb a
-
-bahbl ahbl ab halb hlab la bablh alb halbh albh alb halbh lab hla bhlalb hlab hlab alhka b al halb hablalhb"/>
-
-        </LinearLayout>
-
         <LinearLayout
-                android:layout_width="0dp"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:orientation="vertical"
-                android:layout_weight="0.2">
+                android:weightSum="1"
+  >
 
-            <Button
-                    android:id="@+id/listenbutton"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:textStyle="bold"
-                    android:text="Lyssna!">
-            </Button>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.8"
+                    android:orientation="vertical">
 
-            <Button
-                    android:id="@+id/viewbutton"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif"
-                    android:textStyle="bold"
-                    android:text="Titta!">
-            </Button>
+                <TextView
+                        android:id="@+id/description"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Vad är PS Move? Vad är Twitter @anywhere? Vad har förändrat internet? Vad regerar på smartphonemarknaden? Vad ringer Microsoftanställda med? Vad kommer Telia erbjuda? Och vad hände egentligen med Onlive? Det och mer i denna veckan, med Tommie och Jezper!"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginBottom="12dp"
+                        />
+
+                <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SHOWNOTES"
+                        android:textColor="#e76816"/>
+
+                <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginRight="12dp"
+                        android:background="#e76816"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/shownotes"
+                        android:layout_marginTop="12dp"
+                        android:textSize="15sp"
+                        android:fontFamily="sans-serif"
+                        />
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="0.2">
+
+                <Button
+                        android:id="@+id/listenbutton"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="bold"
+                        android:text="Lyssna!">
+                </Button>
+
+                <Button
+                        android:id="@+id/viewbutton"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="bold"
+                        android:text="Titta!">
+                </Button>
+            </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
-
+    </ScrollView>
 
 </LinearLayout>

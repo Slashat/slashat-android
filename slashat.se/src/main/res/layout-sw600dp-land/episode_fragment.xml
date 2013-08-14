@@ -6,7 +6,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:weightSum="1"
-              android:padding="24dp">
+              android:padding="6dp">
 
     <fragment
             android:layout_width="0dp"
@@ -15,13 +15,13 @@
             android:name="se.slashat.slashapp.fragments.episode.EpisodeListFragment"
             android:id="@+id/listfragment"
             android:layout_gravity="left|center_vertical"
-            android:layout_marginRight="12dp"
+            android:layout_marginRight="6dp"
             tools:layout="@layout/episode_list"/>
     <fragment
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="0.6"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="6dp"
             android:name="se.slashat.slashapp.fragments.episode.EpisodeDetailFragment"
             android:id="@+id/detailfragment"
             tools:layout="@layout/episode_detail"/>

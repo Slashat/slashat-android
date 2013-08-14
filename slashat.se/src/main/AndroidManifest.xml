@@ -41,6 +41,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="se.slashat.slashapp.MainActivity" />
         </activity>
+
+        <activity
+            android:name="se.slashat.slashapp.fragments.episode.EpisodeDetailActivity"/>
     </application>
 
 </manifest>

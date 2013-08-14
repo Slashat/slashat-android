@@ -58,8 +58,7 @@ public class FragmentSwitcher implements Serializable {
             container = R.id.fragment_container;
         }
 
-        if (targetFragment != null){
-        beginTransaction.remove(targetFragment);
+        if (addToBackstack){
             beginTransaction.add(container, fragment);
         }else{
             beginTransaction.replace(container,fragment);
