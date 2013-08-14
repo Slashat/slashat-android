@@ -2,6 +2,7 @@ package se.slashat.slashapp.fragments.episode;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class EpisodeDetailFragment extends Fragment {
                 setText(view.findViewById(R.id.shownotes), "Inga shownotes");
             }else{
                 setText(view.findViewById(R.id.shownotes), episode.getShownotes());
+                Linkify.addLinks((TextView)view.findViewById(R.id.shownotes),Linkify.ALL);
             }
 
         }else{

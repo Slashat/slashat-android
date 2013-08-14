@@ -96,6 +96,7 @@
                         android:layout_marginTop="12dp"
                         android:textSize="15sp"
                         android:fontFamily="sans-serif"
+                        android:linksClickable="true"
                         />
 
             </LinearLayout>
