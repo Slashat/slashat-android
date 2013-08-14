@@ -77,6 +77,7 @@ public class EpisodeFragment extends Fragment implements Callback<Episode> {
             Intent intent = new Intent(this.getActivity(), EpisodeDetailActivity.class);
             intent.putExtra("episode", result);
             startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.enter,R.anim.exit);
         }
 
     }

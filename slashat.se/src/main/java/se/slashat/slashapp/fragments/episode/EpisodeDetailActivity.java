@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 
+import se.slashat.slashapp.R;
 import se.slashat.slashapp.model.Episode;
 
 /**
@@ -43,9 +44,16 @@ public class EpisodeDetailActivity extends FragmentActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+            overridePendingTransition(R.anim.pop_enter,R.anim.pop_exit);
             return true;
         }
 
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.pop_enter,R.anim.pop_exit);
     }
 }
