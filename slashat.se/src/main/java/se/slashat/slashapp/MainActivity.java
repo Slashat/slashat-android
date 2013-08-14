@@ -1,28 +1,17 @@
 package se.slashat.slashapp;
 
-import java.util.Locale;
-
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.MediaRouteButton;
+import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
-import android.view.LayoutInflater;
+import android.support.v7.media.MediaRouter.RouteInfo;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.google.cast.CastContext;
 import com.google.cast.CastDevice;
@@ -30,13 +19,7 @@ import com.google.cast.MediaRouteAdapter;
 import com.google.cast.MediaRouteHelper;
 import com.google.cast.MediaRouteStateChangeListener;
 
-
-
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.MediaRouteButton;
-import android.support.v7.media.MediaRouteSelector;
-import android.support.v7.media.MediaRouter;
-import android.support.v7.media.MediaRouter.RouteInfo;
+import java.util.Locale;
 
 import se.slashat.slashapp.androidservice.EpisodePlayer;
 import se.slashat.slashapp.fragments.FragmentSwitcher;
@@ -45,7 +28,7 @@ import se.slashat.slashapp.fragments.episode.EpisodeFragment;
 import se.slashat.slashapp.fragments.live.LiveFragment;
 import se.slashat.slashapp.player.PlayerInterfaceImpl;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener, MediaRouteAdapter {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, MediaRouteAdapter {
 
     public static final String SELECTEDTAB = "selectedtab";
     /**
@@ -73,7 +56,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         FragmentSwitcher.initalize(getSupportFragmentManager(), this);
 
-        final ActionBar actionBar = getActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         for (int i = 0; i < 3; i++) {
@@ -103,21 +86,21 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     protected void onStop() {
         super.onStop();
 
-        mMediaRouter.removeCallback(mMediaRouterCallback);
+        //mMediaRouter.removeCallback(mMediaRouterCallback);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MediaRouteHelper.unregisterMediaRouteProvider(mCastContext);
-        mCastContext.dispose();
+        //MediaRouteHelper.unregisterMediaRouteProvider(mCastContext);
+        //mCastContext.dispose();
     }
 
     @Override
     protected void onSaveInstanceState( Bundle outState )
     {
         super.onSaveInstanceState( outState );
-        outState.putInt(SELECTEDTAB, getActionBar().getSelectedNavigationIndex() );
+        outState.putInt(SELECTEDTAB, getSupportActionBar().getSelectedNavigationIndex() );
     }
 
     @Override
@@ -125,7 +108,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-        MenuItem mediaRouteItem = menu.findItem( R.id.action_mediaroute );
+        /*MenuItem mediaRouteItem = menu.findItem( R.id.action_mediaroute );
         mediaRouteItem.getActionView().setBackgroundColor(R.color.abc_search_url_text_normal);
 
         mMediaRouteButton = (MediaRouteButton) mediaRouteItem.getActionView();
@@ -138,13 +121,14 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         mMediaRouterCallback = new MyMediaRouterCallback();
 
         mMediaRouter.addCallback(mMediaRouteSelector, mMediaRouterCallback, MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY);
-
+*/
 
         return true;
     }
 
+
     @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
         Fragment fragment = null;
         switch (tab.getPosition()){
             case 0:
@@ -173,12 +157,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
+
     }
 
     @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction fragmentTransaction) {
+
     }
+
 
     private String getTabTitle(int position){
         Locale l = Locale.getDefault();

@@ -1,18 +1,20 @@
 package se.slashat.slashapp.fragments.about;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.fragments.episode.EpisodeDetailFragment;
 import se.slashat.slashapp.model.Personal;
+import se.slashat.slashapp.util.ContentView;
 
 /**
  * Created by nicklas on 8/14/13.
  */
-public class AboutDetailActivity extends FragmentActivity {
+public class AboutDetailActivity extends ActionBarActivity {
 
     private Personal personal;
 
@@ -30,11 +32,11 @@ public class AboutDetailActivity extends FragmentActivity {
         AboutDetailFragment aboutDetailFragment = new AboutDetailFragment();
         aboutDetailFragment.setArguments(bundle);
 
-        getSupportFragmentManager().beginTransaction().add(android.R.id.content, aboutDetailFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(ContentView.getContentViewCompat(), aboutDetailFragment).commit();
 
         setTitle(personal.getName());
 
-        ActionBar ab = getActionBar();
+        ActionBar ab = getSupportActionBar();
 
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);

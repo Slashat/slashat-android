@@ -1,17 +1,18 @@
 package se.slashat.slashapp.fragments.episode;
 
-import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.model.Episode;
+import se.slashat.slashapp.util.ContentView;
 
 /**
  * Created by nicklas on 8/14/13.
  */
-public class EpisodeDetailActivity extends FragmentActivity {
+public class EpisodeDetailActivity extends ActionBarActivity {
 
     private Episode episode;
 
@@ -29,11 +30,11 @@ public class EpisodeDetailActivity extends FragmentActivity {
         EpisodeDetailFragment episodeDetailFragment = new EpisodeDetailFragment();
         episodeDetailFragment.setArguments(bundle);
 
-        getSupportFragmentManager().beginTransaction().add(android.R.id.content, episodeDetailFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(ContentView.getContentViewCompat(), episodeDetailFragment).commit();
 
         setTitle(episode.getFullEpisodeName());
 
-        ActionBar ab = getActionBar();
+        ActionBar ab = getSupportActionBar();
 
         ab.setDisplayShowHomeEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
