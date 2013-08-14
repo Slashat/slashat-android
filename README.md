@@ -1,8 +1,8 @@
 Slashapp för Android
 
-Experimentbranch för Android Studio.
+Experimentbranch för Android Studio 0.2+ (använd ej 0.1)
 
-Efter clone och pull så kan man öppna projektet i Android studio genom att köra import project och välja gradle och gradle wrapper.
+Efter clone och pull så kan man öppna projektet i Android Studio 0.2+ genom att köra import project och välja gradle och gradle wrapper.
 
 Om Android Studio inte skapar local.properties själv så ska den innehålla:
 
