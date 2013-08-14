@@ -37,7 +37,8 @@ public class AboutDetailFragment extends Fragment {
             setHomepageClickListener(person,view.findViewById(R.id.browser));
             setEmailClickListener(person,view.findViewById(R.id.email));
             setTwitterClickListener(person,view.findViewById(R.id.twitter));
-
+        }else{
+            view.findViewById(R.id.aboutdetailroot).setVisibility(View.GONE);
         }
         return view;
     }

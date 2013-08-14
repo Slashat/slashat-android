@@ -44,6 +44,8 @@
 
         <activity
             android:name="se.slashat.slashapp.fragments.episode.EpisodeDetailActivity"/>
+        <activity
+            android:name="se.slashat.slashapp.fragments.about.AboutDetailActivity"/>
     </application>
 
 </manifest>

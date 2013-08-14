@@ -32,6 +32,7 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
+    private static Callback<Personal> callback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -110,12 +111,11 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
 
     @Override
     public void call(Personal result) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("person",result);
 
-        AboutDetailFragment aboutDetailFragment = new AboutDetailFragment();
-        aboutDetailFragment.setArguments(bundle);
+        callback.call(result);
+    }
 
-        FragmentSwitcher.getInstance().switchFragment(aboutDetailFragment, true,  R.id.aboutdetailfragment);
+    public static void setCallback(Callback<Personal> callback) {
+        AboutListFragment.callback = callback;
     }
 }

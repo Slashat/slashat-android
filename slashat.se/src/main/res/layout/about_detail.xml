@@ -2,11 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/card_bg"
+
               android:orientation="vertical"
               android:id="@+id/aboutdetailroot"
         >
 
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_bg"
+            android:layout_margin="12dp"
+            android:orientation="vertical">
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -222,5 +228,6 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+        </LinearLayout>
 
 </LinearLayout>

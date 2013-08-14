@@ -4,7 +4,7 @@
               android:layout_height="wrap_content"
               android:background="@drawable/card_bg"
               android:orientation="vertical"
-              android:visibility="gone"
+              android:visibility="visible"
               android:id="@+id/aboutdetailroot">
         >
 
