@@ -16,8 +16,9 @@ dependencies{
     compile 'joda-time:joda-time:2.2'
     compile 'com.android.support:support-v4:13.0.+'
     compile "com.android.support:appcompat-v7:18.0.+"
-    compile "com.android.support:mediarouter-v7:18.0.0"
-    compile files('libs/GoogleCastSdkAndroid-1.0.0.jar')
+
+    /*compile "com.android.support:mediarouter-v7:18.0.0"
+    compile files('libs/GoogleCastSdkAndroid-1.0.0.jar')*/
 }
 
 android {

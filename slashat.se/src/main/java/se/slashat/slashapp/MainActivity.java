@@ -6,18 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.MediaRouteButton;
-import android.support.v7.media.MediaRouteSelector;
-import android.support.v7.media.MediaRouter;
-import android.support.v7.media.MediaRouter.RouteInfo;
 import android.view.Menu;
 import android.view.Window;
-
-import com.google.cast.CastContext;
-import com.google.cast.CastDevice;
-import com.google.cast.MediaRouteAdapter;
-import com.google.cast.MediaRouteHelper;
-import com.google.cast.MediaRouteStateChangeListener;
 
 import java.util.Locale;
 
@@ -28,7 +18,7 @@ import se.slashat.slashapp.fragments.episode.EpisodeFragment;
 import se.slashat.slashapp.fragments.live.LiveFragment;
 import se.slashat.slashapp.player.PlayerInterfaceImpl;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, MediaRouteAdapter {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
     public static final String SELECTEDTAB = "selectedtab";
     /**
@@ -39,13 +29,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     private AboutFragment mAboutFragment;
     private static Context context;
     private PlayerInterfaceImpl playerInterface;
-    private MediaRouteButton mMediaRouteButton;
-    private CastContext mCastContext;
-    private MediaRouter mMediaRouter;
-    private MediaRouteSelector mMediaRouteSelector;
-    private MyMediaRouterCallback mMediaRouterCallback;
-    private CastDevice mSelectedDevice;
-    private MediaRouteStateChangeListener mRouteStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,34 +166,4 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public static Context getContext() {
         return context;
     }
-
-    @Override
-    public void onDeviceAvailable(CastDevice castDevice, String s, MediaRouteStateChangeListener mediaRouteStateChangeListener) {
-        mSelectedDevice = castDevice;
-        mRouteStateListener = mediaRouteStateChangeListener;
-    }
-
-    @Override
-    public void onSetVolume(double v) {
-
-    }
-
-    @Override
-    public void onUpdateVolume(double v) {
-
-    }
-
-    private class MyMediaRouterCallback extends MediaRouter.Callback {
-        @Override
-        public void onRouteSelected(MediaRouter router, RouteInfo route) {
-            MediaRouteHelper.requestCastDeviceForRoute(route);
-        }
-
-        @Override
-        public void onRouteUnselected(MediaRouter router, RouteInfo route) {
-            mSelectedDevice = null;
-            mRouteStateListener = null;
-        }
-    }
-
 }
