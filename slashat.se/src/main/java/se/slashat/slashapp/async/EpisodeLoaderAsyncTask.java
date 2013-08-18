@@ -44,7 +44,7 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 
 	@Override
 	protected Episode[] doInBackground(Void... params) {
-		Episode[] episodes = ArchiveService.getEpisodes(new UpdateCallback() {
+		Episode[] episodes = ArchiveService.getInstance().getEpisodes(new UpdateCallback() {
 
 			@Override
 			public void onUpdate() {
@@ -69,12 +69,12 @@ public class EpisodeLoaderAsyncTask extends AsyncTask<Void, Void, Episode[]> {
 	@Override
 	protected void onProgressUpdate(Void... values) {
 		super.onProgressUpdate(values);
-		progressDialog.setMessage(ArchiveService.getProgressMessage());
-		int numberOfEpisodes = ArchiveService.getNumberOfEpisodes();
+		progressDialog.setMessage(ArchiveService.getInstance().getProgressMessage());
+		int numberOfEpisodes = ArchiveService.getInstance().getNumberOfEpisodes();
 		if (progressDialog.getMax() != numberOfEpisodes) {
 			progressDialog.setMax(numberOfEpisodes);
 		}
-		progressDialog.incrementProgressBy(ArchiveService.getProcessedNumbers() - progressDialog.getProgress());
+		progressDialog.incrementProgressBy(ArchiveService.getInstance().getProcessedNumbers() - progressDialog.getProgress());
 
 	}
 

@@ -8,6 +8,6 @@ import android.util.Log;
 public class Strings {
 
     public static boolean isNullOrEmpty(String input){
-        return input == null || input.equals("");
+        return input == null || input.length() == 0;
     }
 }

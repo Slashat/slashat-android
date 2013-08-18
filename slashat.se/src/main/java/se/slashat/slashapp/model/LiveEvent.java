@@ -2,7 +2,10 @@ package se.slashat.slashapp.model;
 
 import org.joda.time.DateTime;
 
-public class LiveEvent implements Comparable<LiveEvent> {
+import java.io.Serializable;
+
+public class LiveEvent implements Comparable<LiveEvent>, Serializable {
+    private static final long serialVersionUID = 1L;
     private final DateTime start;
     private final DateTime end;
     private final String summary;

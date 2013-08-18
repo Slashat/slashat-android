@@ -94,12 +94,14 @@ public class CountdownFragment extends Fragment {
         GoogleCalendarService googleCalendarService = new GoogleCalendarService();
         googleCalendarService.getCalendarEntries("3om4bg9o7rdij1vuo7of48n910", new Callback<List<LiveEvent>>() {
             @Override
-            public void call(List<LiveEvent> result) {
+            public void call(final List<LiveEvent> result) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!result.isEmpty()) {
+                            LiveEvent liveEvent = result.get(0);
 
-                LiveEvent liveEvent = result.get(0);
-
-                final DateTime start = liveEvent.getStart();
-                final DateTime now = new DateTime();
+                            final DateTime start = liveEvent.getStart();
 
 
                 /* Enable this for the iOS-app-style counter.
@@ -111,28 +113,41 @@ public class CountdownFragment extends Fragment {
                 minutes.setText(String.valueOf(period.getMinutes()));
                 seconds.setText(String.valueOf(period.getSeconds()));*/
 
-                eventTitle.setText(liveEvent.getSummary());
-                eventDescription.setText(liveEvent.getDescription());
+                            eventTitle.setText(liveEvent.getSummary());
+                            eventDescription.setText(liveEvent.getDescription());
 
-                final PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays().appendSeparator(":").printZeroAlways().minimumPrintedDigits(2).appendHours().appendSeparator(":")
-                        .appendMinutes().appendSeparator(":").appendSeconds().toFormatter();
+                            final PeriodFormatter formatter = new PeriodFormatterBuilder().appendDays().appendSeparator(":").printZeroAlways().minimumPrintedDigits(2).appendHours().appendSeparator(":")
+                                    .appendMinutes().appendSeparator(":").appendSeconds().toFormatter();
 
-                countDownTimer = new CountDownTimer(start.getMillis() - now.getMillis(), 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
 
-                        final DateTime now = new DateTime();
-                        Period period = new Period(now, start);
+                            final DateTime now = new DateTime();
+                            Period period = new Period(now, start);
+                            countdownText.setText(formatter.print(period.normalizedStandard()));
 
-                        countdownText.setText(formatter.print(period.normalizedStandard()));
+                            if (countDownTimer != null) {
+                                countDownTimer.cancel();
+                            }
+
+                            countDownTimer = new CountDownTimer(start.getMillis() - now.getMillis(), 1000) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+
+                                    final DateTime now = new DateTime();
+                                    Period period = new Period(now, start);
+
+                                    countdownText.setText(formatter.print(period.normalizedStandard()));
+                                }
+
+                                @Override
+                                public void onFinish() {
+                                    setOnAir();
+                                }
+                            };
+                            countDownTimer.start();
+                        }
                     }
+                });
 
-                    @Override
-                    public void onFinish() {
-                        setOnAir();
-                    }
-                };
-                countDownTimer.start();
             }
         });
     }

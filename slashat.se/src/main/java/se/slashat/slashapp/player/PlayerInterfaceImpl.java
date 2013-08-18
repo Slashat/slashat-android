@@ -128,7 +128,7 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
         // maybe use setDrawable instead
         Log.i("PlayerInterfaceImpl", "Current: " + episodeName);
         if (EOF && episodeName != null && !episodeName.equals("")) {
-            List<Episode> episodes = Arrays.asList(ArchiveService.getEpisodes(EpisodeLoaderAsyncTask.getVoidCallback(), false));
+            List<Episode> episodes = Arrays.asList(ArchiveService.getInstance().getEpisodes(EpisodeLoaderAsyncTask.getVoidCallback(), false));
 
             Episode newEpisode = null;
             EPISODELOOP:
