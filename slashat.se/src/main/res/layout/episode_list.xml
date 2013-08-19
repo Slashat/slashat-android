@@ -15,5 +15,6 @@
             android:layout_height="wrap_content"
             android:divider="@android:color/transparent"
             android:dividerHeight="5dp"
+            android:background="#EEEEEE"
             tools:listitem="@layout/episode_list_item_row"/>
 </LinearLayout>
