@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class CountdownFragment extends Fragment {
     private TextView countdownText;
     private TextView eventTitle;
     private TextView eventDescription;
+    private View eventTitleHeader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +69,7 @@ public class CountdownFragment extends Fragment {
         countdownText = (TextView) view.findViewById(R.id.countdowntext);
         eventTitle = (TextView) view.findViewById(R.id.liveeventtitle);
         eventDescription = (TextView) view.findViewById(R.id.liveeventdescription);
+        eventTitleHeader = view.findViewById(R.id.eventtitleheader);
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +157,8 @@ public class CountdownFragment extends Fragment {
 
     private void setOnAir() {
         button.setVisibility(View.VISIBLE);
+        eventTitleHeader.setVisibility(View.GONE);
+        eventDescription.setVisibility(View.GONE);
         countdownText.setText(getString(R.string.now_live));
         countdownText.setTextColor(Color.RED);
     }
