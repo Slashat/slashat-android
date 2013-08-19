@@ -4,17 +4,24 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
 
-<LinearLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:id="@+id/fragment_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="12dp"
-    android:layout_marginTop="12dp"
-    android:layout_marginRight="12dp"
-    android:layout_marginBottom="52dp"
-    tools:context=".MainActivity"/>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+        <LinearLayout
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="vertical"
+                android:id="@+id/fragment_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="52dp"
+                tools:context=".MainActivity"/>
+    </LinearLayout>
 
     <LinearLayout
             android:id="@+id/playerLayout"
@@ -39,13 +46,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="0:00:00" />
+                android:text="0:00:00"/>
 
         <SeekBar
                 android:id="@+id/seekbar"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"/>
 
     </LinearLayout>
 
