@@ -8,6 +8,9 @@
 
     <ListView
             android:id="@android:id/list"
+            android:paddingRight="12dp"
+            android:paddingLeft="12dp"
+            android:scrollbarStyle="outsideOverlay"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:divider="@android:color/transparent"
