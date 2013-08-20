@@ -35,6 +35,8 @@ public class TranscodeLoaderAsyncTask extends AsyncTask<URL, Void, String> {
 
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
+            connection.setFixedLengthStreamingMode(0);
+            connection.setDoOutput(true);
             connection.connect();
 
             OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());

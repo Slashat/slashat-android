@@ -1,6 +1,7 @@
 package se.slashat.slashapp.service;
 
 import android.R;
+import android.os.Build;
 import android.util.Log;
 
 import java.net.MalformedURLException;
@@ -70,7 +71,12 @@ public class BambuserService {
     }
 
     private static void loadTranscodedUrl(String broadCastId, Callback<String> callback) throws MalformedURLException {
-        URL url = buildTranscodeUrl(broadCastId, Preset.HLS);
+        URL url = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH && !android.os.Build.MANUFACTURER.toLowerCase().contains("samsung")){
+            url = buildTranscodeUrl(broadCastId, Preset.HLS);
+        }else{
+            url = buildTranscodeUrl(broadCastId, Preset.MP4_MEDIUM);
+        }
         TranscodeLoaderAsyncTask transcodeLoaderAsyncTask = new TranscodeLoaderAsyncTask(callback);
         transcodeLoaderAsyncTask.execute(url);
     }
