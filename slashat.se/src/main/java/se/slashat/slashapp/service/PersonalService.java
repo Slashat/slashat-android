@@ -12,7 +12,7 @@ public class PersonalService {
         if (type == Type.SHOW) {
             Personal[] personal = new Personal[1];
 
-            personal[0] = new Personal("Om Slashat.se", "Sveriges största teknikpodcast", Type.SHOW, R.drawable.ic_launcher, "slashat@slashat.se", "slashat", "http://www.slashat.se",
+            personal[0] = new Personal("Om Slashat.se", "Sveriges största teknikpodcast", Type.SHOW, R.drawable.slashat, "slashat@slashat.se", "slashat", "http://www.slashat.se",
                     "Slashat.se är en svensk teknikpodcast som drivs av Jezper Söderlund och Tommie Podzemski. Podcasten, som är dryga timmen lång, utkommer varje tisdag kväll och i showen diskuteras nyheter främst rörande teknik, prylar, mjukvara, hårdvara och internet."
                             + "\n\nSedan starten 2009 har Slashat-redaktionen fått tillökning av Magnus Jonasson och Johan Larsson som är givna röster vid våra liverapporteringar från t.ex. Apple events och liknande. De dyker dessutom allt som oftast upp i eftersnacken på tisdagarna, i våra specialavsnitt och syns också i reportage från mässor och events som vi besöker."
                             + "Slashat.se spelas in live inför kamera varje tisdag klockan 20.00 med försnack från klockan 19.30 och lyssnare är välkomna att titta och vara en del i diskussionerna via livechatten."
