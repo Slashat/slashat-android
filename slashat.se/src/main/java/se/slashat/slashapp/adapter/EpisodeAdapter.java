@@ -50,7 +50,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 		TextView episodeNumber;
 		TextView txtTitle;
 		TextView date;
-		TextView length;
+        TextView description;
         ImageView playButton;
 
 	}
@@ -61,7 +61,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 		holder.episodeNumber = (TextView) row.findViewById(R.id.episodeNumber);
 		holder.txtTitle = (TextView) row.findViewById(R.id.episodeTitle);
 		holder.date = (TextView) row.findViewById(R.id.dateAndLength);
-		holder.length = (TextView) row.findViewById(R.id.length);
+		holder.description = (TextView) row.findViewById(R.id.descriptionText);
         holder.playButton = (ImageView) row.findViewById(R.id.playbutton);
 		return holder;
 	}
@@ -91,17 +91,17 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 		EpisodeHolder eh = (EpisodeHolder) holder;
 		eh.episodeNumber.setText(String.format("#%03d",episode.getModel().getEpisodeNumber()));
 		eh.txtTitle.setText(episode.getModel().getName());
-		eh.date.setText(dateFormat.format(episode.getModel().getPublished()));
+        eh.description.setText(episode.getModel().getDescription());
 		
 		String duration = episode.getModel().getDuration();
 		if (countOccurrences(duration, ':') == 1){
 			duration = "00:"+duration; // For episodes shorter than 1 hour.
 		}
-		
-		
-		Period period = durationFormatter.parsePeriod(duration).normalizedStandard(PeriodType.minutes());
-		String periodString = String.valueOf(period.getMinutes())+"m";
-		eh.length.setText(periodString);
+
+
+        Period period = durationFormatter.parsePeriod(duration).normalizedStandard(PeriodType.minutes());
+        String periodString = String.valueOf(period.getMinutes())+" minuter";
+        eh.date.setText(dateFormat.format(episode.getModel().getPublished()) + " - " + periodString);
 
         eh.playButton.setOnClickListener(new OnClickListener() {
             @Override
