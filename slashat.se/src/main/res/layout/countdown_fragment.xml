@@ -156,6 +156,7 @@
               android:layout_height="wrap_content"
             android:id="@+id/countdowntext"
             android:text="Laddar"
+            android:textColor="#333333"
             android:fontFamily="sans-serif-condensed"
             android:textSize="60sp"/>
 

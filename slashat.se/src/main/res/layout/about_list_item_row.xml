@@ -28,6 +28,7 @@
                 android:layout_marginTop="2dp"
                 android:gravity="top"
                 android:text="Jezper Söderlund"
+                android:textColor="#333333"
                 android:textSize="20sp"
                 android:fontFamily="sans-serif-condensed"
                 android:lineSpacingMultiplier="1.2"/>

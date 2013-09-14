@@ -79,7 +79,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-                    android:textColor="#000000"
+                    android:textColor="#333333"
                     android:fontFamily="sans-serif"
                     android:textSize="15sp"/>
 
@@ -157,6 +157,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/twitter"
                             android:text="Twitter"
+                            android:textColor="#333333"
                             android:textSize="17sp"
                             android:layout_marginLeft="6dp"
                             android:layout_marginBottom="8dp"
@@ -187,6 +188,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/browser"
                             android:text="Hemsida"
+                            android:textColor="#333333"
                             android:textSize="17sp"
                             android:layout_marginLeft="6dp"
                             android:layout_marginBottom="8dp"
@@ -217,6 +219,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/email"
                             android:text="E-post"
+                            android:textColor="#333333"
                             android:textSize="17sp"
                             android:layout_marginLeft="6dp"
                             android:layout_marginBottom="8dp"
