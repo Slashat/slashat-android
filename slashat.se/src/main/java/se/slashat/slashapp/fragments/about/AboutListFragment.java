@@ -59,11 +59,17 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
     private void populate() {
         PersonalAdapter adapter = null;
 
+        Personal[] show = PersonalService.getPersonal(Personal.Type.SHOW);
         Personal[] crew = PersonalService.getPersonal(Personal.Type.HOST);
         Personal[] assistant = PersonalService.getPersonal(Personal.Type.ASSISTANT);
         Personal[] dev = PersonalService.getPersonal(Personal.Type.DEV);
 
         ArrayList<ViewModelBase> arrayList = new ArrayList<ViewModelBase>();
+
+        arrayList.add(new SectionViewModel(new SectionModel("Om showen")));
+        for (int i = 0; i < show.length; i++) {
+            arrayList.add(new PersonalViewModel(show[i]));
+        }
 
         arrayList.add(new SectionViewModel(new SectionModel("Programledare")));
         for (int i = 0; i < crew.length; i++) {
