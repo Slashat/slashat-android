@@ -23,7 +23,7 @@ public class PersonalService {
         if (type == Type.HOST) {
             Personal[] personal = new Personal[2];
 
-            personal[0] = new Personal("Jezper Söderlund", "PROGRAMLEDARE", Type.HOST, R.drawable.jezper, "kontakt@jezper.se", "jezperse", "http://www.jezper.se",
+            personal[0] = new Personal("Jezper Söderlund", "Apple fanboy", Type.HOST, R.drawable.jezper, "kontakt@jezper.se", "jezperse", "http://www.jezper.se",
                     "En glad och bekväm herre, årsmodell 1980. Jobbar som originalare men är också aktiv inom dansmusikscenen som producenten och DJ:n Airbase."
                             + "\n\nHan spenderar orimligt mycket tid framför datorer och har numer helt och hållet lämnat PC-land får en hundraprocentig Apple-miljö."
                             + "Några Linux-dojor har han aldrig velat ha. Intresset för datorer och teknik har hängt med sedan Amiga 500:an."
@@ -31,7 +31,7 @@ public class PersonalService {
 
             personal[1] = new Personal(
                     "Tommie Podzemski",
-                    "PROGRAMLEDARE",
+                    "Borde avlönas av Google",
                     Type.HOST,
                     R.drawable.tommie,
                     "tommie@tommie.nu",
@@ -45,14 +45,14 @@ public class PersonalService {
         }
         if (type == Type.ASSISTANT){
             Personal[] personal = new Personal[2];
-            personal[0] = new Personal("Magnus Jonasson", "FORUMGENERAL", Type.ASSISTANT, R.drawable.magnus, "magnus@magnusjonasson.com", "magnusjonasson", "http://www.magnusjonasson.com",
+            personal[0] = new Personal("Magnus Jonasson", "Prylnörden", Type.ASSISTANT, R.drawable.magnus, "magnus@magnusjonasson.com", "magnusjonasson", "http://www.magnusjonasson.com",
                     "Killen som drar upp medelåldern på Slashat-redaktionen då han är den enda i gänget som är född på 70-talet."
                             + "\n\nMagnus jobbar till vardags som IT-tekniker och konsult med affärssystem och Windows Server-miljöer som specialitet, men föredrar faktiskt Mac privat."
                             + "\n\nBeskriver sig själv som en prylnörd och är alltid hungrig på nya prylar att integrera med sitt digitala liv."
                             + "\n\nFörutom teknik så har en kärlek till matlagning har funnits länge och inte mycket slår hemlagat med en kall öl till. Eller två.");
             personal[1] = new Personal(
                     "Johan Larsson",
-                    "KOTTRAGEAR OCH APPUTVECKLING",
+                    "Kottrageare",
                     Type.ASSISTANT,
                     R.drawable.johan,
                     "johan@johanl.se",
@@ -65,10 +65,14 @@ public class PersonalService {
         }
 
         if (type == Type.DEV) {
-            Personal[] personal = new Personal[1];
-            personal[0] = new Personal("Nicklas Löf", "APPUTVECKLING", Type.DEV, R.drawable.nicklas, "nicklaslof76@gmail.com", "nicklas.lof", "http://www.soundcloud.com/snukey/",
-                    "Blah blahblahlbhal bahbl ahab halb labh");
-
+            Personal[] personal = new Personal[2];
+            personal[0] = new Personal("Nicklas Löf", "Android-kung", Type.DEV, R.drawable.nicklas, "nicklaslof76@gmail.com", "nicklas.lof", "http://www.soundcloud.com/snukey/",
+                    "Relativt ny Slashat-lyssnare som varit datorintresserad sedan en Vic20 med 12\" svartvit TV uppenbarade sig under granen för många herrans år sedan. Efter detta har vägen gått via C64, Amiga och PC till att bli en trogen Mac-användare i snart 10 år. Testade därför iOS under 1 år men gick över till Android efter 1 år."
+                            + "\n\nJobbat som sysadmin och nättekniker men jobbar sedan några år tillbaka som programmerare på heltid. Mest Java och C#. Har hjälpt till med utvecklingen av Android-versionen av Slashats app."
+                            + "\n\nAktiv Xbox-spelare och har tillsammans med sambon kört igenom nästan varenda co-op-spel med splitscreen. Försöker även att producera elektronisk musik med varierande framgång.");
+            personal[1] = new Personal("Erika Thorsen", "iOS-drottning", Type.DEV, R.drawable.erika, "erika@akiri.se", "", "http://www.akiri.se/",
+                    "Erika har ställt upp med kod och programmeringgsupport i iOS-appen. Till vardags jobbar hon som approgrammerare på en mellanstor konsultfirma. På fritiden slukar hon TV-serier à la science fiction eller springer i skogen med scouterna."
+                    + "\n\nHon gillar och kör Mac, både på jobbet och privat, men programmerar lika gärna appar till iOS som till Android.");
             return personal;
         }
 
