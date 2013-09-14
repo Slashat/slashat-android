@@ -98,7 +98,8 @@
                             android:layout_weight="0.5"
                             android:fontFamily="sans-serif"
                             android:textStyle="bold"
-                            android:text="Titta!">
+                            android:text="Titta!"
+                        android:visibility="gone">
                     </Button>
                 </LinearLayout>
 
