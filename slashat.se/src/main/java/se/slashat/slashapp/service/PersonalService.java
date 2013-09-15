@@ -46,10 +46,8 @@ public class PersonalService {
         if (type == Type.ASSISTANT){
             Personal[] personal = new Personal[2];
             personal[0] = new Personal("Magnus Jonasson", "Prylnörden", Type.ASSISTANT, R.drawable.magnus, "magnus@magnusjonasson.com", "magnusjonasson", "http://www.magnusjonasson.com",
-                    "Killen som drar upp medelåldern på Slashat-redaktionen då han är den enda i gänget som är född på 70-talet."
-                            + "\n\nMagnus jobbar till vardags som IT-tekniker och konsult med affärssystem och Windows Server-miljöer som specialitet, men föredrar faktiskt Mac privat."
-                            + "\n\nBeskriver sig själv som en prylnörd och är alltid hungrig på nya prylar att integrera med sitt digitala liv."
-                            + "\n\nFörutom teknik så har en kärlek till matlagning har funnits länge och inte mycket slår hemlagat med en kall öl till. Eller två.");
+                    "Killen som drar upp medelåldern på Slashat-redaktionen, då han är den enda i gänget som är född på 70-talet. Magnus jobbar till vardags som konsultchef och tekniker och arbetar med affärssystem och Windows Server-miljöer men föredrar Mac privat."
+                            + "\n\nAlltid på jakt efter nya prylar att integrera i sitt digitala liv. Förutom teknik så har en kärlek till matlagning funnits länge och inte mycket slår hemlagad mat med en kall öl. Eller två.");
             personal[1] = new Personal(
                     "Johan Larsson",
                     "Kottrageare",
