@@ -83,7 +83,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                     android:textColor="#333333"
-                    android:fontFamily="sans-serif"
+                    android:lineSpacingMultiplier="1.15"
                     android:textSize="15sp"/>
 
             <LinearLayout

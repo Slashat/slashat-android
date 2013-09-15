@@ -27,7 +27,7 @@
                     android:id="@+id/episodeNumberAndTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginBottom="0dp"
                     android:layout_marginTop="12dp"
                     android:gravity="center_vertical"
                     android:text="#199 - Vi CES och hörs"
@@ -43,8 +43,8 @@
                     android:id="@+id/dateAndLength"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginTop="0dp"
                     android:gravity="center_vertical"
                     android:text="22 jan 2013 - 1:07:45"
                     android:textColor="#ffffff"
@@ -69,8 +69,8 @@
                         android:text="Vad är PS Move? Vad är Twitter @anywhere? Vad har förändrat internet? Vad regerar på smartphonemarknaden? Vad ringer Microsoftanställda med? Vad kommer Telia erbjuda? Och vad hände egentligen med Onlive? Det och mer i denna veckan, med Tommie och Jezper!"
                         android:textColor="#333333"
                         android:textSize="15sp"
-                        android:fontFamily="sans-serif"
                         android:layout_margin="12dp"
+                        android:lineSpacingMultiplier="1.15"
                         />
 
                 <LinearLayout

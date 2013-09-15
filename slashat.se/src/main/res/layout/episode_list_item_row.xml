@@ -99,8 +99,7 @@
                 android:text="Detta är en massa go text för att illustrera hur johan  det ser ut med en massa olika descs ... blalalaal alal lsnasdd akdajk dasdsa dkjasdjsad sajdajsdjas dasd jdsajdasjdsa"
                 android:textColor="#333333"
                 android:textSize="14sp"
-                android:fontFamily="sans-serif-condensed"
-                android:lineSpacingMultiplier="1.2" />
+                android:lineSpacingMultiplier="1.15" />
 
     </LinearLayout>
 
