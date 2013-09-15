@@ -23,18 +23,16 @@ public class PersonalService {
         if (type == Type.HOST) {
             Personal[] personal = new Personal[2];
 
-            personal[0] = new Personal("Jezper Söderlund", "Apple fanboy", Type.HOST, R.drawable.jezper, "kontakt@jezper.se", "jezperse", "http://www.jezper.se",
-                    "En glad och bekväm herre, årsmodell 1980. Jobbar som originalare men är också aktiv inom dansmusikscenen som producenten och DJ:n Airbase."
-                            + "\n\nHan spenderar orimligt mycket tid framför datorer och har numer helt och hållet lämnat PC-land får en hundraprocentig Apple-miljö."
-                            + "Några Linux-dojor har han aldrig velat ha. Intresset för datorer och teknik har hängt med sedan Amiga 500:an."
-                            + "\n\nÖvriga intressen innefattar musik, film, resor, gott öl och vin, motorcyklar, golf och egentligen allt som hör livsnjutning till.");
+            personal[0] = new Personal("Jezper Söderlund", "Apple fanboy", Type.HOST, R.drawable.jezper, "jezper@slashat.se", "jezperse", "http://www.jezper.se",
+                    "En glad och bekväm herre, årsmodell 1980 som arbetar med marknadsföring på dagtid och producerar dansmusik bakom artistnamnet Airbase på kvällstid - när han inte sänder Slashat förstås."
+                            + "\n\nJezper spenderar nästan orimligt mycket tid framför datorer och lever där i symbios med Apples produkter och tjänster, vilka han högljutt proklamerar in-show emellanåt. Övriga intressen inkluderar musik, film, resor, gott öl, vin och allt annat som hör livsnjutning till.");
 
             personal[1] = new Personal(
                     "Tommie Podzemski",
                     "Borde avlönas av Google",
                     Type.HOST,
                     R.drawable.tommie,
-                    "tommie@tommie.nu",
+                    "tommie@slashat.se",
                     "tommienu",
                     "http://www.tommie.nu",
                     "En tjötig och sportig entreprenör med visst huvud för kod, vilket allt som oftast innebär att Tommie får en idé på fredagen, spenderar hela helgen på att koda den och sedan lägger ner projektet på måndagen."
@@ -43,7 +41,7 @@ public class PersonalService {
         }
         if (type == Type.ASSISTANT){
             Personal[] personal = new Personal[2];
-            personal[0] = new Personal("Magnus Jonasson", "Prylnörden", Type.ASSISTANT, R.drawable.magnus, "magnus@magnusjonasson.com", "magnusjonasson", "http://www.magnusjonasson.com",
+            personal[0] = new Personal("Magnus Jonasson", "Prylnörden", Type.ASSISTANT, R.drawable.magnus, "magnus@slashat.se", "magnusjonasson", "http://www.magnusjonasson.com",
                     "Killen som drar upp medelåldern på Slashat-redaktionen, då han är den enda i gänget som är född på 70-talet. Magnus jobbar till vardags som konsultchef och tekniker och arbetar med affärssystem och Windows Server-miljöer men föredrar Mac privat."
                             + "\n\nAlltid på jakt efter nya prylar att integrera i sitt digitala liv. Förutom teknik så har en kärlek till matlagning funnits länge och inte mycket slår hemlagad mat med en kall öl. Eller två.");
             personal[1] = new Personal(
@@ -51,7 +49,7 @@ public class PersonalService {
                     "Kottrageare",
                     Type.ASSISTANT,
                     R.drawable.johan,
-                    "johan@johanl.se",
+                    "johan@slashat.se",
                     "kottkrig",
                     "http://johanl.se",
                     "Älskar allt som är interaktivt. Utvecklar till vardags multimediaproduktioner och till sängdags så utvecklar jag annat smått och gott."
