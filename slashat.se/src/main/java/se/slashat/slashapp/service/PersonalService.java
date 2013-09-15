@@ -58,8 +58,8 @@ public class PersonalService {
                     "johan@johanl.se",
                     "kottkrig",
                     "http://johanl.se",
-                    "Älskar allt som är interaktivt. Utvecklar till vardags multimediaproduktioner och till söngdags så utvecklar jag annat smått och gott."
-                            + "\n\när biOS så jag använder (och utvecklar) lika gärna med Android som iOS. Det finns styrkor och svagheter med allt men jag försöker att använda det som känns mest spännande för stunden."
+                    "Älskar allt som är interaktivt. Utvecklar till vardags multimediaproduktioner och till sängdags så utvecklar jag annat smått och gott."
+                            + "\n\nÄr biOS så jag använder (och utvecklar) lika gärna med Android som iOS. Det finns styrkor och svagheter med allt men jag försöker att använda det som känns mest spännande för stunden."
                             + "\n\nArbetar hellre i OS X och Linux än i Windows när jag vill vara produktiv. Använder hellre Windows än annat när det kommer till lek & spel.");
             return personal;
         }
