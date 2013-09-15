@@ -37,10 +37,8 @@ public class PersonalService {
                     "tommie@tommie.nu",
                     "tommienu",
                     "http://www.tommie.nu",
-                    "Tommie en tjötig och sportig serie-entreprenör med visst huvud för kod."
-                            + "Vilket allt som oftast innebär att Tommie för en idé på fredagen, spenderar hela helgen på att koda den för att sedan lägga ner allt på måndagen."
-                            + "\n\nKör uteslutande PC (Ubuntu och Windows), och är vad man kallar en Android-fanboy."
-                            + "\n\nHan har en viss förkärlek till att pyssla med linux-kärror och jobbar som IT-ansvarig på ett medelstort svenskt företag och säger sällan, t.om aldrig, nej till en öl.");
+                    "En tjötig och sportig entreprenör med visst huvud för kod, vilket allt som oftast innebär att Tommie får en idé på fredagen, spenderar hela helgen på att koda den och sedan lägger ner projektet på måndagen."
+                            + "\n\nArbetar som IT-ansvarig och kör primärt OS X men navigerar även hemtamt i Ubuntu. Tommie ser sig själv som Google och Android-fanboy och utnyttjar detta för att skapa diskussionsunderlag i showen.");
             return personal;
         }
         if (type == Type.ASSISTANT){
