@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="12dp"
-            android:background="#e76816">
+            android:background="#de5214">
 
         <ImageView
                 android:id="@+id/photo"
@@ -97,13 +97,13 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="KONTAKT"
-                        android:textColor="#e76816"/>
+                        android:textColor="#de5214"/>
 
                 <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginRight="12dp"
-                        android:background="#e76816"/>
+                        android:background="#de5214"/>
                 <!--
                 <ImageView
                         android:id="@+id/twitter"

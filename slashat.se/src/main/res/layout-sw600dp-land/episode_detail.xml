@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="32dp"
-            android:background="#e76816"
+            android:background="#de5214"
             >
 
         <TextView
@@ -81,13 +81,13 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="SHOWNOTES"
-                        android:textColor="#e76816"/>
+                        android:textColor="#de5214"/>
 
                 <View
                         android:layout_width="fill_parent"
                         android:layout_height="1dp"
                         android:layout_marginRight="12dp"
-                        android:background="#e76816"/>
+                        android:background="#de5214"/>
 
                 <TextView
                         android:layout_width="wrap_content"
