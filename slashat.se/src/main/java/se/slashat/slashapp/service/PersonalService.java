@@ -59,7 +59,7 @@ public class PersonalService {
         }
 
         if (type == Type.DEV) {
-            Personal[] personal = new Personal[2];
+            Personal[] personal = new Personal[3];
             personal[0] = new Personal("Nicklas Löf", "Android-kung", Type.DEV, R.drawable.nicklas, "nicklaslof76@gmail.com", "nicklas.lof", "http://www.soundcloud.com/snukey/",
                     "Relativt ny Slashat-lyssnare som varit datorintresserad sedan en Vic20 med 12\" svartvit TV uppenbarade sig under granen för många herrans år sedan. Efter detta har vägen gått via C64, Amiga och PC till att bli en trogen Mac-användare i snart 10 år. Testade därför iOS under 1 år men gick över till Android efter 1 år."
                             + "\n\nJobbat som sysadmin och nättekniker men jobbar sedan några år tillbaka som programmerare på heltid. Mest Java och C#. Har hjälpt till med utvecklingen av Android-versionen av Slashats app."
@@ -67,6 +67,9 @@ public class PersonalService {
             personal[1] = new Personal("Erika Thorsen", "iOS-drottning", Type.DEV, R.drawable.erika, "erika@akiri.se", "", "http://www.akiri.se/",
                     "Erika har ställt upp med kod och programmeringgsupport i iOS-appen. Till vardags jobbar hon som approgrammerare på en mellanstor konsultfirma. På fritiden slukar hon TV-serier à la science fiction eller springer i skogen med scouterna."
                     + "\n\nHon gillar och kör Mac, både på jobbet och privat, men programmerar lika gärna appar till iOS som till Android.");
+
+            personal[2] = new Personal("Hjälp Oss!", "Var delaktig i utvecklingen av SlashApp", Type.DEV, R.drawable.help_us, "slashat@slashat.se", "slashat", "http://slashat.se/",
+                    "I väntan på text.");
             return personal;
         }
 
