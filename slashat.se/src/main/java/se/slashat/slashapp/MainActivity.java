@@ -140,6 +140,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     mHighfiveFragment = new HighfiveFragment();
                 }
                 fragment = mHighfiveFragment;
+                break;
         }
         //getSupportFragmentManager().popBackStack();
         //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();

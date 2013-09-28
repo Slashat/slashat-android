@@ -50,4 +50,8 @@ public class User {
     public URL getQr() {
         return qr;
     }
+
+    public Collection<HighFiver> getHighFivers() {
+        return highFivers;
+    }
 }

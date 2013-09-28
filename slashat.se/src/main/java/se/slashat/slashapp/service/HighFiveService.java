@@ -49,15 +49,15 @@ public class HighFiveService {
     }
 
     public static Collection<HighFiver> getAllHighfivers() {
-
+        List<HighFiver> highFivers = new ArrayList<HighFiver>();
         try {
-            List<HighFiver> highFivers = new ArrayList<HighFiver>();
+
             highFivers.add(new HighFiver("Nicklas", "123", "smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
             highFivers.add(new HighFiver("Tommie", "666", "tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        return null;
+        return highFivers;
     }
 
     private static User parseUserFromJson() {
