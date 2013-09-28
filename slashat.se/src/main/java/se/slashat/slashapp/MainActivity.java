@@ -15,6 +15,7 @@ import se.slashat.slashapp.androidservice.EpisodePlayer;
 import se.slashat.slashapp.fragments.FragmentSwitcher;
 import se.slashat.slashapp.fragments.about.AboutFragment;
 import se.slashat.slashapp.fragments.episode.EpisodeFragment;
+import se.slashat.slashapp.fragments.highfive.HighfiveFragment;
 import se.slashat.slashapp.fragments.live.LiveFragment;
 import se.slashat.slashapp.player.PlayerInterfaceImpl;
 
@@ -26,6 +27,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     private LiveFragment mLiveFragment;
     private EpisodeFragment mEpisodeFragment;
+    private HighfiveFragment mHighfiveFragment;
     private AboutFragment mAboutFragment;
     private static Context context;
     private PlayerInterfaceImpl playerInterface;
@@ -42,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             actionBar.addTab(
                     actionBar.newTab()
                             .setText(getTabTitle(i))
@@ -133,6 +135,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 }
                 fragment = mAboutFragment;
                 break;
+            case 3:
+                if (mHighfiveFragment == null){
+                    mHighfiveFragment = new HighfiveFragment();
+                }
+                fragment = mHighfiveFragment;
         }
         //getSupportFragmentManager().popBackStack();
         //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
@@ -159,6 +166,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 return getString(R.string.title_section2).toUpperCase(l);
             case 2:
                 return getString(R.string.title_section3).toUpperCase(l);
+            case 3:
+                return "HIGHFIVE".toUpperCase(l);
         }
 
         return "";
