@@ -27,3 +27,8 @@ local.properties
 
 # ignore comitting changes to Constants which contains hidden keys.
 slashat.se/src/main/java/se/slashat/slashapp/Constants.java
+
+*.DS_Store
+
+#AS ignore
+*.iml
