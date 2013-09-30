@@ -137,7 +137,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:name="se.slashat.slashapp.fragments.highfive.MyHighFiversFragment"
-                    android:id="@+id/about_list_fragment"
+                    android:id="@+id/highfivers_list_fragment"
                     android:layout_gravity="left|center_vertical"
                     tools:layout="@layout/myhighfivers_fragment"/>
 
