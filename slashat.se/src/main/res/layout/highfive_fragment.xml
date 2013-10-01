@@ -2,17 +2,19 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#EEEEEE"
-              android:orientation="vertical"
-              android:id="@+id/highfiveroot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EEEEEE"
+                android:orientation="vertical"
+                android:id="@+id/highfiveroot"
         >
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -22,126 +24,140 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:orientation="vertical">
-        <LinearLayout
-                android:orientation="vertical"
-
-                android:background="@drawable/card_bg"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:id="@+id/linearLayout">
 
             <LinearLayout
-                    android:background="#de5214"
+                    android:orientation="vertical"
+
+                    android:background="@drawable/card_bg"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="12dp"
-                    android:layout_gravity="left|center_vertical">
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="12dp"
+                    android:id="@+id/linearLayout">
 
-                <ImageView
-                        android:layout_width="wrap_content"
+                <LinearLayout
+                        android:background="#de5214"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/highfive_userimage"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="11dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:background="#FFFFFF"
-                        android:padding="1dp"
-                        android:src="@drawable/tommie"/>
+                        android:paddingBottom="12dp"
+                        android:layout_gravity="left|center_vertical">
+
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/highfive_userimage"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="11dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:background="#FFFFFF"
+                            android:padding="1dp"
+                            android:src="@drawable/tommie"/>
+
+                    <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:orientation="vertical">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#ffffff"
+                                android:layout_marginBottom="0dp"
+                                android:layout_marginTop="6dp"
+                                android:fontFamily="sans-serif-condensed"
+                                android:textSize="26sp"
+                                android:textStyle="bold"
+                                android:id="@+id/highfive_username"
+                                android:text="Tommie Podzemski"
+                                />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#dddddd"
+                                android:fontFamily="sans-serif-condensed"
+                                android:textSize="17sp"
+                                android:textStyle="normal"
+                                android:layout_marginBottom="6dp"
+                                android:id="@+id/highfive_numberofhighfives"
+                                android:text="32 highfives"
+                                />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/highfive_firsthighfive"
+                                android:textColor="#dddddd"
+                                android:fontFamily="sans-serif-condensed"
+                                android:textSize="17sp"
+                                android:layout_marginBottom="6dp"
+                                android:textStyle="normal"
+                                android:text="Fick sin första high-five av Jezper den 21 oktober 2013 i Göteborg"
+                                />
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:orientation="vertical">
+                        android:layout_weight="1"
+                        android:background="#EEEEEE"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp">
 
-                    <TextView
+                    <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#ffffff"
-                            android:layout_marginBottom="0dp"
-                            android:layout_marginTop="6dp"
-                            android:fontFamily="sans-serif-condensed"
-                            android:textSize="26sp"
-                            android:textStyle="bold"
-                            android:id="@+id/highfive_username"
-                            android:text="Tommie Podzemski"
-                            />
+                            android:text="Ge high-five"
+                            android:layout_weight="0.5"
+                            android:id="@+id/button"
+                            android:layout_below="@+id/linearLayout"
+                            android:layout_alignParentLeft="true"/>
 
-                    <TextView
+                    <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#dddddd"
-                            android:fontFamily="sans-serif-condensed"
-                            android:textSize="17sp"
-                            android:textStyle="normal"
-                            android:layout_marginBottom="6dp"
-                            android:id="@+id/highfive_numberofhighfives"
-                            android:text="32 highfives"
-                            />
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/highfive_firsthighfive"
-                            android:textColor="#dddddd"
-                            android:fontFamily="sans-serif-condensed"
-                            android:textSize="17sp"
-                            android:layout_marginBottom="6dp"
-                            android:textStyle="normal"
-                            android:text="Fick sin första high-five av Jezper den 21 oktober 2013 i Göteborg"
-                            />
+                            android:text="Ta emot high-five"
+                            android:layout_weight="0.5"
+                            android:id="@+id/button2"
+                            android:layout_below="@+id/linearLayout"
+                            android:layout_toRightOf="@+id/button"
+                            android:singleLine="false"/>
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp">
+                    android:background="#EEEEEE"
+                    android:orientation="vertical">
 
-                <Button
+
+                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ge high-five"
-                        android:layout_weight="0.5"
-                        android:id="@+id/button"
-                        android:layout_below="@+id/linearLayout"
-                        android:layout_alignParentLeft="true"/>
+                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:text="Mina high-fivers:"/>
 
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ta emot high-five"
-                        android:layout_weight="0.5"
-                        android:id="@+id/button2"
-                        android:layout_below="@+id/linearLayout"
-                        android:layout_toRightOf="@+id/button"
-                        android:singleLine="false"/>
+                <fragment
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="#EEEEEE"
+                        android:name="se.slashat.slashapp.fragments.highfive.MyHighFiversFragment"
+                        android:id="@+id/highfivers_list_fragment"
+                        android:layout_gravity="left|center_vertical"
+                        tools:layout="@layout/myhighfivers_fragment"/>
+
             </LinearLayout>
-        </LinearLayout>
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="12dp"
-                      android:layout_marginLeft="12dp"
-                      android:fontFamily="sans-serif-condensed"
-                      android:textSize="20sp"
-                      android:textStyle="bold"
-                    android:text="Mina high-fivers:"/>
-            <fragment
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:name="se.slashat.slashapp.fragments.highfive.MyHighFiversFragment"
-                    android:id="@+id/highfivers_list_fragment"
-                    android:layout_gravity="left|center_vertical"
-                    tools:layout="@layout/myhighfivers_fragment"/>
-
-
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

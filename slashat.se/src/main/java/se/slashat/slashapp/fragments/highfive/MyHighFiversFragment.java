@@ -6,7 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.adapter.MyHighFiversArrayAdapter;
+import se.slashat.slashapp.model.highfive.HighFiver;
+import se.slashat.slashapp.service.HighFiveService;
+import se.slashat.slashapp.viewmodel.HighFiverViewModel;
 
 /**
  * Created by nicklas on 9/28/13.
@@ -15,6 +22,24 @@ public class MyHighFiversFragment extends ListFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.myhighfivers_fragment, null);
+        View view = inflater.inflate(R.layout.myhighfivers_fragment, null);
+
+        Collection<HighFiver> highFivers = HighFiveService.getUser().getHighFivers();
+
+        ArrayList<HighFiverViewModel> list = new ArrayList<HighFiverViewModel>();
+
+
+        for (HighFiver highFiver : highFivers) {
+            HighFiverViewModel highFiverViewModel = new HighFiverViewModel(highFiver);
+            list.add(highFiverViewModel);
+
+        }
+
+        MyHighFiversArrayAdapter myHighFiversArrayAdapter = new MyHighFiversArrayAdapter(getActivity(), R.layout.about_list_item_row, list.toArray(new HighFiverViewModel[list.size()]));
+
+        setListAdapter(myHighFiversArrayAdapter);
+
+
+        return view;
     }
 }
