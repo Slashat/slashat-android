@@ -9,8 +9,8 @@
                 android:id="@+id/highfiveroot"
         >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="vertical"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -33,7 +33,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginBottom="12dp"
                     android:id="@+id/linearLayout">
 
                 <LinearLayout
@@ -105,10 +104,11 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="#EEEEEE"
+                        android:background="#FFFFFF"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp">
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginBottom="4dp">
 
                     <Button
                             android:layout_width="wrap_content"
@@ -131,33 +131,33 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#EEEEEE"
-                    android:orientation="vertical">
 
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:fontFamily="sans-serif-condensed"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:text="Mina high-fivers:"/>
-
-                <fragment
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:background="#EEEEEE"
-                        android:name="se.slashat.slashapp.fragments.highfive.MyHighFiversFragment"
-                        android:id="@+id/highfivers_list_fragment"
-                        android:layout_gravity="left|center_vertical"
-                        tools:layout="@layout/myhighfivers_fragment"/>
-
-            </LinearLayout>
         </LinearLayout>
-    </RelativeLayout>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EEEEEE"
+                android:orientation="vertical">
+
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Mina high-fivers:"/>
+
+            <fragment
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="#EEEEEE"
+                    android:name="se.slashat.slashapp.fragments.highfive.MyHighFiversFragment"
+                    android:id="@+id/highfivers_list_fragment"
+                    android:layout_gravity="left|center_vertical"
+                    tools:layout="@layout/myhighfivers_fragment"/>
+
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
