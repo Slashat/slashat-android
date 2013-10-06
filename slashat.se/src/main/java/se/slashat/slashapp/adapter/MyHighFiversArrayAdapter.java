@@ -3,6 +3,7 @@ package se.slashat.slashapp.adapter;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import se.slashat.slashapp.R;
@@ -29,6 +30,7 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<HighFiverView
         myHighFiversHolder.name = (TextView) row.findViewById(R.id.txtName);
         myHighFiversHolder.username = (TextView) row.findViewById(R.id.title);
         myHighFiversHolder.imageThumb = (ImageView) row.findViewById(R.id.imgIcon);
+        myHighFiversHolder.progressBar = (ProgressBar) row.findViewById(R.id.imageviewprogress);
 
         return myHighFiversHolder;
     }
