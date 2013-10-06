@@ -55,6 +55,8 @@
 
     <style name="ActionBarTabStyle.Slashat" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_slashat</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
     </style>
 	
     <style name="DropDownNav.Slashat" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
