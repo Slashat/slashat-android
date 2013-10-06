@@ -31,10 +31,18 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 
 	@Override
 	public View getView(int position, View convertView, final ViewGroup parent) {
+        // A bit hacky since we have two different kind of views in the adapter but we still want to
+        // make sure that we use the holderpattern and don't create a new view during scroll to prevent lag.
+        //
+        // So we only create a new view if the cached view is of the wrong type. Should be ok since most of the
+        // views will be of the right type anyway.
+
+        // There is probably a better way to do this :-)
+
+
 		View row = convertView;
 		Holder holder = null;
 		final T t = data[position];
-		//if (t instanceof ViewModelBase) {
 			boolean isSection = false;
 			
 			if (t instanceof SectionViewModel){
@@ -53,7 +61,6 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 				holder = createHolder(row);
 			}
 			row.setTag(holder);
-		//}
 
 		if (isClickable()) {
 			row.setOnClickListener(createOnClickListener(t));

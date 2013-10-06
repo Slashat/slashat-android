@@ -12,7 +12,7 @@ import java.util.Collection;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
-import se.slashat.slashapp.adapter.PersonalAdapter;
+import se.slashat.slashapp.adapter.AboutAdapter;
 import se.slashat.slashapp.model.Personal;
 import se.slashat.slashapp.model.SectionModel;
 import se.slashat.slashapp.model.highfive.HighFiver;
@@ -57,7 +57,7 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
     }
 
     private void populate() {
-        PersonalAdapter adapter = null;
+        AboutAdapter adapter = null;
 
         Personal[] show = PersonalService.getPersonal(Personal.Type.SHOW);
         Personal[] crew = PersonalService.getPersonal(Personal.Type.HOST);
@@ -96,7 +96,7 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
         ViewModelBase<?>[] array = arrayList.toArray(new ViewModelBase<?>[arrayList.size()]);
 
 
-        adapter = new PersonalAdapter(getActivity(), R.layout.about_list_item_row, array, this);
+        adapter = new AboutAdapter(getActivity(), R.layout.about_list_item_row, array, this);
 
         setListAdapter(adapter);
 
