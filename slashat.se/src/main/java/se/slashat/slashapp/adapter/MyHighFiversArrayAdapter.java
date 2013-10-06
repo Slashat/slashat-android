@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.viewmodel.HighFiverViewModel;
 
 /**
@@ -17,8 +18,7 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<HighFiverView
         super(context, layoutResourceId, 0, data);
     }
 
-    public static class MyHighFiversHolder extends Holder {
-        ImageView userPhoto;
+    public static class MyHighFiversHolder extends ImageAsyncHolder {
         TextView name;
         TextView username;
     }
@@ -28,7 +28,7 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<HighFiverView
         MyHighFiversHolder myHighFiversHolder = new MyHighFiversHolder();
         myHighFiversHolder.name = (TextView) row.findViewById(R.id.txtName);
         myHighFiversHolder.username = (TextView) row.findViewById(R.id.title);
-        myHighFiversHolder.userPhoto = (ImageView) row.findViewById(R.id.imgIcon);
+        myHighFiversHolder.imageThumb = (ImageView) row.findViewById(R.id.imgIcon);
 
         return myHighFiversHolder;
     }
@@ -50,7 +50,12 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<HighFiverView
         h.name.setText(highFiverViewModel.getModel().getName());
         h.username.setText(highFiverViewModel.getModel().getUsername());
         //TODO: load async
-        h.userPhoto.setImageResource(R.drawable.nicklas);
+        //h.userPhoto.setImageResource(R.drawable.nicklas);
+
+
+        if (highFiverViewModel.getModel().getPicture() != null){
+            ImageService.populateImage(h, highFiverViewModel.getModel().getPicture().toString());
+        }
 
     }
 }

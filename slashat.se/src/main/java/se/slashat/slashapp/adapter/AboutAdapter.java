@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.async.LoadImageAsyncTask;
 import se.slashat.slashapp.model.Personal;
+import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.viewmodel.AboutViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
 
@@ -12,6 +14,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class AboutAdapter extends AbstractArrayAdapter<ViewModelBase<?>> implements Serializable {
@@ -29,16 +32,15 @@ public class AboutAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impleme
 		this.callback = callback;
 	}
 
-	public static class AboutHolder extends Holder {
+	public static class AboutHolder extends ImageAsyncHolder {
 		TextView txtName;
-		ImageView imgView;
         TextView txtTitle;
 	}
 
 	@Override
 	public Holder createHolder(View row) {
 		AboutHolder holder = new AboutHolder();
-		holder.imgView = (ImageView) row.findViewById(R.id.imgIcon);
+		holder.imageThumb = (ImageView) row.findViewById(R.id.imgIcon);
 		holder.txtName = (TextView) row.findViewById(R.id.txtName);
         holder.txtTitle = (TextView) row.findViewById(R.id.title);
 		return holder;
@@ -73,7 +75,13 @@ public class AboutAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impleme
 		AboutHolder ph = (AboutHolder) holder;
 
 		ph.txtName.setText(pvm.getName());
-		ph.imgView.setImageResource(pvm.getImg());
+        if (pvm.getImageUrl() == null){
+            ph.imageThumb.setImageResource(pvm.getImg());
+        }else if (pvm.getImageUrl() != null){
+            ImageService.populateImage(ph,pvm.imageUrl.toString());
+        }
+		//
+
         ph.txtTitle.setText(pvm.getTitle());
 	}
 }

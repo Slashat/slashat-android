@@ -18,6 +18,7 @@ import se.slashat.slashapp.fragments.episode.EpisodeFragment;
 import se.slashat.slashapp.fragments.highfive.HighfiveFragment;
 import se.slashat.slashapp.fragments.live.LiveFragment;
 import se.slashat.slashapp.player.PlayerInterfaceImpl;
+import se.slashat.slashapp.service.ImageService;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -64,6 +65,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onStart();
         playerInterface = new PlayerInterfaceImpl(this);
         EpisodePlayer.initalize(this,playerInterface);
+        ImageService.init(this);
 
     }
 

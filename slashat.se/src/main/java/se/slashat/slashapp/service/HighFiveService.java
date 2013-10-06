@@ -52,8 +52,11 @@ public class HighFiveService {
         List<HighFiver> highFivers = new ArrayList<HighFiver>();
         try {
 
-            highFivers.add(new HighFiver("Nicklas", "123", "smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie", "666", "tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
+            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
+            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
+            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
+            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
+            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -63,13 +66,13 @@ public class HighFiveService {
     private static User parseUserFromJson() {
         try {
             // Mock HighFivedBy:
-            HighFivedBy highFivedBy = new HighFivedBy("Nicklas", new Date(), "Uppsala");
+            HighFivedBy highFivedBy = new HighFivedBy("Nicklas Löf", new Date(), "Uppsala");
             // Mock HighFiver:
 
             Collection<HighFiver> highFivers = getAllHighfivers();
 
             // Mock user:
-            return new User("Nicklas", "123", "smiley", highFivedBy, new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg"), new URL("http://qrcode"), highFivers);
+            return new User("Nicklas Löf", "123", "smiley", highFivedBy, new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg"), new URL("http://qrcode"), highFivers);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
