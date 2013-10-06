@@ -7,6 +7,10 @@
               android:orientation="horizontal"
               android:padding="10dp" >
 
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp">
     <ImageView
             android:id="@+id/imgIcon"
             android:layout_width="55dp"
@@ -15,8 +19,17 @@
             android:padding="1dp"
             android:src="@drawable/jezper"
             android:background="#cfcac5"
-            android:layout_marginRight="10dp"
+
         />
+        <ProgressBar
+                android:id="@+id/imageviewprogress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/progress"
+                android:visibility="gone" />
+    </RelativeLayout>
 
     <LinearLayout
             android:layout_width="match_parent"

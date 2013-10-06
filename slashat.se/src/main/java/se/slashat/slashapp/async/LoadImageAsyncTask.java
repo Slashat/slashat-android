@@ -47,7 +47,7 @@ public class LoadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
     protected void onPreExecute() {
 
         super.onPreExecute();
-        //progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class LoadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
                 imageView.get().setScaleType(ScaleType.CENTER_CROP);
             }*/
             if (imageViewThumbnail.get() != null){
-                //progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
                 imageViewThumbnail.get().setImageBitmap(result);
                 imageViewThumbnail.get().setScaleType(ScaleType.FIT_XY);
             }

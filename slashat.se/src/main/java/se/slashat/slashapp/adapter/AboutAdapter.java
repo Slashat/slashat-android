@@ -43,6 +43,7 @@ public class AboutAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impleme
 		holder.imageThumb = (ImageView) row.findViewById(R.id.imgIcon);
 		holder.txtName = (TextView) row.findViewById(R.id.txtName);
         holder.txtTitle = (TextView) row.findViewById(R.id.title);
+        holder.progressBar = (ProgressBar) row.findViewById(R.id.imageviewprogress);
 		return holder;
 	}
 
