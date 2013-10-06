@@ -5,7 +5,7 @@ import java.io.Serializable;
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.model.Personal;
-import se.slashat.slashapp.viewmodel.PersonalViewModel;
+import se.slashat.slashapp.viewmodel.AboutViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
 
 import android.content.Context;
@@ -60,21 +60,30 @@ public class PersonalAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impl
 
 	@Override
 	public OnClickListener createOnClickListener(final ViewModelBase personal) {
-		return new OnClickListener() {
+        if (personal.getModel() instanceof Personal){
+		    return new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				callback.call((Personal) personal.getModel());
 			}
 		};
+        }
+        return new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        };
 	}
 
 	@Override
 	public void setDataOnHolder(Holder holder, ViewModelBase personal) {
+        AboutViewModel pvm = (AboutViewModel) personal;
 		PersonalHolder ph = (PersonalHolder) holder;
-		Personal model = (Personal) personal.getModel();
-		ph.txtName.setText(model.getName());
-		ph.imgView.setImageResource(model.getImg());
-        ph.txtTitle.setText(model.getTitle());
+
+		ph.txtName.setText(pvm.getName());
+		ph.imgView.setImageResource(pvm.getImg());
+        ph.txtTitle.setText(pvm.getTitle());
 		/*setTwitterClickListener(model, ph);
 		setEmailClickListener(model, ph);
 		setHomepageClickListener(model, ph);*/

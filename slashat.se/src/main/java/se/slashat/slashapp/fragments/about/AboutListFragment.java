@@ -1,7 +1,6 @@
 package se.slashat.slashapp.fragments.about;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,16 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.adapter.PersonalAdapter;
-import se.slashat.slashapp.fragments.FragmentSwitcher;
-import se.slashat.slashapp.fragments.episode.EpisodeDetailFragment;
 import se.slashat.slashapp.model.Personal;
 import se.slashat.slashapp.model.SectionModel;
+import se.slashat.slashapp.model.highfive.HighFiver;
+import se.slashat.slashapp.service.HighFiveService;
 import se.slashat.slashapp.service.PersonalService;
-import se.slashat.slashapp.viewmodel.PersonalViewModel;
+import se.slashat.slashapp.viewmodel.AboutViewModel;
 import se.slashat.slashapp.viewmodel.SectionViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
 
@@ -63,27 +63,34 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
         Personal[] crew = PersonalService.getPersonal(Personal.Type.HOST);
         Personal[] assistant = PersonalService.getPersonal(Personal.Type.ASSISTANT);
         Personal[] dev = PersonalService.getPersonal(Personal.Type.DEV);
+        Collection<HighFiver> allHighfivers = HighFiveService.getAllHighfivers();
 
         ArrayList<ViewModelBase> arrayList = new ArrayList<ViewModelBase>();
 
         arrayList.add(new SectionViewModel(new SectionModel("Om showen")));
         for (int i = 0; i < show.length; i++) {
-            arrayList.add(new PersonalViewModel(show[i]));
+            arrayList.add(new AboutViewModel(show[i]));
         }
 
         arrayList.add(new SectionViewModel(new SectionModel("Programledare")));
         for (int i = 0; i < crew.length; i++) {
-            arrayList.add(new PersonalViewModel(crew[i]));
+            arrayList.add(new AboutViewModel(crew[i]));
         }
 
         arrayList.add(new SectionViewModel(new SectionModel("Medarbetare")));
         for (int i = 0; i < assistant.length; i++) {
-            arrayList.add(new PersonalViewModel(assistant[i]));
+            arrayList.add(new AboutViewModel(assistant[i]));
         }
 
         arrayList.add(new SectionViewModel(new SectionModel("Team Slashat Devops")));
         for (int i = 0; i < dev.length; i++) {
-            arrayList.add(new PersonalViewModel(dev[i]));
+            arrayList.add(new AboutViewModel(dev[i]));
+        }
+
+        arrayList.add(new SectionViewModel(new SectionModel("Highfivers")));
+
+        for (HighFiver allHighfiver : allHighfivers) {
+            arrayList.add(new AboutViewModel(allHighfiver));
         }
 
         ViewModelBase<?>[] array = arrayList.toArray(new ViewModelBase<?>[arrayList.size()]);
