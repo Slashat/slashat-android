@@ -80,7 +80,7 @@ public class HighfiveFragment extends Fragment {
                                         if (success) {
                                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                                            builder.setMessage("Inloggad. Klicka ok för att starta om Slashapp!").setCancelable(false)
+                                            builder.setMessage("Inloggad. Klicka ok för att starta om appen!").setCancelable(false)
                                                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                         public void onClick(DialogInterface dialog, int id) {
                                                             Intent i = getActivity().getBaseContext().getPackageManager()
