@@ -16,13 +16,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.User;
 import se.slashat.slashapp.service.HighFiveService;
+import se.slashat.slashapp.util.Strings;
 
 /**
  * Created by nicklas on 9/28/13.
@@ -42,16 +53,23 @@ public class HighfiveFragment extends Fragment {
 
 
                 //Call async when adding webservice
-                User user = HighFiveService.getUser();
-
                 view = inflater.inflate(R.layout.highfive_fragment, null);
-                if (user != null) {
 
-                    setText(view.findViewById(R.id.highfive_username), user.getName());
-                    setText(view.findViewById(R.id.highfive_numberofhighfives), user.getHighFivers().size() + " highfives");
-                    setText(view.findViewById(R.id.highfive_firsthighfive), formatFirstHighfivedBy(user.getHighFivedBy()));
-                    setImage(view.findViewById(R.id.highfive_userimage), R.drawable.nicklas);
-                }
+                HighFiveService.getUser(new Callback<User>() {
+                    @Override
+                    public void call(User user) {
+                        if (user != null) {
+
+                            setText(view.findViewById(R.id.highfive_username), user.getUserName());
+                            setText(view.findViewById(R.id.highfive_numberofhighfives), user.getHighFivers().size() + " highfives");
+                            setText(view.findViewById(R.id.highfive_firsthighfive), formatFirstHighfivedBy(user.getHighFivedBy()));
+                            setImage(view.findViewById(R.id.highfive_userimage), R.drawable.nicklas);
+                        }
+                    }
+                });
+
+
+
             } else {
                 view = inflater.inflate(R.layout.login, null);
                 final EditText userNameEditText = (EditText) view.findViewById(R.id.loginusername);
@@ -122,8 +140,18 @@ public class HighfiveFragment extends Fragment {
     }
 
     private String formatFirstHighfivedBy(HighFivedBy highFivedBy) {
-        String base = "Fick sin första high-five av %s den %s i %s";
-        return String.format(base, highFivedBy.getName(), highFivedBy.getDate(), highFivedBy.getLocation());
+        String base = "";
+
+        if (Strings.isNullOrEmpty(highFivedBy.getLocation())){
+            base = "Fick sin första high-five av %s den %s";
+        }else{
+            base = "Fick sin första high-five av %s den %s i %s";
+        }
+
+        DateTime dateTime = new DateTime(Long.valueOf(highFivedBy.getDate())*1000l, DateTimeZone.getDefault());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd MMM yyyy");
+        String date = dateTimeFormatter.print(dateTime);
+        return String.format(base, highFivedBy.getName(), date, highFivedBy.getLocation());
     }
 
 

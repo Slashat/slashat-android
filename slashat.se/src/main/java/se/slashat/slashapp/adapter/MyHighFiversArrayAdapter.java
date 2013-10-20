@@ -49,11 +49,8 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<HighFiverView
     public void setDataOnHolder(Holder holder, HighFiverViewModel highFiverViewModel) {
         MyHighFiversHolder h = (MyHighFiversHolder) holder;
 
-        h.name.setText(highFiverViewModel.getModel().getName());
-        h.username.setText(highFiverViewModel.getModel().getUsername());
-        //TODO: load async
-        //h.userPhoto.setImageResource(R.drawable.nicklas);
-
+        h.name.setText(highFiverViewModel.getModel().getUsername());
+        h.username.setText("");
 
         if (highFiverViewModel.getModel().getPicture() != null){
             ImageService.populateImage(h, highFiverViewModel.getModel().getPicture().toString());

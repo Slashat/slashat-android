@@ -12,10 +12,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import se.slashat.slashapp.Callback;
+import se.slashat.slashapp.async.HighFiveGetUserAsyncTask;
 import se.slashat.slashapp.async.HighFiveLoginAsyncTask;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.HighFiver;
@@ -57,15 +59,11 @@ public class HighFiveService {
     }
 
     // Must be called async
-    public static User getUser() {
+    public static void getUser(Callback<User> callback) {
         boolean networkAvailable = Network.isNetworkAvailable();
-
-
         if (networkAvailable) {
-            User user = parseUserFromJson();
-            return user;
+            getUserFromAsyncTask(callback);
         }
-        return null;
     }
 
     public static void login(String username, String password, String deviceId, final Callback<Boolean> onSuccess, final Callback<String> onError) {
@@ -116,84 +114,11 @@ public class HighFiveService {
     }
 
     public static Collection<HighFiver> getAllHighfivers() {
-        List<HighFiver> highFivers = new ArrayList<HighFiver>();
-        try {
-
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-            highFivers.add(new HighFiver("Nicklas Löf", "123", "Smiley", new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg")));
-            highFivers.add(new HighFiver("Tommie Podzemski", "456", "Tommienu", new URL("http://forum.slashat.se/download/file.php?avatar=53_1379446237.png")));
-            highFivers.add(new HighFiver("Jezper Söderlund", "789", "Jezper", new URL("http://forum.slashat.se/download/file.php?avatar=54_1371413866.png")));
-            highFivers.add(new HighFiver("Magnus Jonasson", "987", "Jonasson", new URL("http://forum.slashat.se/download/file.php?avatar=66_1368392108.jpg")));
-            highFivers.add(new HighFiver("Johan Larsson", "654", "Kottkrig", new URL("http://forum.slashat.se/download/file.php?avatar=78_1279716572.jpg")));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        return highFivers;
+        return Collections.EMPTY_LIST;
     }
 
-    private static User parseUserFromJson() {
-        try {
-            // Mock HighFivedBy:
-            HighFivedBy highFivedBy = new HighFivedBy("Nicklas Löf", new Date(), "Uppsala");
-            // Mock HighFiver:
-
-            Collection<HighFiver> highFivers = getAllHighfivers();
-
-            // Mock user:
-            return new User("Nicklas Löf", "123", "smiley", highFivedBy, new URL("http://forum.slashat.se/download/file.php?avatar=1197_1372799107.jpg"), new URL("http://qrcode"), highFivers);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    private static void getUserFromAsyncTask(Callback<User> callback) {
+        HighFiveGetUserAsyncTask highFiveGetUserAsyncTask = new HighFiveGetUserAsyncTask(callback);
+        highFiveGetUserAsyncTask.execute(new String[]{GET_MY_HIGHFIVES,token});
     }
 }

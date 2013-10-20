@@ -7,16 +7,16 @@ import java.util.Date;
  */
 public class HighFivedBy{
     private final String name;
-    private final Date date;
+    private final String date;
     private final String location;
 
-    public HighFivedBy(String name, Date date, String location) {
+    public HighFivedBy(String name, String date, String location) {
         this.name = name;
         this.date = date;
         this.location = location;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 

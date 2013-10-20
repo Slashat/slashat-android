@@ -7,21 +7,15 @@ import java.net.URL;
  */
 public class HighFiver {
 
-    private final String name;
     private final String userId;
     private final String username;
     private final URL picture;
 
 
-    public HighFiver(String name, String userId, String username, URL picture) {
-        this.name = name;
+    public HighFiver(String userId, String username, URL picture) {
         this.userId = userId;
         this.username = username;
         this.picture = picture;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public String getUserId() {
