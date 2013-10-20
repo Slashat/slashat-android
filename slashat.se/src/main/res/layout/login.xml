@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EEEEEE">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:background="@drawable/card_bg"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="6dp"
+            android:padding="8dp"
+
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logga in med ditt Slashat Forum-konto"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="26sp"
+                android:paddingBottom="10dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="17sp"
+                android:text="Du använder ditt befintliga Slashat Forum-konto för att koppla ihop appen med din befintliga forumprofil."/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="17sp"
+                android:text="Användarnamn">
+
+        </TextView>
+
+        <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/loginusername"
+                android:layout_gravity="left|center_vertical"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="17sp"
+                android:text="Lösenord">
+
+        </TextView>
+
+        <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/loginpassword"
+                android:layout_gravity="left|center_vertical"/>
+
+        <Button
+                android:id="@+id/loginbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logga in">
+
+        </Button>
+
+    </LinearLayout>
+</RelativeLayout>

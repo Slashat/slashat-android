@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.async.HighFiveLoginAsyncTask;
@@ -23,6 +22,7 @@ import se.slashat.slashapp.model.highfive.HighFiver;
 import se.slashat.slashapp.model.highfive.User;
 import se.slashat.slashapp.util.IOUtils;
 import se.slashat.slashapp.util.Network;
+import se.slashat.slashapp.util.Strings;
 
 import static se.slashat.slashapp.Constants.HIGHFIVE_ALL;
 import static se.slashat.slashapp.Constants.HIGHFIVE_BASE_URL;
@@ -50,7 +50,7 @@ public class HighFiveService {
     private static String token;
 
 
-    public static void initalize(Context context){
+    public static void initalize(Context context) {
 
         HighFiveService.context = context;
         getToken();
@@ -68,15 +68,20 @@ public class HighFiveService {
         return null;
     }
 
-    public static void login(String username, String password, String deviceId){
-        if (token != null){
-            Log.w("HighfiveService","Already logged in");
+    public static void login(String username, String password, String deviceId, final Callback<Boolean> onSuccess, final Callback<String> onError) {
+        if (token != null) {
+            Log.w("HighfiveService", "Already logged in");
             return;
         }
         HighFiveLoginAsyncTask highFiveLoginAsyncTask = new HighFiveLoginAsyncTask(new Callback<String>() {
             @Override
             public void call(String result) {
-                storeToken(result);
+                if (Strings.isNullOrEmpty(result)) {
+                    onError.call("Kunde inte logga in");  // Fetch better error messages.
+                } else {
+                    storeToken(result);
+                    onSuccess.call(true);
+                }
             }
         });
 
@@ -95,7 +100,7 @@ public class HighFiveService {
         }
     }
 
-    private static void getToken(){
+    private static void getToken() {
         try {
             FileInputStream fileInputStream = context.openFileInput(TOKENFILE);
             token = IOUtils.readStringFromStream(fileInputStream);
@@ -106,7 +111,7 @@ public class HighFiveService {
         }
     }
 
-    public static boolean hasToken(){
+    public static boolean hasToken() {
         return token != null;
     }
 
