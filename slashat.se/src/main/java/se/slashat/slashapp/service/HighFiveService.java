@@ -1,6 +1,13 @@
 package se.slashat.slashapp.service;
 
 
+import android.content.Context;
+import android.util.Log;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,9 +16,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import se.slashat.slashapp.Callback;
+import se.slashat.slashapp.async.HighFiveLoginAsyncTask;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.HighFiver;
 import se.slashat.slashapp.model.highfive.User;
+import se.slashat.slashapp.util.IOUtils;
 import se.slashat.slashapp.util.Network;
 
 import static se.slashat.slashapp.Constants.HIGHFIVE_ALL;
@@ -26,16 +36,25 @@ import static se.slashat.slashapp.Constants.HIGHFIVE_REGISTER_TO_SERVICE;
  */
 public class HighFiveService {
 
-    private final static String LOGIN_TO_SERVICE = HIGHFIVE_BASE_URL + "/" + HIGHFIVE_LOGIN_TO_SERVICE;
+    private final static String LOGIN_TO_SERVICE = HIGHFIVE_BASE_URL + HIGHFIVE_LOGIN_TO_SERVICE;
 
-    private final static String REGISTER_TO_SERVICE = HIGHFIVE_BASE_URL + "/" + HIGHFIVE_REGISTER_TO_SERVICE;
+    private final static String REGISTER_TO_SERVICE = HIGHFIVE_BASE_URL + HIGHFIVE_REGISTER_TO_SERVICE;
 
-    private final static String GET_MY_HIGHFIVES = HIGHFIVE_BASE_URL + "/" + HIGHFIVE_GET_MY_HIGHFIVES;
+    private final static String GET_MY_HIGHFIVES = HIGHFIVE_BASE_URL + HIGHFIVE_GET_MY_HIGHFIVES;
 
-    private final static String ALL = HIGHFIVE_BASE_URL + "/" + HIGHFIVE_ALL;
+    private final static String ALL = HIGHFIVE_BASE_URL + HIGHFIVE_ALL;
 
-    private final static String DO = HIGHFIVE_BASE_URL + "/" + HIGHFIVE_DO;
+    private final static String DO = HIGHFIVE_BASE_URL + HIGHFIVE_DO;
+    private static final String TOKENFILE = "token";
+    private static Context context;
+    private static String token;
 
+
+    public static void initalize(Context context){
+
+        HighFiveService.context = context;
+        getToken();
+    }
 
     // Must be called async
     public static User getUser() {
@@ -47,6 +66,48 @@ public class HighFiveService {
             return user;
         }
         return null;
+    }
+
+    public static void login(String username, String password, String deviceId){
+        if (token != null){
+            Log.w("HighfiveService","Already logged in");
+            return;
+        }
+        HighFiveLoginAsyncTask highFiveLoginAsyncTask = new HighFiveLoginAsyncTask(new Callback<String>() {
+            @Override
+            public void call(String result) {
+                storeToken(result);
+            }
+        });
+
+        highFiveLoginAsyncTask.execute(new String[]{LOGIN_TO_SERVICE, username, password, deviceId});
+
+    }
+
+    private static void storeToken(String result) {
+        try {
+            FileOutputStream fileOutputStream = context.openFileOutput(TOKENFILE, Context.MODE_PRIVATE);
+            fileOutputStream.write(result.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void getToken(){
+        try {
+            FileInputStream fileInputStream = context.openFileInput(TOKENFILE);
+            token = IOUtils.readStringFromStream(fileInputStream);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean hasToken(){
+        return token != null;
     }
 
     public static Collection<HighFiver> getAllHighfivers() {
