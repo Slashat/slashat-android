@@ -85,7 +85,7 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
     private User getUserFromJson(JSONObject jsonObject) throws JSONException, MalformedURLException {
 
 
-        String username = jsonObject.getString("user_name");
+        String username = jsonObject.getString("username");
         String userId = jsonObject.getString("user_id");
         String pictureUrl = jsonObject.getString("picture");
         String qrcode = jsonObject.getString("qrcode");
