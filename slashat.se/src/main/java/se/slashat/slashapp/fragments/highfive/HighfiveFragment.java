@@ -30,9 +30,11 @@ import java.util.TimeZone;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.fragments.FragmentSwitcher;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.User;
 import se.slashat.slashapp.service.HighFiveService;
+import se.slashat.slashapp.util.ContentView;
 import se.slashat.slashapp.util.Strings;
 
 /**
@@ -64,6 +66,16 @@ public class HighfiveFragment extends Fragment {
                             setText(view.findViewById(R.id.highfive_numberofhighfives), user.getHighFivers().size() + " highfives");
                             setText(view.findViewById(R.id.highfive_firsthighfive), formatFirstHighfivedBy(user.getHighFivedBy()));
                             setImage(view.findViewById(R.id.highfive_userimage), R.drawable.nicklas);
+                            Button getHighfive = (Button) view.findViewById(R.id.gethighfive);
+                            getHighfive.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    RecieveHighFiveFragment recieveHighFiveFragment = new RecieveHighFiveFragment();
+                                    FragmentSwitcher.getInstance().switchFragment(recieveHighFiveFragment,false,R.id.fragment_container);
+
+                                   //getActivity().getSupportFragmentManager().beginTransaction().replace(ContentView.getContentViewCompat(),recieveHighFiveFragment).addToBackStack("").commit();
+                                }
+                            });
                         }
                     }
                 });

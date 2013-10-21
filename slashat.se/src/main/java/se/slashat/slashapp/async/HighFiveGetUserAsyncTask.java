@@ -1,5 +1,7 @@
 package se.slashat.slashapp.async;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import org.apache.http.HttpResponse;
@@ -68,6 +70,10 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
                 JSONObject jsonObject = new JSONObject(userJsonString);
                 System.out.println(userJsonString);
                 user = getUserFromJson(jsonObject);
+
+                InputStream qrStream = user.getQr().openStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(qrStream);
+                user.setQrBitmap(bitmap);
             }
 
         } catch (MalformedURLException e) {

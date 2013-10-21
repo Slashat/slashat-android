@@ -1,5 +1,7 @@
 package se.slashat.slashapp.model.highfive;
 
+import android.graphics.Bitmap;
+
 import java.net.URL;
 import java.util.Collection;
 
@@ -12,6 +14,7 @@ public class User {
     private final HighFivedBy highFivedBy;
     private final URL picture;
     private final URL qr;
+    private Bitmap qrBitmap;
     private final Collection<HighFiver> highFivers;
 
 
@@ -46,5 +49,13 @@ public class User {
 
     public Collection<HighFiver> getHighFivers() {
         return highFivers;
+    }
+
+    public void setQrBitmap(Bitmap qrBitmap) {
+        this.qrBitmap = qrBitmap;
+    }
+
+    public Bitmap getQrBitmap() {
+        return qrBitmap;
     }
 }
