@@ -9,14 +9,15 @@ import android.widget.TextView;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.viewmodel.HighFiverViewModel;
+import se.slashat.slashapp.viewmodel.ViewModelBase;
 
 /**
  * Created by nicklas on 10/1/13.
  */
-public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<HighFiverViewModel>{
+public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<ViewModelBase<?>>{
 
-    public MyHighFiversArrayAdapter(Context context, int layoutResourceId, HighFiverViewModel[] data) {
-        super(context, layoutResourceId, 0, data);
+    public MyHighFiversArrayAdapter(Context context, int layoutResourceId, ViewModelBase[] data) {
+        super(context, layoutResourceId, R.layout.section, data);
     }
 
     public static class MyHighFiversHolder extends ImageAsyncHolder {
@@ -36,7 +37,7 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<HighFiverView
     }
 
     @Override
-    public View.OnClickListener createOnClickListener(HighFiverViewModel highFiverViewModel) {
+    public View.OnClickListener createOnClickListener(ViewModelBase highFiverViewModel) {
         return null;
     }
 
@@ -46,14 +47,15 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<HighFiverView
     }
 
     @Override
-    public void setDataOnHolder(Holder holder, HighFiverViewModel highFiverViewModel) {
+    public void setDataOnHolder(Holder holder, ViewModelBase highFiverViewModel) {
         MyHighFiversHolder h = (MyHighFiversHolder) holder;
+        HighFiverViewModel vm = (HighFiverViewModel) highFiverViewModel;
 
-        h.name.setText(highFiverViewModel.getModel().getUsername());
+        h.name.setText(vm.getModel().getUsername());
         h.username.setText("");
 
-        if (highFiverViewModel.getModel().getPicture() != null){
-            ImageService.populateImage(h, highFiverViewModel.getModel().getPicture().toString());
+        if (vm.getModel().getPicture() != null){
+            ImageService.populateImage(h, vm.getModel().getPicture().toString());
         }
 
     }

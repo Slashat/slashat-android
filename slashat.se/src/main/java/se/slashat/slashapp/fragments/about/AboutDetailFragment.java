@@ -17,7 +17,7 @@ import se.slashat.slashapp.model.Personal;
 /**
  * Created by nicklas on 6/19/13.
  */
-public class AboutDetailFragment extends Fragment {
+public class    AboutDetailFragment extends Fragment {
 
 
     private Personal person;
