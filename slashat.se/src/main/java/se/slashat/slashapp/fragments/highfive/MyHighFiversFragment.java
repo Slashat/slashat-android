@@ -34,17 +34,19 @@ public class MyHighFiversFragment extends ListFragment {
                     @Override
                     public void call(User user) {
                         Collection<HighFiver> highFivers = user.getHighFivers();
-                        ArrayList<ViewModelBase> list = new ArrayList<ViewModelBase>();
+                        if (!highFivers.isEmpty()) {
+                            ArrayList<ViewModelBase> list = new ArrayList<ViewModelBase>();
 
-                        list.add(new SectionViewModel(new SectionModel("Mina highfivers")));
+                            list.add(new SectionViewModel(new SectionModel("Mina highfivers")));
 
-                        for (HighFiver highFiver : highFivers) {
-                            HighFiverViewModel highFiverViewModel = new HighFiverViewModel(highFiver);
-                            list.add(highFiverViewModel);
+                            for (HighFiver highFiver : highFivers) {
+                                HighFiverViewModel highFiverViewModel = new HighFiverViewModel(highFiver);
+                                list.add(highFiverViewModel);
+                            }
+
+                            MyHighFiversArrayAdapter myHighFiversArrayAdapter = new MyHighFiversArrayAdapter(getActivity(), R.layout.about_list_item_row, list.toArray(new ViewModelBase[list.size()]));
+                            setListAdapter(myHighFiversArrayAdapter);
                         }
-
-                        MyHighFiversArrayAdapter myHighFiversArrayAdapter = new MyHighFiversArrayAdapter(getActivity(), R.layout.about_list_item_row, list.toArray(new ViewModelBase[list.size()]));
-                        setListAdapter(myHighFiversArrayAdapter);
                     }
                 });
         return view;
