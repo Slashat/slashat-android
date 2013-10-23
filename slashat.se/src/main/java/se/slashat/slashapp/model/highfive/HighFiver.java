@@ -1,11 +1,12 @@
 package se.slashat.slashapp.model.highfive;
 
+import java.io.Serializable;
 import java.net.URL;
 
 /**
  * Created by nicklas on 9/28/13.
  */
-public class HighFiver {
+public class HighFiver implements Serializable{
 
     private final String userId;
     private final String username;

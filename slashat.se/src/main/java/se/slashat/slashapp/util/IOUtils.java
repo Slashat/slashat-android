@@ -23,4 +23,26 @@ public class IOUtils {
             inputStream.close();
         }
     }
+
+    public static byte[] readBytesFromStream(InputStream inputStream) throws IOException {
+        try {
+            long length = inputStream.available();
+
+            byte[] bytes = new byte[(int) length];
+
+            int offset = 0;
+            int numRead = 0;
+            while (offset < bytes.length && (numRead = inputStream.read(bytes, offset, bytes.length - offset)) >= 0) {
+                offset += numRead;
+            }
+
+            if (offset < bytes.length) {
+                throw new IOException("Couldn't read the image file ");
+            }
+
+            return bytes;
+        } finally {
+            inputStream.close();
+        }
+    }
 }

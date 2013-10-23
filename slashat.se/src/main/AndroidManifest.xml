@@ -46,6 +46,9 @@
             android:name="se.slashat.slashapp.fragments.episode.EpisodeDetailActivity"/>
         <activity
             android:name="se.slashat.slashapp.fragments.about.AboutDetailActivity"/>
+
+        <activity
+                android:name="se.slashat.slashapp.fragments.highfive.RecieveHighFiveActivity"/>
     </application>
 
 </manifest>

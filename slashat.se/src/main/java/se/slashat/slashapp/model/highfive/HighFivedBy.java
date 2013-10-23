@@ -1,11 +1,12 @@
 package se.slashat.slashapp.model.highfive;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by nicklas on 9/28/13.
  */
-public class HighFivedBy{
+public class HighFivedBy implements Serializable{
     private final String name;
     private final String date;
     private final String location;

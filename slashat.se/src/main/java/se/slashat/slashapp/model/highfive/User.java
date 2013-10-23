@@ -2,19 +2,20 @@ package se.slashat.slashapp.model.highfive;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.Collection;
 
 /**
  * Created by nicklas on 9/28/13.
  */
-public class User {
+public class User implements Serializable{
     private final String userName;
     private final String userId;
     private final HighFivedBy highFivedBy;
     private final URL picture;
     private final URL qr;
-    private Bitmap qrBitmap;
+    private byte[] qrBitmap;
     private final Collection<HighFiver> highFivers;
 
 
@@ -51,11 +52,11 @@ public class User {
         return highFivers;
     }
 
-    public void setQrBitmap(Bitmap qrBitmap) {
+    public void setQrBitmap(byte[] qrBitmap) {
         this.qrBitmap = qrBitmap;
     }
 
-    public Bitmap getQrBitmap() {
+    public byte[] getQrBitmap() {
         return qrBitmap;
     }
 }

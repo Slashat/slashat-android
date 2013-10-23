@@ -3,6 +3,7 @@ package se.slashat.slashapp.fragments.highfive;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +32,13 @@ import java.util.TimeZone;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.adapter.AbstractArrayAdapter;
+import se.slashat.slashapp.async.LoadImageAsyncTask;
 import se.slashat.slashapp.fragments.FragmentSwitcher;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.User;
 import se.slashat.slashapp.service.HighFiveService;
+import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.util.ContentView;
 import se.slashat.slashapp.util.Strings;
 
@@ -59,22 +64,28 @@ public class HighfiveFragment extends Fragment {
 
                 HighFiveService.getUser(new Callback<User>() {
                     @Override
-                    public void call(User user) {
+                    public void call(final User user) {
                         if (user != null) {
-
+                            UserImageHolder userImageHolder = new UserImageHolder();
+                            userImageHolder.imageThumb = (ImageView) view.findViewById(R.id.highfive_userimage);
+                            userImageHolder.image = (ImageView) view.findViewById(R.id.highfive_userimage);
+                            userImageHolder.progressBar = (ProgressBar) view.findViewById(R.id.imageviewprogress);
                             setText(view.findViewById(R.id.highfive_username), user.getUserName());
                             setText(view.findViewById(R.id.highfive_numberofhighfives), user.getHighFivers().size() + " highfives");
                             setText(view.findViewById(R.id.highfive_firsthighfive), formatFirstHighfivedBy(user.getHighFivedBy()));
-                            setImage(view.findViewById(R.id.highfive_userimage), R.drawable.nicklas);
+
+                            if (user.getPicture() != null){
+                                ImageService.populateImage(userImageHolder,user.getPicture().toString());
+                            }
+
                             Button getHighfive = (Button) view.findViewById(R.id.gethighfive);
                             getHighfive.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    RecieveHighFiveFragment recieveHighFiveFragment = new RecieveHighFiveFragment();
-                                    FragmentSwitcher.getInstance().switchFragment(recieveHighFiveFragment,false,R.id.fragment_container);
-
-                                   //getActivity().getSupportFragmentManager().beginTransaction().replace(ContentView.getContentViewCompat(),recieveHighFiveFragment).addToBackStack("").commit();
-                                }
+                                    Intent intent = new Intent(HighfiveFragment.this.getActivity(), RecieveHighFiveActivity.class);
+                                    intent.putExtra("user", user);
+                                    startActivity(intent);
+                                    getActivity().overridePendingTransition(R.anim.enter,R.anim.exit);                                }
                             });
                         }
                     }
@@ -173,6 +184,10 @@ public class HighfiveFragment extends Fragment {
 
     private void setImage(View view, int resource) {
         ((ImageView) view).setImageResource(resource);
+    }
+
+    public class UserImageHolder extends AbstractArrayAdapter.ImageAsyncHolder{
+
     }
 
     // TODO: Load async image
