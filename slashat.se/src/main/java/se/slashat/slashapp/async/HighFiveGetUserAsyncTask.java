@@ -95,7 +95,7 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
 
     private User getUserFromJson(JSONObject jsonObject) throws JSONException, MalformedURLException {
 
-
+        Collection<HighFiver> highFivers = new ArrayList<HighFiver>();
         String username = jsonObject.getString("username");
         String userId = jsonObject.getString("user_id");
         String pictureUrlString = jsonObject.getString("picture");
@@ -104,7 +104,9 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
         String qrcode_id = "";
         HighFivedBy highFivedBy = getHighFivedByFromJson(jsonObject);
 
-        Collection<HighFiver> highFivers = getHighFiversFromJson(jsonObject.getJSONObject("highfivers"));
+        if (!(jsonObject.get("highfivers") instanceof JSONArray)){
+            highFivers = getHighFiversFromJson(jsonObject.getJSONObject("highfivers"));
+        }
 
         URL pictureUrl = null;
         URL qrcode = null;
@@ -145,6 +147,9 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
         String date = jsonObject.getString("highfived_date");
         String where = jsonObject.getString("highfived_where");
 
+        if (name.equals("null") || date.equals("null") || where.equals("null")){
+            return new HighFivedBy("","","");
+        }
         return new HighFivedBy(name,date, where);
     }
 

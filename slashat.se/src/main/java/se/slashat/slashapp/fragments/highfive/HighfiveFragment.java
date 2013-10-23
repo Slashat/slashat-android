@@ -165,6 +165,10 @@ public class HighfiveFragment extends Fragment {
     private String formatFirstHighfivedBy(HighFivedBy highFivedBy) {
         String base = "";
 
+        if (Strings.isNullOrEmpty(highFivedBy.getDate()) || Strings.isNullOrEmpty(highFivedBy.getLocation()) || Strings.isNullOrEmpty(highFivedBy.getName())){
+            return "Du har inte tagit emot din första high five ännu";
+        }
+
         if (Strings.isNullOrEmpty(highFivedBy.getLocation())){
             base = "Fick sin första high-five av %s den %s";
         }else{
