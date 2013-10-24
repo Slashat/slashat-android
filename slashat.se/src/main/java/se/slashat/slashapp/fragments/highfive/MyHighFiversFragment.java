@@ -1,5 +1,6 @@
 package se.slashat.slashapp.fragments.highfive;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -33,19 +34,27 @@ public class MyHighFiversFragment extends ListFragment {
                 new Callback<User>() {
                     @Override
                     public void call(User user) {
-                        Collection<HighFiver> highFivers = user.getHighFivers();
-                        if (!highFivers.isEmpty()) {
-                            ArrayList<ViewModelBase> list = new ArrayList<ViewModelBase>();
+                        if (user == null) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                            list.add(new SectionViewModel(new SectionModel("Mina highfivers")));
+                            AlertDialog alertDialog = builder.setMessage("Kunde inte ta emot data från servern. Detta kan bero på dålig nätanslutning men ifall du loggat in med samma konto på en annan enhet måste du för tillfället ominstallera denna app för att logga in igen")
+                                    .setCancelable(true).create();
+                            alertDialog.show();
+                        } else {
+                            Collection<HighFiver> highFivers = user.getHighFivers();
+                            if (!highFivers.isEmpty()) {
+                                ArrayList<ViewModelBase> list = new ArrayList<ViewModelBase>();
 
-                            for (HighFiver highFiver : highFivers) {
-                                HighFiverViewModel highFiverViewModel = new HighFiverViewModel(highFiver);
-                                list.add(highFiverViewModel);
+                                list.add(new SectionViewModel(new SectionModel("Mina highfivers")));
+
+                                for (HighFiver highFiver : highFivers) {
+                                    HighFiverViewModel highFiverViewModel = new HighFiverViewModel(highFiver);
+                                    list.add(highFiverViewModel);
+                                }
+
+                                MyHighFiversArrayAdapter myHighFiversArrayAdapter = new MyHighFiversArrayAdapter(getActivity(), R.layout.about_list_item_row, list.toArray(new ViewModelBase[list.size()]));
+                                setListAdapter(myHighFiversArrayAdapter);
                             }
-
-                            MyHighFiversArrayAdapter myHighFiversArrayAdapter = new MyHighFiversArrayAdapter(getActivity(), R.layout.about_list_item_row, list.toArray(new ViewModelBase[list.size()]));
-                            setListAdapter(myHighFiversArrayAdapter);
                         }
                     }
                 });
