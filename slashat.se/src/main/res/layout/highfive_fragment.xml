@@ -128,7 +128,7 @@
                             android:layout_height="wrap_content"
                             android:text="Ge high-five"
                             android:layout_weight="0.5"
-                            android:id="@+id/button"
+                            android:id="@+id/givehighfive"
                             android:layout_below="@+id/linearLayout"
                             android:layout_alignParentLeft="true"/>
 

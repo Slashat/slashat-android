@@ -18,6 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.*;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -57,9 +61,6 @@ public class HighfiveFragment extends Fragment {
         }
         try {
             if (HighFiveService.hasToken()) {
-
-
-                //Call async when adding webservice
                 view = inflater.inflate(R.layout.highfive_fragment, null);
 
                 HighFiveService.getUser(new Callback<User>() {
@@ -85,8 +86,18 @@ public class HighfiveFragment extends Fragment {
                                     Intent intent = new Intent(HighfiveFragment.this.getActivity(), RecieveHighFiveActivity.class);
                                     intent.putExtra("user", user);
                                     startActivity(intent);
-                                    getActivity().overridePendingTransition(R.anim.enter,R.anim.exit);                                }
+                                    getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+                                }
                             });
+
+                            Button giveHighfive = (Button) view.findViewById(R.id.givehighfive);
+                            giveHighfive.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    IntentIntegrator.initiateScan(HighfiveFragment.this.getActivity());
+                                }
+                            });
+
                         }
                     }
                 });

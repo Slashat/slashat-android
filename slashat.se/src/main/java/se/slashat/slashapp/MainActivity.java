@@ -1,6 +1,7 @@
 package se.slashat.slashapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -8,6 +9,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.Window;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.Locale;
 
@@ -179,5 +183,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
     public static Context getContext() {
         return context;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (scanResult != null) {
+            System.out.println("QRRESULT:"+scanResult.getContents());
+        }
     }
 }
