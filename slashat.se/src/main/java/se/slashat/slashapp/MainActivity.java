@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -190,6 +191,18 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (scanResult != null) {
             System.out.println("QRRESULT:"+scanResult.getContents());
+
+            HighFiveService.setHighFive(scanResult.getContents(),new Callback<Boolean>() {
+                @Override
+                public void call(Boolean result) {
+                    if (result){
+                        Toast.makeText(MainActivity.this,"Hurrra!",Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(MainActivity.this,"Dä funka int!",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
         }
     }
 }

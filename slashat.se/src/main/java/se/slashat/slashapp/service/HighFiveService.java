@@ -19,6 +19,7 @@ import java.util.List;
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.async.HighFiveGetUserAsyncTask;
 import se.slashat.slashapp.async.HighFiveLoginAsyncTask;
+import se.slashat.slashapp.async.HighFiveSetAsyncTask;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.HighFiver;
 import se.slashat.slashapp.model.highfive.User;
@@ -115,6 +116,11 @@ public class HighFiveService {
 
     public static Collection<HighFiver> getAllHighfivers() {
         return Collections.EMPTY_LIST;
+    }
+
+    public static void setHighFive(String receiver, Callback<Boolean> callback){
+        HighFiveSetAsyncTask highFiveSetAsyncTask = new HighFiveSetAsyncTask(callback);
+        highFiveSetAsyncTask.execute(new String[]{DO,receiver,token});
     }
 
     private static void getUserFromAsyncTask(Callback<User> callback) {
