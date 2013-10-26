@@ -196,9 +196,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 @Override
                 public void call(Boolean result) {
                     if (result){
-                        Toast.makeText(MainActivity.this,"Hurrra!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Grattis! Du har nu highfiveat!",Toast.LENGTH_LONG).show();
+                        mHighfiveFragment.reload();
                     }else{
-                        Toast.makeText(MainActivity.this,"Dä funka int!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Kunde inte scanna. Försök igen!",Toast.LENGTH_LONG).show();
                     }
                 }
             });

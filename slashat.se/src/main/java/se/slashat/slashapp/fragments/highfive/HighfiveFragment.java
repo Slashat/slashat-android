@@ -63,45 +63,7 @@ public class HighfiveFragment extends Fragment {
             if (HighFiveService.hasToken()) {
                 view = inflater.inflate(R.layout.highfive_fragment, null);
 
-                HighFiveService.getUser(new Callback<User>() {
-                    @Override
-                    public void call(final User user) {
-                        if (user != null) {
-                            UserImageHolder userImageHolder = new UserImageHolder();
-                            userImageHolder.imageThumb = (ImageView) view.findViewById(R.id.highfive_userimage);
-                            userImageHolder.image = (ImageView) view.findViewById(R.id.highfive_userimage);
-                            userImageHolder.progressBar = (ProgressBar) view.findViewById(R.id.imageviewprogress);
-                            setText(view.findViewById(R.id.highfive_username), user.getUserName());
-                            setText(view.findViewById(R.id.highfive_numberofhighfives), user.getHighFivers().size() + " highfives");
-                            setText(view.findViewById(R.id.highfive_firsthighfive), formatFirstHighfivedBy(user.getHighFivedBy()));
-
-                            if (user.getPicture() != null){
-                                ImageService.populateImage(userImageHolder,user.getPicture().toString());
-                            }
-
-                            Button getHighfive = (Button) view.findViewById(R.id.gethighfive);
-                            getHighfive.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(HighfiveFragment.this.getActivity(), RecieveHighFiveActivity.class);
-                                    intent.putExtra("user", user);
-                                    startActivity(intent);
-                                    getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
-                                }
-                            });
-
-                            Button giveHighfive = (Button) view.findViewById(R.id.givehighfive);
-                            giveHighfive.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    IntentIntegrator.initiateScan(HighfiveFragment.this.getActivity());
-                                }
-                            });
-
-                        }
-                    }
-                },false);
-
+                populate(false);
 
 
             } else {
@@ -173,6 +135,47 @@ public class HighfiveFragment extends Fragment {
         return view;
     }
 
+    private void populate(boolean reload) {
+        HighFiveService.getUser(new Callback<User>() {
+            @Override
+            public void call(final User user) {
+                if (user != null) {
+                    UserImageHolder userImageHolder = new UserImageHolder();
+                    userImageHolder.imageThumb = (ImageView) view.findViewById(R.id.highfive_userimage);
+                    userImageHolder.image = (ImageView) view.findViewById(R.id.highfive_userimage);
+                    userImageHolder.progressBar = (ProgressBar) view.findViewById(R.id.imageviewprogress);
+                    setText(view.findViewById(R.id.highfive_username), user.getUserName());
+                    setText(view.findViewById(R.id.highfive_numberofhighfives), user.getHighFivers().size() + " highfives");
+                    setText(view.findViewById(R.id.highfive_firsthighfive), formatFirstHighfivedBy(user.getHighFivedBy()));
+
+                    if (user.getPicture() != null) {
+                        ImageService.populateImage(userImageHolder, user.getPicture().toString());
+                    }
+
+                    Button getHighfive = (Button) view.findViewById(R.id.gethighfive);
+                    getHighfive.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(HighfiveFragment.this.getActivity(), RecieveHighFiveActivity.class);
+                            intent.putExtra("user", user);
+                            startActivity(intent);
+                            getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+                        }
+                    });
+
+                    Button giveHighfive = (Button) view.findViewById(R.id.givehighfive);
+                    giveHighfive.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            IntentIntegrator.initiateScan(HighfiveFragment.this.getActivity());
+                        }
+                    });
+
+                }
+            }
+        }, reload);
+    }
+
     private String formatFirstHighfivedBy(HighFivedBy highFivedBy) {
         String base = "";
 
@@ -199,6 +202,10 @@ public class HighfiveFragment extends Fragment {
 
     private void setImage(View view, int resource) {
         ((ImageView) view).setImageResource(resource);
+    }
+
+    public void reload() {
+        populate(true);
     }
 
     public class UserImageHolder extends AbstractArrayAdapter.ImageAsyncHolder{
