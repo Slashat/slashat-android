@@ -51,6 +51,7 @@ public class HighFiveService {
     private static final String TOKENFILE = "token";
     private static Context context;
     private static String token;
+    private static User user;
 
 
     public static void initalize(Context context) {
@@ -59,9 +60,19 @@ public class HighFiveService {
         getToken();
     }
 
-    // Must be called async
-    public static void getUser(Callback<User> callback) {
+    public static void getUser(Callback<User> callback, boolean reload) {
+
+        if (user != null && !reload){
+            callback.call(user);
+            return;
+        }
         boolean networkAvailable = Network.isNetworkAvailable();
+
+        if (!networkAvailable && user != null){
+            callback.call(user);
+            return;
+        }
+
         if (networkAvailable) {
             getUserFromAsyncTask(callback);
         }
@@ -123,8 +134,16 @@ public class HighFiveService {
         highFiveSetAsyncTask.execute(new String[]{DO,receiver,token});
     }
 
-    private static void getUserFromAsyncTask(Callback<User> callback) {
-        HighFiveGetUserAsyncTask highFiveGetUserAsyncTask = new HighFiveGetUserAsyncTask(callback);
+    private static void getUserFromAsyncTask(final Callback<User> callback) {
+        HighFiveGetUserAsyncTask highFiveGetUserAsyncTask = new HighFiveGetUserAsyncTask(new Callback<User>() {
+
+
+            @Override
+            public void call(User result) {
+                user = result;
+                callback.call(result);
+            }
+        });
         highFiveGetUserAsyncTask.execute(new String[]{GET_MY_HIGHFIVES,token});
     }
 }

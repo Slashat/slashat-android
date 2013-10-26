@@ -57,7 +57,7 @@ public class MyHighFiversFragment extends ListFragment {
                             }
                         }
                     }
-                });
+                },false);
         return view;
     }
 }

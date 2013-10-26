@@ -40,7 +40,7 @@ public class RecieveHighFiveFragment extends Fragment {
                         qr.setImageBitmap(BitmapFactory.decodeByteArray(user.getQrBitmap(),0,user.getQrBitmap().length));
                     }
                 }
-            });
+            },false);
 
 
         } catch (InflateException e) {
