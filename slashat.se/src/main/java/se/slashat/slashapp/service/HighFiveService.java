@@ -60,7 +60,7 @@ public class HighFiveService {
         getToken();
     }
 
-    public static void getUser(Callback<User> callback, boolean reload) {
+    public synchronized static void getUser(Callback<User> callback, boolean reload) {
 
         if (user != null && !reload){
             callback.call(user);

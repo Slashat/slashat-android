@@ -52,6 +52,8 @@ public class MyHighFiversFragment extends ListFragment {
                                     list.add(highFiverViewModel);
                                 }
 
+                                list.add(new SectionViewModel(new SectionModel("")));
+
                                 MyHighFiversArrayAdapter myHighFiversArrayAdapter = new MyHighFiversArrayAdapter(getActivity(), R.layout.about_list_item_row, list.toArray(new ViewModelBase[list.size()]));
                                 setListAdapter(myHighFiversArrayAdapter);
                             }
