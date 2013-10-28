@@ -57,48 +57,57 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
     }
 
     private void populate() {
-        AboutAdapter adapter = null;
-
-        Personal[] show = PersonalService.getPersonal(Personal.Type.SHOW);
-        Personal[] crew = PersonalService.getPersonal(Personal.Type.HOST);
-        Personal[] assistant = PersonalService.getPersonal(Personal.Type.ASSISTANT);
-        Personal[] dev = PersonalService.getPersonal(Personal.Type.DEV);
-        Collection<HighFiver> allHighfivers = HighFiveService.getAllHighfivers();
-
-        ArrayList<ViewModelBase> arrayList = new ArrayList<ViewModelBase>();
-
-        arrayList.add(new SectionViewModel(new SectionModel("Om showen")));
-        for (int i = 0; i < show.length; i++) {
-            arrayList.add(new AboutViewModel(show[i]));
-        }
-
-        arrayList.add(new SectionViewModel(new SectionModel("Programledare")));
-        for (int i = 0; i < crew.length; i++) {
-            arrayList.add(new AboutViewModel(crew[i]));
-        }
-
-        arrayList.add(new SectionViewModel(new SectionModel("Medarbetare")));
-        for (int i = 0; i < assistant.length; i++) {
-            arrayList.add(new AboutViewModel(assistant[i]));
-        }
-
-        arrayList.add(new SectionViewModel(new SectionModel("Team Slashat Devops")));
-        for (int i = 0; i < dev.length; i++) {
-            arrayList.add(new AboutViewModel(dev[i]));
-        }
-
-        arrayList.add(new SectionViewModel(new SectionModel("Highfivers")));
-
-        for (HighFiver allHighfiver : allHighfivers) {
-            arrayList.add(new AboutViewModel(allHighfiver));
-        }
-
-        ViewModelBase<?>[] array = arrayList.toArray(new ViewModelBase<?>[arrayList.size()]);
 
 
-        adapter = new AboutAdapter(getActivity(), R.layout.about_list_item_row, array, this);
 
-        setListAdapter(adapter);
+        HighFiveService.getAllHighfivers(new Callback<Collection<HighFiver>>() {
+            @Override
+            public void call(Collection<HighFiver> result) {
+                AboutAdapter adapter = null;
+                Personal[] show = PersonalService.getPersonal(Personal.Type.SHOW);
+                Personal[] crew = PersonalService.getPersonal(Personal.Type.HOST);
+                Personal[] assistant = PersonalService.getPersonal(Personal.Type.ASSISTANT);
+                Personal[] dev = PersonalService.getPersonal(Personal.Type.DEV);
+
+
+                ArrayList<ViewModelBase> arrayList = new ArrayList<ViewModelBase>();
+
+                arrayList.add(new SectionViewModel(new SectionModel("Om showen")));
+                for (int i = 0; i < show.length; i++) {
+                    arrayList.add(new AboutViewModel(show[i]));
+                }
+
+                arrayList.add(new SectionViewModel(new SectionModel("Programledare")));
+                for (int i = 0; i < crew.length; i++) {
+                    arrayList.add(new AboutViewModel(crew[i]));
+                }
+
+                arrayList.add(new SectionViewModel(new SectionModel("Medarbetare")));
+                for (int i = 0; i < assistant.length; i++) {
+                    arrayList.add(new AboutViewModel(assistant[i]));
+                }
+
+                arrayList.add(new SectionViewModel(new SectionModel("Team Slashat Devops")));
+                for (int i = 0; i < dev.length; i++) {
+                    arrayList.add(new AboutViewModel(dev[i]));
+                }
+
+                arrayList.add(new SectionViewModel(new SectionModel("Highfivers")));
+
+                for (HighFiver allHighfiver : result) {
+                    arrayList.add(new AboutViewModel(allHighfiver));
+                }
+
+                ViewModelBase<?>[] array = arrayList.toArray(new ViewModelBase<?>[arrayList.size()]);
+
+
+                adapter = new AboutAdapter(getActivity(), R.layout.about_list_item_row, array, AboutListFragment.this);
+
+                setListAdapter(adapter);
+
+            }
+        },false);
+
 
     }
 

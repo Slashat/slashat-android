@@ -20,6 +20,7 @@ import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.async.HighFiveGetUserAsyncTask;
 import se.slashat.slashapp.async.HighFiveLoginAsyncTask;
 import se.slashat.slashapp.async.HighFiveSetAsyncTask;
+import se.slashat.slashapp.async.HighFiversAllAsyncTask;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.HighFiver;
 import se.slashat.slashapp.model.highfive.User;
@@ -52,6 +53,7 @@ public class HighFiveService {
     private static Context context;
     private static String token;
     private static User user;
+    private static Collection<HighFiver> highFivers;
 
 
     public static void initalize(Context context) {
@@ -125,13 +127,38 @@ public class HighFiveService {
         return token != null;
     }
 
-    public static Collection<HighFiver> getAllHighfivers() {
-        return Collections.EMPTY_LIST;
+    public static void getAllHighfivers(Callback<Collection<HighFiver>> callback, boolean reload) {
+        if (highFivers != null && !reload){
+            callback.call(highFivers);
+            return;
+        }
+        boolean networkAvailable = Network.isNetworkAvailable();
+
+        if (!networkAvailable && highFivers != null){
+            callback.call(highFivers);
+            return;
+        }
+
+        if (networkAvailable) {
+            getAllHighfiversFromAsyncTask(callback);
+        }
     }
 
     public static void setHighFive(String receiver, Callback<Boolean> callback){
         HighFiveSetAsyncTask highFiveSetAsyncTask = new HighFiveSetAsyncTask(callback);
         highFiveSetAsyncTask.execute(new String[]{DO,receiver,token});
+    }
+
+    private static void getAllHighfiversFromAsyncTask(final Callback<Collection<HighFiver>> callback){
+        HighFiversAllAsyncTask highFiversAllAsyncTask = new HighFiversAllAsyncTask(new Callback<Collection<HighFiver>>() {
+            @Override
+            public void call(Collection<HighFiver> result) {
+                highFivers = result;
+                callback.call(result);
+            }
+        });
+        highFiversAllAsyncTask.execute(ALL);
+
     }
 
     private static void getUserFromAsyncTask(final Callback<User> callback) {

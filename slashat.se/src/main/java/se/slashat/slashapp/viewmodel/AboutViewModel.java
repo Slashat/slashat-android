@@ -24,10 +24,8 @@ public class AboutViewModel extends ViewModelBase<Object> {
 
     public AboutViewModel(HighFiver p) {
         super(p);
-        name = p.getUserId();
-        title = p.getUsername();
-        //Get real user image async
-        image = 0;
+        name = p.getUsername();
+        title = "";
         imageUrl = p.getPicture();
 
     }
