@@ -48,6 +48,7 @@
         <EditText
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 android:id="@+id/loginusername"
                 android:layout_gravity="left|center_vertical"/>
 
