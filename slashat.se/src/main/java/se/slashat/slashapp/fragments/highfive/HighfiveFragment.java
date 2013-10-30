@@ -183,14 +183,17 @@ public class HighfiveFragment extends Fragment {
             return "Du har inte tagit emot din första high five ännu";
         }
 
+        /*
         if (Strings.isNullOrEmpty(highFivedBy.getLocation())){
             base = "Fick sin första high-five av %s den %s";
         }else{
             base = "Fick sin första high-five av %s den %s i %s";
         }
+        */
+        base = "Fick sin första High-Five av %s den %s";
 
         DateTime dateTime = new DateTime(Long.valueOf(highFivedBy.getDate())*1000l, DateTimeZone.getDefault());
-        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd MMM yyyy");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd MM, yyyy");
         String date = dateTimeFormatter.print(dateTime);
         return String.format(base, highFivedBy.getName(), date, highFivedBy.getLocation());
     }

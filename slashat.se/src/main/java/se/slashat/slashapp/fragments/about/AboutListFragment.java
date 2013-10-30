@@ -87,12 +87,12 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
                     arrayList.add(new AboutViewModel(assistant[i]));
                 }
 
-                arrayList.add(new SectionViewModel(new SectionModel("Team Slashat Devops")));
+                arrayList.add(new SectionViewModel(new SectionModel("App-hjälpredor")));
                 for (int i = 0; i < dev.length; i++) {
                     arrayList.add(new AboutViewModel(dev[i]));
                 }
 
-                arrayList.add(new SectionViewModel(new SectionModel("Highfivers")));
+                arrayList.add(new SectionViewModel(new SectionModel("High-Fivers!")));
 
                 for (HighFiver allHighfiver : result) {
                     arrayList.add(new AboutViewModel(allHighfiver));

@@ -58,9 +58,10 @@ public class HighFiveLoginAsyncTask extends AsyncTask<String,Void,String>{
 
             HttpResponse response = httpclient.execute(httppost);
 
-
             InputStream stream = response.getEntity().getContent();
             String tokenJsonString = IOUtils.readStringFromStream(stream);
+
+            System.out.println(tokenJsonString);
 
             if (!Strings.isNullOrEmpty(tokenJsonString)){
                 JSONObject jsonObject = new JSONObject(tokenJsonString);

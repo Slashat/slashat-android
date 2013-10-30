@@ -12,11 +12,11 @@ public class PersonalService {
         if (type == Type.SHOW) {
             Personal[] personal = new Personal[1];
 
-            personal[0] = new Personal("Om Slashat.se", "Sveriges största teknikpodcast", Type.SHOW, R.drawable.slashat, "slashat@slashat.se", "slashat", "http://www.slashat.se",
+            personal[0] = new Personal("Slashat.se", "Sveriges största teknikpodcast", Type.SHOW, R.drawable.slashat, "slashat@slashat.se", "slashat", "http://www.slashat.se",
                     "Slashat.se är en svensk teknikpodcast som drivs av Jezper Söderlund och Tommie Podzemski. Podcasten, som är dryga timmen lång, utkommer varje tisdag kväll och i showen diskuteras nyheter främst rörande teknik, prylar, mjukvara, hårdvara och internet."
                             + "\n\nSedan starten 2009 har Slashat-redaktionen fått tillökning av Magnus Jonasson och Johan Larsson som är givna röster vid våra liverapporteringar från t.ex. Apple events och liknande. De dyker dessutom allt som oftast upp i eftersnacken på tisdagarna, i våra specialavsnitt och syns också i reportage från mässor och events som vi besöker."
-                            + "Slashat.se spelas in live inför kamera varje tisdag klockan 20.00 med försnack från klockan 19.30 och lyssnare är välkomna att titta och vara en del i diskussionerna via livechatten."
-                            + "\n\nÖvriga intressen innefattar musik, film, resor, gott öl och vin, motorcyklar, golf och egentligen allt som hör livsnjutning till.");
+                            + "\n\nSlashat.se spelas in live inför kamera varje tisdag klockan 20.00 med försnack från klockan 19.30 och lyssnare är välkomna att titta och vara en del i diskussionerna via livechatten."
+                            + "\n\nDu kan lyssna på Slashat via hemsidan eller prenumerera på oss via iTunes eller i din podcast-app. Showen utkommer tisdagskvällar varje vecka, året runt. Inspelningen sänds live via vår hemsida http://live.slashat.se.");
 
             return personal;
         }
@@ -68,8 +68,11 @@ public class PersonalService {
                     "Erika har ställt upp med kod och programmeringgsupport i iOS-appen. Till vardags jobbar hon som approgrammerare på en mellanstor konsultfirma. På fritiden slukar hon TV-serier à la science fiction eller springer i skogen med scouterna."
                     + "\n\nHon gillar och kör Mac, både på jobbet och privat, men programmerar lika gärna appar till iOS som till Android.");
 
-            personal[2] = new Personal("Hjälp Oss!", "Var delaktig i utvecklingen av SlashApp", Type.DEV, R.drawable.help_us, "slashat@slashat.se", "slashat", "http://slashat.se/",
-                    "I väntan på text.");
+            personal[2] = new Personal("Hjälp till med appen!", "Sugen på att dra ditt strå till stacken?", Type.DEV, R.drawable.help_us, "slashat@slashat.se", "slashat", "http://slashat.se/",
+                    "Har du åsikter eller kunskaper för hur du vill förbättra appen? Dela med dig!"
+                     + "\n\nVare sig du är en van kodknackare eller om du bara hittat en felstavning någonstans så kom och hjälp till. All hjälp är välkommen! Koden ligger på GitHub och på Slashats forum kan man diskutera alla delar av appen."
+                     + "\n\nBehöver du hjälp med att komma igång så kan du antingen mejla eller slänga upp en tråd på forumet. "
+            );
             return personal;
         }
 

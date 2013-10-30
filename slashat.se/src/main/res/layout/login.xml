@@ -23,7 +23,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Logga in med ditt Slashat Forum-konto"
+                android:text="Slashat.se Forum-konto:"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="26sp"
                 android:paddingBottom="10dp"/>
@@ -34,7 +34,7 @@
                 android:paddingBottom="10dp"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="17sp"
-                android:text="Du använder ditt befintliga Slashat Forum-konto för att koppla ihop appen med din befintliga forumprofil."/>
+                android:text="Du använder ditt befintliga Slashat.se Forum-konto för att koppla ihop appen med din forumprofil."/>
 
         <TextView
                 android:layout_width="wrap_content"

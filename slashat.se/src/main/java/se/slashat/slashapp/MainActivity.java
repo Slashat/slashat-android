@@ -177,7 +177,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             case 2:
                 return getString(R.string.title_section3).toUpperCase(l);
             case 3:
-                return "HIGHFIVE".toUpperCase(l);
+                return "HIGH-FIVE!".toUpperCase(l);
         }
 
         return "";
@@ -196,10 +196,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 @Override
                 public void call(Boolean result) {
                     if (result){
-                        Toast.makeText(MainActivity.this,"Grattis! Du har nu highfiveat!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Yay, High-Five!",Toast.LENGTH_LONG).show();
                         mHighfiveFragment.reload();
                     }else{
-                        Toast.makeText(MainActivity.this,"Kunde inte scanna. Försök igen!",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Aj då, det där gick inte så bra. Försök igen!",Toast.LENGTH_LONG).show();
                     }
                 }
             });

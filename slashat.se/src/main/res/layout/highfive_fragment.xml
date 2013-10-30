@@ -96,7 +96,7 @@
                                 android:layout_marginBottom="6dp"
                                 android:id="@+id/highfive_numberofhighfives"
                                 android:text="Laddar"
-                                />
+                            android:visibility="gone" />
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -126,7 +126,7 @@
                     <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ge high-five"
+                            android:text="Ge High-Five!"
                             android:layout_weight="0.5"
                             android:id="@+id/givehighfive"
                             android:layout_below="@+id/linearLayout"
@@ -135,7 +135,7 @@
                     <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ta emot high-five"
+                            android:text="Ta emot High-Five!"
                             android:layout_weight="0.5"
                             android:id="@+id/gethighfive"
                             android:layout_below="@+id/linearLayout"
