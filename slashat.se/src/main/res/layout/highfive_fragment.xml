@@ -71,7 +71,8 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                        android:layout_marginRight="5dp">
 
                         <TextView
                                 android:layout_width="wrap_content"
@@ -104,7 +105,7 @@
                                 android:id="@+id/highfive_firsthighfive"
                                 android:textColor="#dddddd"
                                 android:fontFamily="sans-serif-condensed"
-                                android:textSize="17sp"
+                                android:textSize="16sp"
                                 android:layout_marginBottom="6dp"
                                 android:textStyle="normal"
                                 android:text="Laddar"
@@ -135,7 +136,7 @@
                     <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ta emot High-Five!"
+                            android:text="Ta emot high-five"
                             android:layout_weight="0.5"
                             android:id="@+id/gethighfive"
                             android:layout_below="@+id/linearLayout"
