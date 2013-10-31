@@ -39,24 +39,28 @@
                         android:background="#de5214"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="12dp"
-                        android:layout_gravity="left|center_vertical">
+                        android:paddingBottom="6dp">
                     <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="1dp"
-                            android:layout_marginBottom="2dp"
-                            android:layout_marginTop="11dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp">
+                            android:layout_marginBottom="3dp"
+                            android:layout_marginTop="9dp"
+                            android:layout_marginLeft="9dp"
+                            android:layout_marginRight="9dp">
                     <ImageView
-                            android:layout_width="96dp"
-                            android:layout_height="96dp"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
                             android:id="@+id/highfive_userimage"
 
-                            android:background="#de5214"
+                            android:background="#cfcac5"
 
-                            />
+                        android:src="@drawable/slashat"
+                        android:padding="1dp"
+                        android:layout_alignWithParentIfMissing="false"
+                        android:adjustViewBounds="false"
+                        android:layout_alignTop="@+id/imageviewprogress"
+                        android:layout_alignLeft="@+id/imageviewprogress" />
                     <ProgressBar
                             android:id="@+id/imageviewprogress"
                             style="?android:attr/progressBarStyleLarge"
@@ -70,8 +74,7 @@
                     <LinearLayout
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:orientation="vertical"
+                        android:orientation="vertical"
                         android:layout_marginRight="5dp">
 
                         <TextView
@@ -79,9 +82,9 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="#ffffff"
                                 android:layout_marginBottom="0dp"
-                                android:layout_marginTop="6dp"
+                                android:layout_marginTop="4dp"
                                 android:fontFamily="sans-serif-condensed"
-                                android:textSize="26sp"
+                                android:textSize="23sp"
                                 android:textStyle="bold"
                                 android:id="@+id/highfive_username"
                                 android:text="Laddar"
@@ -106,10 +109,9 @@
                                 android:textColor="#dddddd"
                                 android:fontFamily="sans-serif-condensed"
                                 android:textSize="16sp"
-                                android:layout_marginBottom="6dp"
-                                android:textStyle="normal"
+                            android:textStyle="normal"
                                 android:text="Laddar"
-                                />
+                            android:maxLines="2" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -120,7 +122,7 @@
                         android:layout_weight="1"
                         android:background="#FFFFFF"
                         android:orientation="horizontal"
-                        android:layout_marginLeft="2dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginRight="2dp"
                         android:layout_marginBottom="4dp">
 
@@ -131,17 +133,19 @@
                             android:layout_weight="0.5"
                             android:id="@+id/givehighfive"
                             android:layout_below="@+id/linearLayout"
-                            android:layout_alignParentLeft="true"/>
+                            android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="-2dp" />
 
                     <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ta emot high-five"
+                            android:text="Ta emot High-Five!"
                             android:layout_weight="0.5"
                             android:id="@+id/gethighfive"
                             android:layout_below="@+id/linearLayout"
                             android:layout_toRightOf="@+id/button"
-                            android:singleLine="false"/>
+                            android:singleLine="false"
+                        android:layout_marginRight="4dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -174,4 +178,5 @@
 
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>
