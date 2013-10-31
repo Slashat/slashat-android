@@ -165,12 +165,17 @@ public class HighfiveFragment extends Fragment {
                     });
 
                     Button giveHighfive = (Button) view.findViewById(R.id.givehighfive);
-                    giveHighfive.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            IntentIntegrator.initiateScan(HighfiveFragment.this.getActivity());
-                        }
-                    });
+                    if (!user.getHighFivers().isEmpty()) {
+                        giveHighfive.setEnabled(true);
+                        giveHighfive.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                IntentIntegrator.initiateScan(HighfiveFragment.this.getActivity());
+                            }
+                        });
+                    }else{
+                        giveHighfive.setEnabled(false);
+                    }
 
                 }
             }
