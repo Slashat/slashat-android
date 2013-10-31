@@ -71,7 +71,7 @@ public class AboutAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impleme
 	}
 
 	@Override
-	public void setDataOnHolder(Holder holder, ViewModelBase personal) {
+	public void setDataOnHolder(Holder holder, ViewModelBase personal, int position) {
         AboutViewModel pvm = (AboutViewModel) personal;
 		AboutHolder ph = (AboutHolder) holder;
 
@@ -79,7 +79,7 @@ public class AboutAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impleme
         if (pvm.getImageUrl() == null){
             ph.imageThumb.setImageResource(pvm.getImg());
         }else if (pvm.getImageUrl() != null){
-            ImageService.populateImage(ph,pvm.imageUrl.toString());
+            ImageService.populateImage(ph,pvm.imageUrl.toString(), position);
         }
 		//
 

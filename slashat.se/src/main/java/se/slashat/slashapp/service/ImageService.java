@@ -61,7 +61,7 @@ public class ImageService {
         }*/
     }
 
-    public static void populateImage(AbstractArrayAdapter.ImageAsyncHolder holder, String imageUrl) {
+    public static void populateImage(AbstractArrayAdapter.ImageAsyncHolder holder, String imageUrl, int position) {
         Bitmap bitmap = getBitmapFromMemCache(imageUrl);
 
         if (bitmap == null) {
@@ -70,9 +70,9 @@ public class ImageService {
                 addBitmapToMemoryCache(imageUrl, bitmap);
             }
             if (bitmap == null) {
-                if (holder.loadImageAsyncTask != null) {
-                    holder.loadImageAsyncTask.cancel();
-                }
+                //if (holder.loadImageAsyncTask != null) {
+                //    holder.loadImageAsyncTask.cancel();
+                //}
                 // holder.newsImage.setImageResource(R.drawable.ic_launcher);
                 //holder.image.setImageBitmap(null);
                 //holder.image.invalidate();
@@ -81,12 +81,12 @@ public class ImageService {
 
                 ImageView image = null;
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB){
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
                     image = holder.image;
                 }
 
                 LoadImageAsyncTask loadImageAsyncTask = new LoadImageAsyncTask(
-                        image, holder.imageThumb, holder.progressBar,
+                        position, image, holder, holder.imageThumb, holder.progressBar,
                         new LoadImageAsyncTask.ImageCacheCallback() {
                             @Override
                             public void addToCache(String url, Bitmap bitmap) {
@@ -100,14 +100,14 @@ public class ImageService {
         }
 
         if (bitmap != null) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB){
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
                 //holder.image.setImageBitmap(bitmap);
             }
             holder.imageThumb.setImageBitmap(bitmap);
             holder.hasImage = true;
         }
-
     }
+
 
     private static Bitmap getBitmapFromMemCache(String url) {
         String key = md5(url);

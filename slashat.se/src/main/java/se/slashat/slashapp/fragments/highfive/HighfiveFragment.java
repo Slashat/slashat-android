@@ -144,12 +144,13 @@ public class HighfiveFragment extends Fragment {
                     userImageHolder.imageThumb = (ImageView) view.findViewById(R.id.highfive_userimage);
                     userImageHolder.image = (ImageView) view.findViewById(R.id.highfive_userimage);
                     userImageHolder.progressBar = (ProgressBar) view.findViewById(R.id.imageviewprogress);
+                    userImageHolder.position = 0;
                     setText(view.findViewById(R.id.highfive_username), user.getUserName());
                     setText(view.findViewById(R.id.highfive_numberofhighfives), user.getHighFivers().size() + " highfives");
                     setText(view.findViewById(R.id.highfive_firsthighfive), formatFirstHighfivedBy(user.getHighFivedBy()));
 
                     if (user.getPicture() != null) {
-                        ImageService.populateImage(userImageHolder, user.getPicture().toString());
+                        ImageService.populateImage(userImageHolder, user.getPicture().toString(),0);
                     }
 
                     Button getHighfive = (Button) view.findViewById(R.id.gethighfive);

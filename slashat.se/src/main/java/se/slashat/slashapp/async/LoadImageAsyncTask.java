@@ -21,9 +21,14 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.ProgressBar;
 
+import se.slashat.slashapp.adapter.AbstractArrayAdapter;
+
 //TODO: Move away all the caching internal code and merge to separate class!
 
 public class LoadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
+
+    private int position;
+    private AbstractArrayAdapter.ImageAsyncHolder holder;
 
     public interface ImageCacheCallback {
         void addToCache(String url, Bitmap bitmap);
@@ -35,8 +40,10 @@ public class LoadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
     private ImageCacheCallback imageCacheCallback;
     private WeakReference<ImageView> imageViewThumbnail;
 
-    public LoadImageAsyncTask(ImageView imageView, ImageView imageViewThumbnail, ProgressBar progressBar,
+    public LoadImageAsyncTask(int position, ImageView imageView, AbstractArrayAdapter.ImageAsyncHolder holder, ImageView imageViewThumbnail, ProgressBar progressBar,
                               ImageCacheCallback imageCacheCallback) {
+        this.position = position;
+        this.holder = holder;
         this.imageViewThumbnail = new WeakReference<ImageView>(imageViewThumbnail);
         this.progressBar = progressBar;
         this.imageCacheCallback = imageCacheCallback;
@@ -126,7 +133,7 @@ public class LoadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap result) {
         super.onPostExecute(result);
-        if (!cancel) {
+        if (holder.position == position) {
             /*if (imageView.get() != null) {
                 progressBar.setVisibility(View.GONE);
                 imageView.get().setImageBitmap(result);
@@ -136,6 +143,7 @@ public class LoadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
                 progressBar.setVisibility(View.GONE);
                 imageViewThumbnail.get().setImageBitmap(result);
                 imageViewThumbnail.get().setScaleType(ScaleType.FIT_XY);
+                holder.loadImageAsyncTask = null;
             }
         }
     }

@@ -46,24 +46,25 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 		View row = convertView;
 		Holder holder = null;
 		final T t = data[position];
-			boolean isSection = false;
-			
-			if (t instanceof SectionViewModel){
-				isSection = true;
-			}
-			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			if (isSection) {
-				if (row == null || !(row.getTag() instanceof SectionHolder) ) {
-					row = inflater.inflate(sectionLayoutResourceId, parent, false);
-				}
-				holder = getSectionHolder(row);
-			} else {
-				if (row == null || (row.getTag() instanceof SectionHolder)) {
-					row = inflater.inflate(layoutResourceId, parent, false);
-				}
-				holder = createHolder(row);
-			}
-			row.setTag(holder);
+
+        boolean isSection = false;
+
+        if (t instanceof SectionViewModel) {
+            isSection = true;
+        }
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+        if (isSection) {
+            if (row == null || !(row.getTag() instanceof SectionHolder)) {
+                row = inflater.inflate(sectionLayoutResourceId, parent, false);
+            }
+            holder = getSectionHolder(row);
+        } else {
+            if (row == null || (row.getTag() instanceof SectionHolder)) {
+                row = inflater.inflate(layoutResourceId, parent, false);
+            }
+            holder = createHolder(row);
+        }
+        row.setTag(holder);
 
 		if (isClickable()) {
 			row.setOnClickListener(createOnClickListener(t));
@@ -74,8 +75,9 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 			if (holder instanceof SectionHolder) {
 				setDataOnSectionHolder(holder, (SectionViewModel) t);
 			} else {
-				setDataOnHolder(holder, t);
+				setDataOnHolder(holder, t,position);
 			}
+            holder.position = position;
 		}
 
         if (!t.isAnimationShown()) {
@@ -136,9 +138,10 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 	 * @param holder
 	 * @param t
 	 */
-	public abstract void setDataOnHolder(Holder holder, T t);
+	public abstract void setDataOnHolder(Holder holder, T t, int position);
 
 	static class Holder {
+        public int position;
 	}
 
     public static class ImageAsyncHolder extends Holder{

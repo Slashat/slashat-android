@@ -47,7 +47,7 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<ViewModelBase
     }
 
     @Override
-    public void setDataOnHolder(Holder holder, ViewModelBase highFiverViewModel) {
+    public void setDataOnHolder(Holder holder, ViewModelBase highFiverViewModel, int position) {
         MyHighFiversHolder h = (MyHighFiversHolder) holder;
         HighFiverViewModel vm = (HighFiverViewModel) highFiverViewModel;
 
@@ -55,7 +55,7 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<ViewModelBase
         h.username.setText("");
 
         if (vm.getModel().getPicture() != null){
-            ImageService.populateImage(h, vm.getModel().getPicture().toString());
+            ImageService.populateImage(h, vm.getModel().getPicture().toString(), position);
         }
 
     }
