@@ -4,6 +4,17 @@ package se.slashat.slashapp.service;
  * Created by nicklas on 10/6/13.
  */
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.support.v4.util.LruCache;
+import android.widget.ImageView;
+
+import com.jakewharton.disklrucache.DiskLruCache;
+import com.jakewharton.disklrucache.DiskLruCache.Editor;
+import com.jakewharton.disklrucache.DiskLruCache.Snapshot;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -11,22 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
-import android.support.v4.util.LruCache;
-import android.util.Log;
-import android.widget.ImageView;
-
-/*import com.jakewharton.disklrucache.DiskLruCache;
-import com.jakewharton.disklrucache.DiskLruCache.Editor;
-import com.jakewharton.disklrucache.DiskLruCache.Snapshot;*/
 
 import se.slashat.slashapp.adapter.AbstractArrayAdapter;
 import se.slashat.slashapp.async.LoadImageAsyncTask;
@@ -34,7 +31,7 @@ import se.slashat.slashapp.async.LoadImageAsyncTask;
 public class ImageService {
 
     private static LruCache<String, Bitmap> memoryCache;
-    //private static DiskLruCache diskLruCache;
+    private static DiskLruCache diskLruCache;
     private static final int DISK_CACHE_SIZE = 1024 * 1024 * 10; // 10MB
     private static final int APP_VERSION = 1;
     private static final int VALUE_COUNT = 1;
@@ -50,7 +47,7 @@ public class ImageService {
             memoryCache = new LruCache<String, Bitmap>(cacheSize);
         }
 
-        /*if (diskLruCache == null) {
+        if (diskLruCache == null) {
             File cacheDir = getDiskCacheDir(context, "tumbs");
             try {
                 diskLruCache = DiskLruCache.open(cacheDir, APP_VERSION,
@@ -58,14 +55,14 @@ public class ImageService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
     }
 
     public static void populateImage(AbstractArrayAdapter.ImageAsyncHolder holder, String imageUrl, int position) {
         Bitmap bitmap = getBitmapFromMemCache(imageUrl);
 
         if (bitmap == null) {
-            //bitmap = getBitmapFromDiskCache(imageUrl);
+            bitmap = getBitmapFromDiskCache(imageUrl);
             if (bitmap != null) {
                 addBitmapToMemoryCache(imageUrl, bitmap);
             }
@@ -91,7 +88,7 @@ public class ImageService {
                             @Override
                             public void addToCache(String url, Bitmap bitmap) {
                                 addBitmapToMemoryCache(url, bitmap);
-                                //addBitmapToDiskCache(url, bitmap);
+                                addBitmapToDiskCache(url, bitmap);
                             }
                         });
                 holder.loadImageAsyncTask = loadImageAsyncTask;
@@ -111,17 +108,17 @@ public class ImageService {
 
     private static Bitmap getBitmapFromMemCache(String url) {
         String key = md5(url);
-        Log.d(ImageService.class.getName(), "getting image: " + key
-                + " from memory cache");
+       // Log.d(ImageService.class.getName(), "getting image: " + key
+       //         + " from memory cache");
         Bitmap bitmap = memoryCache.get(key);
         if (bitmap != null) {
-            Log.d(ImageService.class.getName(), "image: " + key
-                    + " read from memory cache");
+           // Log.d(ImageService.class.getName(), "image: " + key
+           //         + " read from memory cache");
         }
         return bitmap;
     }
 
-    /*private static Bitmap getBitmapFromDiskCache(String url) {
+    private static Bitmap getBitmapFromDiskCache(String url) {
         String key = md5(url);
         Bitmap bitmap = null;
         InputStream inputStream = null;
@@ -151,22 +148,22 @@ public class ImageService {
             }
         }
 
-        Log.d(NewsitemAdapter.class.getName(), "image: " + key
-                + " read from disk cache");
+       // Log.d(ImageService.class.getName(), "image: " + key
+       //         + " read from disk cache");
         addBitmapToMemoryCache(key, bitmap);
         return bitmap;
-    }*/
+    }
 
     public static void addBitmapToMemoryCache(String url, Bitmap bitmap) {
         if (url != null && bitmap != null) {
             String key = md5(url);
-            Log.d(ImageService.class.getName(), "image: " + key
-                    + " added to memory cache");
+           // Log.d(ImageService.class.getName(), "image: " + key
+           //         + " added to memory cache");
             memoryCache.put(key, bitmap);
         }
     }
 
-   /* public static void addBitmapToDiskCache(String url, Bitmap bitmap) {
+   public static void addBitmapToDiskCache(String url, Bitmap bitmap) {
         if (url != null && bitmap != null) {
             synchronized (sync) {
                 String key = md5(url);
@@ -180,8 +177,8 @@ public class ImageService {
                     if (writeBitmapToFile(bitmap, editor)) {
                         diskLruCache.flush();
                         editor.commit();
-                        Log.d(NewsitemAdapter.class.getName(), "image: " + key
-                                + " added to disk cache");
+                        //Log.d(ImageService.class.getName(), "image: " + key
+                       //         + " added to disk cache");
                     } else {
                         editor.abort();
                     }
@@ -196,9 +193,9 @@ public class ImageService {
                 }
             }
         }
-    }*/
+    }
 
-    /*private static boolean writeBitmapToFile(Bitmap bitmap,
+    private static boolean writeBitmapToFile(Bitmap bitmap,
                                              DiskLruCache.Editor editor) throws IOException,
             FileNotFoundException {
         OutputStream out = null;
@@ -210,7 +207,7 @@ public class ImageService {
                 out.close();
             }
         }
-    }*/
+    }
 
     private static File getDiskCacheDir(Context context, String uniqueName) {
         final String cachePath = context.getCacheDir().getPath();
