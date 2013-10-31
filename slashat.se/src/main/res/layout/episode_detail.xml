@@ -89,7 +89,8 @@
                             android:fontFamily="sans-serif"
                             android:textStyle="bold"
                             android:textColor="#333333"
-                            android:text="Strömma">
+                            android:text="Strömma"
+                        style="@style/Widget.AppCompat.Light.ActionButton.Overflow">
                     </Button>
 
                     <Button
