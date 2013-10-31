@@ -238,6 +238,10 @@ public class HighfiveFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        if (HighFiveService.hasToken()) {
+            populate(true);
+        }
     }
 
 }
