@@ -194,8 +194,10 @@ public class HighfiveFragment extends Fragment {
         base = "Fick sin första High-Five av %s den %s";
 
         DateTime dateTime = new DateTime(Long.valueOf(highFivedBy.getDate())*1000l, DateTimeZone.getDefault());
-        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd MM, yyyy");
+        String monthName = dateTime.monthOfYear().getAsText(new Locale("sv"));
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd '"+monthName+"', yyyy");
         String date = dateTimeFormatter.print(dateTime);
+
         return String.format(base, highFivedBy.getName(), date, highFivedBy.getLocation());
     }
 
