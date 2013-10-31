@@ -34,9 +34,9 @@ public class    AboutDetailFragment extends Fragment {
             setText(view.findViewById(R.id.title), person.getTitle());
             setText(view.findViewById(R.id.bio), person.getBio());
             setImage(view.findViewById(R.id.photo), person.getImg());
-            setHomepageClickListener(person,view.findViewById(R.id.browser));
-            setEmailClickListener(person,view.findViewById(R.id.email));
-            setTwitterClickListener(person,view.findViewById(R.id.twitter));
+            setHomepageClickListener(person,view.findViewById(R.id.webholder));
+            setEmailClickListener(person,view.findViewById(R.id.emailholder));
+            setTwitterClickListener(person,view.findViewById(R.id.twitterholder));
         }else{
             view.findViewById(R.id.aboutdetailroot).setVisibility(View.GONE);
         }
