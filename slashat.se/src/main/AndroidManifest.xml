@@ -21,6 +21,7 @@
         android:theme="@style/Theme.Slashat" >
         <activity
             android:name="se.slashat.slashapp.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <service
             android:name="se.slashat.slashapp.androidservice.EpisodePlayer"
             android:label="Episode Player Service" />
@@ -45,12 +45,15 @@
         </activity>
 
         <activity
-            android:name="se.slashat.slashapp.fragments.episode.EpisodeDetailActivity"/>
+            android:name="se.slashat.slashapp.fragments.episode.EpisodeDetailActivity"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name="se.slashat.slashapp.fragments.about.AboutDetailActivity"/>
+            android:name="se.slashat.slashapp.fragments.about.AboutDetailActivity"
+            android:screenOrientation="portrait"/>
 
         <activity
-                android:name="se.slashat.slashapp.fragments.highfive.RecieveHighFiveActivity"/>
+                android:name="se.slashat.slashapp.fragments.highfive.RecieveHighFiveActivity"
+                android:screenOrientation="portrait"/>
 
         <activity android:clearTaskOnLaunch="true" android:configChanges="orientation|keyboardHidden"
                   android:name="com.google.zxing.client.android.CaptureActivity" android:screenOrientation="landscape"
