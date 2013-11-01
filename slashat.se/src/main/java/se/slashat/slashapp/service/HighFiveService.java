@@ -2,6 +2,8 @@ package se.slashat.slashapp.service;
 
 
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
 
 import java.io.FileInputStream;
@@ -145,8 +147,16 @@ public class HighFiveService {
     }
 
     public static void setHighFive(String receiver, Callback<Boolean> callback){
+        String longitude = "";
+        String latitude = "";
+        LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location != null){
+            longitude = String.valueOf(location.getLongitude());
+            latitude = String.valueOf(location.getLatitude());
+        }
         HighFiveSetAsyncTask highFiveSetAsyncTask = new HighFiveSetAsyncTask(callback);
-        highFiveSetAsyncTask.execute(new String[]{DO,receiver,token});
+        highFiveSetAsyncTask.execute(new String[]{DO,receiver,longitude,latitude,token});
     }
 
     private static void getAllHighfiversFromAsyncTask(final Callback<Collection<HighFiver>> callback){

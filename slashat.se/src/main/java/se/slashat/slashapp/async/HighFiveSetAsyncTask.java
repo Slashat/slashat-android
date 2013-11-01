@@ -42,7 +42,9 @@ public class HighFiveSetAsyncTask extends AsyncTask<String,Void,Boolean> {
     protected Boolean doInBackground(String... strings) {
         String urlString = strings[0];
         String receiver = strings[1];
-        String token = strings[2];
+        String longitude = strings[2];
+        String latitude = strings[3];
+        String token = strings[4];
 
         try {
             DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
@@ -51,6 +53,10 @@ public class HighFiveSetAsyncTask extends AsyncTask<String,Void,Boolean> {
             ArrayList<BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
             postData.add(new BasicNameValuePair("receiver",receiver));
             postData.add(new BasicNameValuePair("token",token));
+            if (!Strings.isNullOrEmpty(longitude) && !Strings.isNullOrEmpty(latitude)){
+                postData.add(new BasicNameValuePair("geolocation_lon", longitude));
+                postData.add(new BasicNameValuePair("geolocation_lat", latitude));
+            }
 
             httpPost.setEntity(new UrlEncodedFormEntity(postData));
             HttpResponse response = defaultHttpClient.execute(httpPost);

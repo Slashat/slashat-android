@@ -190,7 +190,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (scanResult != null) {
-            System.out.println("QRRESULT:"+scanResult.getContents());
 
             HighFiveService.setHighFive(scanResult.getContents(),new Callback<Boolean>() {
                 @Override

@@ -57,7 +57,6 @@ public class GoogleCalendarLoaderAsyncTask extends AsyncTask<URL, Void, List<Liv
                 liveEvents.add(createEventFromJson(item));
             }
 
-            System.out.println(jsonObject);
 
 
             return Collections.unmodifiableList(liveEvents);
