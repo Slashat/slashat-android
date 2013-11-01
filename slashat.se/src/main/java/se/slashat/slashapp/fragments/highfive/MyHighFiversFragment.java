@@ -26,10 +26,17 @@ import se.slashat.slashapp.viewmodel.ViewModelBase;
  */
 public class MyHighFiversFragment extends ListFragment {
 
+    private View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.myhighfivers_fragment, null);
+        view = inflater.inflate(R.layout.myhighfivers_fragment, null);
 
+        populate(true);
+        return view;
+    }
+
+    private void populate(boolean reload) {
         HighFiveService.getUser(
                 new Callback<User>() {
                     @Override
@@ -59,7 +66,15 @@ public class MyHighFiversFragment extends ListFragment {
                             }
                         }
                     }
-                },false);
-        return view;
+                }, reload);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (HighFiveService.hasToken()) {
+            populate(true);
+        }
     }
 }
