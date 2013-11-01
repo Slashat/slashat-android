@@ -170,7 +170,7 @@ public class HighfiveFragment extends Fragment {
                         giveHighfive.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                IntentIntegrator.initiateScan(HighfiveFragment.this.getActivity());
+                                IntentIntegrator.initiateScan(HighfiveFragment.this.getActivity(), "QR_CODE");
                             }
                         });
                     }else{
@@ -239,8 +239,13 @@ public class HighfiveFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (HighFiveService.hasToken()) {
-            populate(true);
+        try {
+            if (HighFiveService.hasToken()) {
+                populate(true);
+            }
+        } catch (Exception e) {
+            //supress errors
+            e.printStackTrace();
         }
     }
 

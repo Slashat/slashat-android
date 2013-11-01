@@ -32,7 +32,7 @@ public class MyHighFiversFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.myhighfivers_fragment, null);
 
-        populate(true);
+        //populate(true);
         return view;
     }
 
@@ -73,8 +73,13 @@ public class MyHighFiversFragment extends ListFragment {
     public void onResume() {
         super.onResume();
 
-        if (HighFiveService.hasToken()) {
-            populate(true);
+        try {
+            if (HighFiveService.hasToken()) {
+                populate(true);
+            }
+        } catch (Exception e) {
+            //supress errors
+            e.printStackTrace();
         }
     }
 }
