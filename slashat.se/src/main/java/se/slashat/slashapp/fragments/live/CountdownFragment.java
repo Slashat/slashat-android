@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import java.util.List;
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.LiveFullscreenActivity;
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.androidservice.EpisodePlayer;
 import se.slashat.slashapp.model.LiveEvent;
 import se.slashat.slashapp.service.BambuserService;
 import se.slashat.slashapp.service.GoogleCalendarService;
@@ -42,11 +42,12 @@ public class CountdownFragment extends Fragment {
     private TextView seconds;
     private LiveEvent liveEvent;
     private CountDownTimer countDownTimer;
-    private Button button;
+    private Button liveViewButton;
     private TextView countdownText;
     private TextView eventTitle;
     private TextView eventDescription;
     private View eventTitleHeader;
+    private Button liveListenButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,14 +66,15 @@ public class CountdownFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        button = (Button) view.findViewById(R.id.livebutton);
+        liveViewButton = (Button) view.findViewById(R.id.live_view_button);
+        liveListenButton = (Button) view.findViewById(R.id.live_listen_button);
         countdownText = (TextView) view.findViewById(R.id.countdowntext);
         eventTitle = (TextView) view.findViewById(R.id.liveeventtitle);
         eventDescription = (TextView) view.findViewById(R.id.liveeventdescription);
         eventTitleHeader = view.findViewById(R.id.eventtitleheader);
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        liveViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), LiveFullscreenActivity.class);
@@ -80,6 +82,12 @@ public class CountdownFragment extends Fragment {
             }
         });
 
+        liveListenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EpisodePlayer.getEpisodePlayer().playLiveStream();
+            }
+        });
 
         BambuserService.getLiveStream(new Callback<String>() {
             @Override
@@ -156,7 +164,8 @@ public class CountdownFragment extends Fragment {
     }
 
     private void setOnAir() {
-        button.setVisibility(View.VISIBLE);
+        liveViewButton.setVisibility(View.VISIBLE);
+        liveListenButton.setVisibility(View.VISIBLE);
         eventTitleHeader.setVisibility(View.GONE);
         eventDescription.setVisibility(View.GONE);
         countdownText.setText(getString(R.string.now_live));

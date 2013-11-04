@@ -60,8 +60,9 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	private String streamUrl;
 	private int startposition;
 	private static Context callingContext;
+    private boolean live;
 
-	public class EpisodePlayerBinder extends Binder implements Serializable {
+    public class EpisodePlayerBinder extends Binder implements Serializable {
 		/**
 		 * 
 		 */
@@ -139,14 +140,23 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		binder = new EpisodePlayerBinder();
 	}
 
+    public void playLiveStream(){
+        playStream("http://slashat.se:8000/","Slashat.se - live",0,null,true);
+    }
+
 	/**
 	 * Starts a new Mediaplayer for the selected URL.
-	 * 
-	 * @param streamUrl
-	 * @param fullEpisodeName
-	 * @param position
-	 */
-	public void initializePlayer(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog) {
+	 *
+     * @param streamUrl
+     * @param fullEpisodeName
+     * @param position
+     */
+
+    public void playStream(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog) {
+        playStream(streamUrl, fullEpisodeName, position, progressDialog,false);
+    }
+
+	private void playStream(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog, boolean live) {
 
         if (progressDialog == null){
             progressDialog = new ProgressDialog(callingContext);
@@ -159,6 +169,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		this.streamUrl = streamUrl;
 		this.progressDialog = progressDialog;
 		this.startposition = position;
+        this.live = live;
 
         if (mediaPlayer != null && mediaPlayer.isPlaying()){
             mediaPlayer.stop();
@@ -202,8 +213,15 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
-		durationUpdaterThread.interupt();
-		playerInterface.onMediaStopped(episodeName, true);
+        if (durationUpdaterThread != null){
+		    durationUpdaterThread.interupt();
+        }
+
+        if (progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+
+		playerInterface.onMediaStopped(episodeName, !live);
 	}
 
 	/**

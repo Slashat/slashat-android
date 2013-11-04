@@ -177,15 +177,32 @@
                 android:textColor="#999999"
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="12sp"/>
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
     <Button
-            android:id="@+id/livebutton"
+            android:id="@+id/live_view_button"
             android:text="Titta!"
+            android:layout_weight="0.5"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:visibility="gone"
+            android:layout_marginRight="4dp"
+            style="@style/Widget.AppCompat.Light.Base.ActionButton.Overflow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
+        <Button
+            android:id="@+id/live_listen_button"
+            android:text="Lyssna!"
+            android:layout_weight="0.5"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginRight="4dp"
+            style="@style/Widget.AppCompat.Light.Base.ActionButton.Overflow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        </LinearLayout>
         </LinearLayout>
 
 </LinearLayout>

@@ -2,7 +2,6 @@ package se.slashat.slashapp.player;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -10,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -143,7 +141,7 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
             }
 
             if (newEpisode != null) {
-                EpisodePlayer.getEpisodePlayer().initializePlayer(newEpisode.getStreamUrl(), newEpisode.getFullEpisodeName(), 0, null);
+                EpisodePlayer.getEpisodePlayer().playStream(newEpisode.getStreamUrl(), newEpisode.getFullEpisodeName(), 0, null);
             }
         }
 
@@ -164,7 +162,7 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
             int lastPlayedPosition = EpisodePlayer.getEpisodePlayer().getLastPlayedPosition();
             String lastPlayedStreamUrl = EpisodePlayer.getEpisodePlayer().getLastPlayedStreamUrl();
             if (lastPlayedStreamUrl != null && !lastPlayedStreamUrl.equals("")) {
-                EpisodePlayer.getEpisodePlayer().initializePlayer(lastPlayedStreamUrl, lastPlayedEpisodeName, lastPlayedPosition, null);
+                EpisodePlayer.getEpisodePlayer().playStream(lastPlayedStreamUrl, lastPlayedEpisodeName, lastPlayedPosition, null);
                 onMediaPlaying("");
             }
             return;

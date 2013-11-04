@@ -34,7 +34,7 @@ public class EpisodeDetailFragment extends Fragment {
             ((Button) view.findViewById(R.id.listenbutton)).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    EpisodePlayer.getEpisodePlayer().initializePlayer(episode.getStreamUrl(),episode.getFullEpisodeName(),0,null);
+                    EpisodePlayer.getEpisodePlayer().playStream(episode.getStreamUrl(), episode.getFullEpisodeName(), 0, null);
                 }
             });
             ((Button) view.findViewById(R.id.viewbutton)).setEnabled(false); // Disable view video button for now.
