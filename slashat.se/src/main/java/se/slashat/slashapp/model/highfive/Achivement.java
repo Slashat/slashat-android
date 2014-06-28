@@ -5,24 +5,13 @@ import java.net.URL;
 /**
  * Created by nicklas on 6/28/14.
  */
-public class Achivement
+public class Achivement extends Badge
 {
-    public final String name;
-    public final String picture;
     public final boolean achieved;
 
     public Achivement(String name, String picture, boolean achieved) {
-        this.name = name;
-        this.picture = picture;
+        super(name, picture);
         this.achieved = achieved;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPicture() {
-        return picture;
     }
 
     public boolean isAchieved() {

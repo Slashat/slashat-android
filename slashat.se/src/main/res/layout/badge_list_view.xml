@@ -17,73 +17,16 @@
             android:textStyle="bold"
             />
 
-
-        <LinearLayout
+        <GridView
+            android:id="@+id/badges"
+            android:numColumns="4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:paddingTop="8dp">
-            <RelativeLayout
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="2dp">
-                <ImageView
-                    android:id="@+id/badge1"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:gravity="center_vertical"
-                    android:background="#EEEEEE"
-                    />
-                <ProgressBar
-                    android:id="@+id/badgeprogress1"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_centerInParent="true"
-                    android:indeterminateDrawable="@drawable/progress"
-                    android:visibility="gone" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="2dp">
-                <ImageView
-                    android:id="@+id/badge2"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:gravity="center_vertical"
-                    android:background="#EEEEEE"
-                    />
-                <ProgressBar
-                    android:id="@+id/badgeprogress2"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_centerInParent="true"
-                    android:indeterminateDrawable="@drawable/progress"
-                    android:visibility="gone" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginRight="2dp">
-                <ImageView
-                    android:id="@+id/badge3"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:gravity="center_vertical"
-                    android:background="#EEEEEE"
-                    />
-                <ProgressBar
-                    android:id="@+id/badgeprogress3"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_centerInParent="true"
-                    android:indeterminateDrawable="@drawable/progress"
-                    android:visibility="gone" />
-            </RelativeLayout>
-        </LinearLayout>
+            android:stretchMode="columnWidth"
+            android:gravity="center_horizontal"
+            android:paddingTop="8dp"/>
+
+
 
         <LinearLayout
             android:orientation="vertical" android:layout_width="match_parent"
@@ -102,8 +45,9 @@
             <GridView
                 android:id="@+id/achivements"
                 android:numColumns="4"
+                android:verticalSpacing="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="156dp"
                 android:stretchMode="columnWidth"
                 android:gravity="center_horizontal"
                 android:paddingTop="8dp"/>

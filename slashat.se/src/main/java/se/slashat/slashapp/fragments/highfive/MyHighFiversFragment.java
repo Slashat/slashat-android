@@ -80,52 +80,23 @@ public class MyHighFiversFragment extends ListFragment {
 
                                 if (!headerPopulated) {
 
-                                    ImageView badge1 = (ImageView) headerView.findViewById(R.id.badge1);
-                                    ProgressBar badge1Progress = (ProgressBar) headerView.findViewById(R.id.badgeprogress1);
-                                    ImageView badge2 = (ImageView) headerView.findViewById(R.id.badge2);
-                                    ProgressBar badge2Progress = (ProgressBar) headerView.findViewById(R.id.badgeprogress2);
-                                    ImageView badge3 = (ImageView) headerView.findViewById(R.id.badge3);
-                                    ProgressBar badge3Progress = (ProgressBar) headerView.findViewById(R.id.badgeprogress3);
-
-                                    LinkedList<ImageView> badgeImageViews = new LinkedList<ImageView>();
-                                    badgeImageViews.add(badge1);
-                                    badgeImageViews.add(badge2);
-                                    badgeImageViews.add(badge3);
-
-                                    LinkedList<ProgressBar> badgeProgressBars = new LinkedList<ProgressBar>();
-                                    badgeProgressBars.add(badge1Progress);
-                                    badgeProgressBars.add(badge2Progress);
-                                    badgeProgressBars.add(badge3Progress);
-
-                                    LinkedList<Badge> badges = new LinkedList<Badge>(user.getBadges());
-
-                                    for (int i = 0; i < badges.size(); i++) {
-                                        BadgeImageHolder imageHolder = new BadgeImageHolder();
-                                        ImageView imageView = badgeImageViews.get(i);
-                                        ProgressBar progressBar = badgeProgressBars.get(i);
-                                        imageHolder.image = imageView;
-                                        imageHolder.imageThumb = imageView;
-                                        imageHolder.progressBar = progressBar;
-                                        Badge badge = badges.get(i);
-                                        ImageService.populateImage(imageHolder, badge.getPicture(), 0);
-                                    }
-
-
-                                    GridView gridView = (GridView) headerView.findViewById(R.id.achivements);
+                                    GridView achivmentGridView = (GridView) headerView.findViewById(R.id.achivements);
+                                    GridView badgesView = (GridView) headerView.findViewById(R.id.badges);
 
                                     Collection<Achivement> achivements = user.getAchivements();
-                                    System.out.println("achicments::::::"+ user.getAchivements().size());
+                                    Collection<Badge> badges = user.getBadges();
 
                                     AchivementArrayAdapter achivementArrayAdapter = new AchivementArrayAdapter(new LinkedList(achivements));
+                                    AchivementArrayAdapter badgesArrayAdatper = new AchivementArrayAdapter(new LinkedList<Badge>(badges));
 
-                                    gridView.setAdapter(achivementArrayAdapter);
+
+                                    achivmentGridView.setAdapter(achivementArrayAdapter);
+                                    badgesView.setAdapter(badgesArrayAdatper);
 
 
                                     headerPopulated = true;
                                     getListView().addHeaderView(headerView, null, false);
                                 }
-
-
 
                                 MyHighFiversArrayAdapter myHighFiversArrayAdapter = new MyHighFiversArrayAdapter(getActivity(), R.layout.about_list_item_row, list.toArray(new ViewModelBase[list.size()]));
                                 setListAdapter(myHighFiversArrayAdapter);
@@ -138,9 +109,9 @@ public class MyHighFiversFragment extends ListFragment {
 
     public class AchivementArrayAdapter extends BaseAdapter{
 
-        private final LinkedList<Achivement> achivements;
+        private final LinkedList<Badge> achivements;
 
-        public AchivementArrayAdapter(LinkedList<Achivement> achivements) {
+        public AchivementArrayAdapter(LinkedList<Badge> achivements) {
             this.achivements = achivements;
         }
 
@@ -172,12 +143,15 @@ public class MyHighFiversFragment extends ListFragment {
                 imageHolder.imageThumb = imageView;
                 imageHolder.image = imageView;
                 imageHolder.progressBar = progressBar;
+                Badge badge = achivements.get(i);
+                if (badge instanceof Achivement) {
+                    if (!((Achivement)badge).isAchieved()) {
 
-                if (!achivements.get(i).achieved){
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                        imageView.setAlpha(0.5f);
-                    }else{
-                        imageView.setVisibility(View.GONE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            imageView.setAlpha(0.5f);
+                        } else {
+                            imageView.setVisibility(View.GONE);
+                        }
                     }
                 }
 
