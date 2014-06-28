@@ -172,8 +172,6 @@ public class HighfiveFragment extends Fragment {
                                 IntentIntegrator.initiateScan(HighfiveFragment.this.getActivity(), "QR_CODE");
                             }
                         });
-                    }else{
-                        giveHighfive.setEnabled(false);
                     }
 
                 }
