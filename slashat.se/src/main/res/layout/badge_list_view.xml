@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#EEEEEE">
+
+    <TextView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mina troféer:"
+        android:paddingRight="8dp"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="8dp">
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="2dp">
+            <ImageView
+                android:id="@+id/badge1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center_vertical"
+                android:background="#EEEEEE"
+                />
+            <ProgressBar
+                android:id="@+id/badgeprogress1"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/progress"
+                android:visibility="gone" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="2dp">
+            <ImageView
+                android:id="@+id/badge2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center_vertical"
+                android:background="#EEEEEE"
+                />
+            <ProgressBar
+                android:id="@+id/badgeprogress2"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/progress"
+                android:visibility="gone" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="2dp">
+            <ImageView
+                android:id="@+id/badge3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:gravity="center_vertical"
+                android:background="#EEEEEE"
+                />
+            <ProgressBar
+                android:id="@+id/badgeprogress3"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/progress"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

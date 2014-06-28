@@ -44,6 +44,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        getWindow().getAttributes().format = android.graphics.PixelFormat.RGBA_8888;
         setContentView(R.layout.activity_main);
 
         FragmentSwitcher.initalize(getSupportFragmentManager(), this);

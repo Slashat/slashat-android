@@ -26,9 +26,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import se.slashat.slashapp.Callback;
+import se.slashat.slashapp.model.highfive.Achivement;
+import se.slashat.slashapp.model.highfive.Badge;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.HighFiver;
 import se.slashat.slashapp.model.highfive.User;
@@ -98,6 +101,8 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
     private User getUserFromJson(JSONObject jsonObject) throws JSONException, MalformedURLException {
 
         List<HighFiver> highFivers = new ArrayList<HighFiver>();
+        List<Achivement> achivements = new ArrayList<Achivement>();
+        List<Badge> badges = new ArrayList<Badge>();
         String username = jsonObject.getString("username");
         String userId = jsonObject.getString("user_id");
         String pictureUrlString = jsonObject.getString("picture");
@@ -118,6 +123,10 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
             });
         }
 
+        if (jsonObject.get("badges") instanceof JSONArray){
+            badges.addAll(getBadgesFromJson(jsonObject.getJSONArray("badges")));
+        }
+
         URL pictureUrl = null;
         URL qrcode = null;
 
@@ -130,8 +139,21 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
         }
 
 
-        return new User(username,userId, highFivedBy, pictureUrl, qrcode, qrcode_id, highFivers);
+        return new User(username,userId, highFivedBy, pictureUrl, qrcode, qrcode_id, highFivers, achivements, badges);
     }
+
+    private List<Badge> getBadgesFromJson(JSONArray badges) throws JSONException, MalformedURLException {
+        LinkedList<Badge> bs = new LinkedList<Badge>();
+        int length = badges.length();
+        for (int i = 0; i < length; i++) {
+            JSONObject jsonObject = badges.getJSONObject(i);
+            String name = jsonObject.getString("name");
+            String picture = jsonObject.getString("picture");
+            bs.add (new Badge(name, picture));
+        }
+        return bs;
+    }
+
 
     private List<HighFiver> getHighFiversFromJson(JSONObject highfiversJson) throws JSONException, MalformedURLException {
         ArrayList<HighFiver> highFivers = new ArrayList<HighFiver>();

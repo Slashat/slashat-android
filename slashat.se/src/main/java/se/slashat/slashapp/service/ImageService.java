@@ -134,7 +134,10 @@ public class ImageService {
             if (inputStream != null) {
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(
                         inputStream, 8192);
-                bitmap = BitmapFactory.decodeStream(bufferedInputStream);
+                BitmapFactory.Options opts = new BitmapFactory.Options();
+                opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                bitmap = BitmapFactory.decodeStream(bufferedInputStream, null, opts);
+                bitmap.extractAlpha();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -201,7 +204,7 @@ public class ImageService {
         OutputStream out = null;
         try {
             out = new BufferedOutputStream(editor.newOutputStream(0), 8192);
-            return bitmap.compress(CompressFormat.JPEG, 70, out);
+            return bitmap.compress(CompressFormat.PNG, 70, out);
         } finally {
             if (out != null) {
                 out.close();

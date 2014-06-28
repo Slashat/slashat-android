@@ -17,15 +17,19 @@ public class User implements Serializable{
     private final URL qr;
     private byte[] qrBitmap;
     private final Collection<HighFiver> highFivers;
+    private final Collection<Achivement> achivements;
+    private final Collection<Badge> badges;
 
 
-    public User(String userName, String userId, HighFivedBy highFivedBy, URL picture, URL qr, String qrcode_id, Collection<HighFiver> highFivers) {
+    public User(String userName, String userId, HighFivedBy highFivedBy, URL picture, URL qr, String qrcode_id, Collection<HighFiver> highFivers, Collection<Achivement> achivements, Collection<Badge> badges) {
         this.userName = userName;
         this.userId = userId;
         this.highFivedBy = highFivedBy;
         this.picture = picture;
         this.qr = qr;
         this.highFivers = highFivers;
+        this.achivements = achivements;
+        this.badges = badges;
     }
 
     public String getUserName() {
@@ -58,5 +62,13 @@ public class User implements Serializable{
 
     public byte[] getQrBitmap() {
         return qrBitmap;
+    }
+
+    public Collection<Achivement> getAchivements() {
+        return achivements;
+    }
+
+    public Collection<Badge> getBadges() {
+        return badges;
     }
 }
