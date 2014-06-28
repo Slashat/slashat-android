@@ -146,7 +146,6 @@ public class HighfiveFragment extends Fragment {
                     userImageHolder.progressBar = (ProgressBar) view.findViewById(R.id.imageviewprogress);
                     userImageHolder.position = 0;
                     setText(view.findViewById(R.id.highfive_username), user.getUserName());
-                    setText(view.findViewById(R.id.highfive_numberofhighfives), user.getHighFivers().size() + " highfives");
                     setText(view.findViewById(R.id.highfive_firsthighfive), formatFirstHighfivedBy(user.getHighFivedBy()));
 
                     if (user.getPicture() != null) {

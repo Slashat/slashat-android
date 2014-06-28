@@ -52,7 +52,7 @@ public class MyHighFiversFragment extends ListFragment {
                             if (!highFivers.isEmpty()) {
                                 ArrayList<ViewModelBase> list = new ArrayList<ViewModelBase>();
 
-                                list.add(new SectionViewModel(new SectionModel("Mina High-Fivers:")));
+                                list.add(new SectionViewModel(new SectionModel("Mina High-Fivers ("+user.getHighFivers().size()+"):")));
 
                                 for (HighFiver highFiver : highFivers) {
                                     HighFiverViewModel highFiverViewModel = new HighFiverViewModel(highFiver);

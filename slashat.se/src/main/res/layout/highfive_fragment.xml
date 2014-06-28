@@ -94,18 +94,6 @@
                         <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#dddddd"
-                                android:fontFamily="sans-serif-condensed"
-                                android:textSize="17sp"
-                                android:textStyle="normal"
-                                 android:lineSpacingExtra="-3dp"
-                                android:id="@+id/highfive_numberofhighfives"
-                                android:text="Laddar"
-                            android:visibility="gone" />
-
-                        <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
                                 android:id="@+id/highfive_firsthighfive"
                                 android:textColor="#ffffff"
                                 android:fontFamily="sans-serif-condensed"
