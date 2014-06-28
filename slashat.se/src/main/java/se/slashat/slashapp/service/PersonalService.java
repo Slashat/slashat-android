@@ -13,9 +13,9 @@ public class PersonalService {
             Personal[] personal = new Personal[1];
 
             personal[0] = new Personal("Slashat.se", "Sveriges största teknikpodcast", Type.SHOW, R.drawable.slashat, "slashat@slashat.se", "slashat", "http://www.slashat.se",
-                    "Slashat.se är en svensk teknikpodcast som drivs av Jezper Söderlund och Tommie Podzemski. Podcasten, som är dryga timmen lång, utkommer varje tisdag kväll och i showen diskuteras nyheter främst rörande teknik, prylar, mjukvara, hårdvara och internet."
-                            + "\n\nSedan starten 2009 har Slashat-redaktionen fått tillökning av Magnus Jonasson och Johan Larsson som är givna röster vid våra liverapporteringar från t.ex. Apple events och liknande. De dyker dessutom allt som oftast upp i eftersnacken på tisdagarna, i våra specialavsnitt och syns också i reportage från mässor och events som vi besöker."
-                            + "\n\nSlashat.se spelas in live inför kamera varje tisdag klockan 20.00 med försnack från klockan 19.30 och lyssnare är välkomna att titta och vara en del i diskussionerna via livechatten."
+                    "Slashat.se är en svensk teknikpodcast som drivs av Jezper Söderlund, Tommie Podzemski, Magnus Jonasson och Johan Larsson. Podcasten, som är dryga timmen lång, utkommer varje tisdag kväll och i showen diskuteras nyheter främst rörande teknik, prylar, mjukvara, hårdvara och internet."
+                            + "\n\nSedan starten 2009 har Slashat-redaktionen besökt mässor och events och rapporterar dessutom löpande från Apple- och Google-keynotes under året. Special- och temashower är andra återkommande tillställningar utöver den show som släpps varje vecka."
+                            + "\n\nSlashat.se spelas in live varje tisdag klockan 20.00 med försnack från klockan 19.30 och lyssnare är välkomna att titta och vara en del i diskussionerna via livechatten."
                             + "\n\nDu kan lyssna på Slashat via hemsidan eller prenumerera på oss via iTunes eller i din podcast-app. Showen utkommer tisdagskvällar varje vecka, året runt. Inspelningen sänds live via vår hemsida http://live.slashat.se.");
 
             return personal;
