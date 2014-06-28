@@ -15,7 +15,7 @@
             android:textColor="#333333"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             />
 
         <GridView
@@ -26,7 +26,7 @@
             android:stretchMode="columnWidth"
             android:gravity="center_horizontal"
             android:verticalSpacing="15dp"
-            android:paddingTop="8dp"/>
+            android:paddingTop="0dp"/>
 
 
 
@@ -53,8 +53,8 @@
                 android:layout_height="170dp"
                 android:stretchMode="columnWidth"
                 android:gravity="center_horizontal"
-                android:paddingTop="8dp"
-                android:layout_marginBottom="15dp"/>
+                android:paddingTop="0dp"
+                android:layout_marginBottom="5dp"/>
 
 
         </LinearLayout>

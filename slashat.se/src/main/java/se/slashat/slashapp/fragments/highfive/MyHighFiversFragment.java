@@ -148,14 +148,14 @@ public class MyHighFiversFragment extends ListFragment {
                     if (!((Achivement)badge).isAchieved()) {
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                            imageView.setAlpha(0.5f);
+                            imageView.setAlpha(0.2f);
                         } else {
                             imageView.setVisibility(View.GONE);
                         }
                     }
                 }
 
-                ImageService.populateImage(imageHolder, achivements.get(i).getPicture(), i);
+                ImageService.populateImage(imageHolder, achivements.get(i).getPicture(), 0);
 
                 return imageView;
             }
