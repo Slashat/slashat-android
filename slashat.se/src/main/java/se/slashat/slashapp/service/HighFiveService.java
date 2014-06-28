@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class HighFiveService {
     private static Context context;
     private static String token;
     private static User user;
-    private static Collection<HighFiver> highFivers;
+    private static List<HighFiver> highFivers;
 
 
     public static void initalize(Context context) {
@@ -129,7 +130,7 @@ public class HighFiveService {
         return token != null;
     }
 
-    public static void getAllHighfivers(Callback<Collection<HighFiver>> callback, boolean reload) {
+    public static void getAllHighfivers(Callback<List<HighFiver>> callback, boolean reload) {
         if (highFivers != null && !reload){
             callback.call(highFivers);
             return;
@@ -159,11 +160,12 @@ public class HighFiveService {
         highFiveSetAsyncTask.execute(new String[]{DO,receiver,longitude,latitude,token});
     }
 
-    private static void getAllHighfiversFromAsyncTask(final Callback<Collection<HighFiver>> callback){
-        HighFiversAllAsyncTask highFiversAllAsyncTask = new HighFiversAllAsyncTask(new Callback<Collection<HighFiver>>() {
+    private static void getAllHighfiversFromAsyncTask(final Callback<List<HighFiver>> callback){
+        HighFiversAllAsyncTask highFiversAllAsyncTask = new HighFiversAllAsyncTask(new Callback<List<HighFiver>>() {
             @Override
-            public void call(Collection<HighFiver> result) {
+            public void call(List<HighFiver> result) {
                 highFivers = result;
+
                 callback.call(result);
             }
         });

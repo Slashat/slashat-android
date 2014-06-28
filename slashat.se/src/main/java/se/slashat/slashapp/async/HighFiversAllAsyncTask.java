@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.model.highfive.HighFiver;
@@ -21,17 +22,17 @@ import se.slashat.slashapp.util.IOUtils;
 /**
  * Created by nicklas on 10/28/13.
  */
-public class HighFiversAllAsyncTask extends AsyncTask<String, Void, Collection<HighFiver>> {
+public class HighFiversAllAsyncTask extends AsyncTask<String, Void, List<HighFiver>> {
 
-    private Callback<Collection<HighFiver>> callback;
+    private Callback<List<HighFiver>> callback;
 
-    public HighFiversAllAsyncTask(Callback<Collection<HighFiver>> callback) {
+    public HighFiversAllAsyncTask(Callback<List<HighFiver>> callback) {
         this.callback = callback;
     }
 
     @Override
-    protected Collection<HighFiver> doInBackground(String... strings) {
-        Collection<HighFiver> highFivers = new ArrayList<HighFiver>();
+    protected List<HighFiver> doInBackground(String... strings) {
+        List<HighFiver> highFivers = new ArrayList<HighFiver>();
 
         HttpURLConnection connection = null;
 
@@ -58,7 +59,7 @@ public class HighFiversAllAsyncTask extends AsyncTask<String, Void, Collection<H
                 String picture = userJsonObject.getString("picture");
 
 
-                HighFiver highFiver = new HighFiver(userId, username, new URL(picture));
+                HighFiver highFiver = new HighFiver(userId, username, new URL(picture), 0);
                 highFivers.add(highFiver);
             }
 
@@ -78,7 +79,7 @@ public class HighFiversAllAsyncTask extends AsyncTask<String, Void, Collection<H
     }
 
     @Override
-    protected void onPostExecute(Collection<HighFiver> highFivers) {
+    protected void onPostExecute(List<HighFiver> highFivers) {
         callback.call(highFivers);
     }
 }

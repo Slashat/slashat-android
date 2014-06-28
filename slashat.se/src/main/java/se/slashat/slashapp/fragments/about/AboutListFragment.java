@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
@@ -60,9 +61,9 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
 
 
 
-        HighFiveService.getAllHighfivers(new Callback<Collection<HighFiver>>() {
+        HighFiveService.getAllHighfivers(new Callback<List<HighFiver>>() {
             @Override
-            public void call(Collection<HighFiver> result) {
+            public void call(List<HighFiver> result) {
                 AboutAdapter adapter = null;
                 Personal[] show = PersonalService.getPersonal(Personal.Type.SHOW);
                 Personal[] crew = PersonalService.getPersonal(Personal.Type.HOST);
