@@ -127,6 +127,10 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
             badges.addAll(getBadgesFromJson(jsonObject.getJSONArray("badges")));
         }
 
+        if (jsonObject.get("achievements") instanceof JSONArray){
+            achivements.addAll(getAchivementsFromJson(jsonObject.getJSONArray("achievements")));
+        }
+
         URL pictureUrl = null;
         URL qrcode = null;
 
@@ -147,9 +151,22 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
         int length = badges.length();
         for (int i = 0; i < length; i++) {
             JSONObject jsonObject = badges.getJSONObject(i);
-            String name = jsonObject.getString("name");
+            String name = jsonObject.getString("id");
             String picture = jsonObject.getString("picture");
             bs.add (new Badge(name, picture));
+        }
+        return bs;
+    }
+
+    private List<Achivement> getAchivementsFromJson(JSONArray badges) throws JSONException, MalformedURLException {
+        LinkedList<Achivement> bs = new LinkedList<Achivement>();
+        int length = badges.length();
+        for (int i = 0; i < length; i++) {
+            JSONObject jsonObject = badges.getJSONObject(i);
+            String name = jsonObject.getString("id");
+            String picture = jsonObject.getString("picture");
+            boolean achieved = jsonObject.getBoolean("achieved");
+            bs.add (new Achivement(name, picture, achieved));
         }
         return bs;
     }

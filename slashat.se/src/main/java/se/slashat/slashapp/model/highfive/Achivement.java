@@ -8,10 +8,10 @@ import java.net.URL;
 public class Achivement
 {
     public final String name;
-    public final URL picture;
+    public final String picture;
     public final boolean achieved;
 
-    public Achivement(String name, URL picture, boolean achieved) {
+    public Achivement(String name, String picture, boolean achieved) {
         this.name = name;
         this.picture = picture;
         this.achieved = achieved;
@@ -21,7 +21,7 @@ public class Achivement
         return name;
     }
 
-    public URL getPicture() {
+    public String getPicture() {
         return picture;
     }
 

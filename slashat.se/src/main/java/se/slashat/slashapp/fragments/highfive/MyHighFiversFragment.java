@@ -1,11 +1,18 @@
 package se.slashat.slashapp.fragments.highfive;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -18,6 +25,7 @@ import se.slashat.slashapp.R;
 import se.slashat.slashapp.adapter.AbstractArrayAdapter;
 import se.slashat.slashapp.adapter.MyHighFiversArrayAdapter;
 import se.slashat.slashapp.model.SectionModel;
+import se.slashat.slashapp.model.highfive.Achivement;
 import se.slashat.slashapp.model.highfive.Badge;
 import se.slashat.slashapp.model.highfive.HighFiver;
 import se.slashat.slashapp.model.highfive.User;
@@ -101,6 +109,18 @@ public class MyHighFiversFragment extends ListFragment {
                                         Badge badge = badges.get(i);
                                         ImageService.populateImage(imageHolder, badge.getPicture(), 0);
                                     }
+
+
+                                    GridView gridView = (GridView) headerView.findViewById(R.id.achivements);
+
+                                    Collection<Achivement> achivements = user.getAchivements();
+                                    System.out.println("achicments::::::"+ user.getAchivements().size());
+
+                                    AchivementArrayAdapter achivementArrayAdapter = new AchivementArrayAdapter(new LinkedList(achivements));
+
+                                    gridView.setAdapter(achivementArrayAdapter);
+
+
                                     headerPopulated = true;
                                     getListView().addHeaderView(headerView, null, false);
                                 }
@@ -116,8 +136,64 @@ public class MyHighFiversFragment extends ListFragment {
                 }, reload);
     }
 
+    public class AchivementArrayAdapter extends BaseAdapter{
+
+        private final LinkedList<Achivement> achivements;
+
+        public AchivementArrayAdapter(LinkedList<Achivement> achivements) {
+            this.achivements = achivements;
+        }
+
+        @Override
+        public int getCount() {
+            return achivements.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+                ImageView imageView = new ImageView(getActivity());
+                imageView.setLayoutParams(new GridView.LayoutParams(getPx(70), getPx(70)));
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setPadding(0, 0, 0, 0);
+
+                ProgressBar progressBar = new ProgressBar(getActivity());
+
+                BadgeImageHolder imageHolder = new BadgeImageHolder();
+                imageHolder.imageThumb = imageView;
+                imageHolder.image = imageView;
+                imageHolder.progressBar = progressBar;
+
+                if (!achivements.get(i).achieved){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        imageView.setAlpha(0.5f);
+                    }else{
+                        imageView.setVisibility(View.GONE);
+                    }
+                }
+
+                ImageService.populateImage(imageHolder, achivements.get(i).getPicture(), i);
+
+                return imageView;
+            }
+    }
+
     public class BadgeImageHolder extends AbstractArrayAdapter.ImageAsyncHolder{
 
+    }
+
+    public int getPx(int dimensionDp) {
+        float density = getResources().getDisplayMetrics().density;
+        return (int) (dimensionDp * density + 0.5f);
     }
 
     @Override
