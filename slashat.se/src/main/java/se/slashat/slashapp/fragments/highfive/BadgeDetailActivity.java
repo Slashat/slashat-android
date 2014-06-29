@@ -37,7 +37,7 @@ public class BadgeDetailActivity  extends ActionBarActivity {
 
         getSupportFragmentManager().beginTransaction().add(ContentView.getContentViewCompat(), badgeDetailFragment).commit();
 
-        setTitle("Ta emot High-Five!");
+        setTitle("Information om troféen");
 
         ActionBar ab = getSupportActionBar();
 
