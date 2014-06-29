@@ -26,6 +26,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.ocpsoft.prettytime.PrettyTime;
 
 import java.net.URL;
 import java.text.ParseException;
@@ -191,19 +192,11 @@ public class HighfiveFragment extends Fragment {
             return "Du har inte tagit emot din första high five ännu";
         }
 
-        /*
-        if (Strings.isNullOrEmpty(highFivedBy.getLocation())){
-            base = "Fick sin första high-five av %s den %s";
-        }else{
-            base = "Fick sin första high-five av %s den %s i %s";
-        }
-        */
-        base = "Fick sin första High-Five av %s den %s";
+        base = "Fick sin första High-Five av %s för %s.";
 
+        PrettyTime prettyTime = new PrettyTime(new Locale("sv"));
         DateTime dateTime = new DateTime(Long.valueOf(highFivedBy.getDate())*1000l, DateTimeZone.getDefault());
-        String monthName = dateTime.monthOfYear().getAsText(new Locale("sv"));
-        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd '"+monthName+"', yyyy");
-        String date = dateTimeFormatter.print(dateTime);
+        String date = prettyTime.format(dateTime.toDate());
 
         return String.format(base, highFivedBy.getName(), date, highFivedBy.getLocation());
     }
