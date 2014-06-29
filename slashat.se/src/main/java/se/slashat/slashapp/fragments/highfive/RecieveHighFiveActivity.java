@@ -30,7 +30,7 @@ public class RecieveHighFiveActivity extends ActionBarActivity {
 
         getSupportFragmentManager().beginTransaction().add(ContentView.getContentViewCompat(), recieveHighFiveFragment).commit();
 
-        setTitle("Ta emot highfive");
+        setTitle("Ta emot High-Five!");
 
         ActionBar ab = getSupportActionBar();
 
