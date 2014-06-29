@@ -9,12 +9,16 @@ import java.net.URL;
 public class Badge implements Serializable{
 
 
-    public final String name;
-    public final String picture;
+    private final String name;
+    private final String picture;
+    private final String pictureLarge;
+    private final String description;
 
-    public Badge(String name, String picture) {
+    public Badge(String name, String picture, String pictureLarge, String description) {
         this.name = name;
         this.picture = picture;
+        this.pictureLarge = pictureLarge;
+        this.description = description;
     }
 
     public String getName() {
@@ -23,5 +27,13 @@ public class Badge implements Serializable{
 
     public String getPicture() {
         return picture;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getPictureLarge() {
+        return pictureLarge;
     }
 }

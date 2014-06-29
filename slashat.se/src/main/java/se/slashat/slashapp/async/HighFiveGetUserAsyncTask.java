@@ -76,6 +76,7 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
 
             if (!Strings.isNullOrEmpty(userJsonString)) {
                 JSONObject jsonObject = new JSONObject(userJsonString);
+                System.out.println(jsonObject.toString(5));
                 user = getUserFromJson(jsonObject);
                 if (user.getQr() != null){
                     InputStream qrStream = user.getQr().openStream();
@@ -153,7 +154,9 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
             JSONObject jsonObject = badges.getJSONObject(i);
             String name = jsonObject.getString("id");
             String picture = jsonObject.getString("picture");
-            bs.add (new Badge(name, picture));
+            String pictureLarge = jsonObject.getString("picture_large");
+            String description = jsonObject.getString("description");
+            bs.add (new Badge(name, picture, pictureLarge, description));
         }
         return bs;
     }
@@ -165,8 +168,11 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
             JSONObject jsonObject = badges.getJSONObject(i);
             String name = jsonObject.getString("id");
             String picture = jsonObject.getString("picture");
+            String pictureLarge = jsonObject.getString("picture_large");
+            String description = jsonObject.getString("description");
+            String descriptionAchieved = jsonObject.getString("description_achieved");
             boolean achieved = jsonObject.getBoolean("achieved");
-            bs.add (new Achivement(name, picture, achieved));
+            bs.add (new Achivement(name, picture, pictureLarge, description, descriptionAchieved, achieved));
         }
         return bs;
     }

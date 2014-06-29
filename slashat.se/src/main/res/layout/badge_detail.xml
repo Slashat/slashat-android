@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="1dp"
+        android:layout_marginBottom="9dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:layout_gravity="center_horizontal">
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:id="@+id/badgeImage"
+                android:layout_gravity="center_horizontal" />
+
+                <ProgressBar
+                    android:id="@+id/imageviewprogress"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_centerInParent="true"
+                    android:indeterminateDrawable="@drawable/progress"
+                    android:visibility="gone" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/badgeDescription"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#333333"
+        android:lineSpacingMultiplier="1.15"
+        android:text="Laddar"
+        android:textSize="15sp"/>
+</LinearLayout>

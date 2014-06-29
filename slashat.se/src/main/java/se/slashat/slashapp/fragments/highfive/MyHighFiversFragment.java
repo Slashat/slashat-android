@@ -1,6 +1,7 @@
 package se.slashat.slashapp.fragments.highfive;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
@@ -144,7 +145,7 @@ public class MyHighFiversFragment extends ListFragment {
                 imageHolder.imageThumb = imageView;
                 imageHolder.image = imageView;
                 imageHolder.progressBar = progressBar;
-                Badge badge = achivements.get(i);
+                final Badge badge = achivements.get(i);
                 if (badge instanceof Achivement) {
                     if (!((Achivement)badge).isAchieved()) {
 
@@ -157,6 +158,25 @@ public class MyHighFiversFragment extends ListFragment {
                 }
 
                 ImageService.populateImage(imageHolder, achivements.get(i).getPicture(), 0);
+
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(MyHighFiversFragment.this.getActivity(), BadgeDetailActivity.class);
+                        intent.putExtra("pictureLarge", badge.getPictureLarge());
+                        String description = badge.getDescription();
+                        if (badge instanceof Achivement){
+                            if (((Achivement)badge).isAchieved()){
+                                description = ((Achivement)badge).getDescriptionAchieved();
+
+                            }
+                        }
+                        intent.putExtra("description", description);
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.enter, R.anim.exit);
+                    }
+                });
+
 
                 return imageView;
             }
