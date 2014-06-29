@@ -15,49 +15,19 @@
             android:textColor="#333333"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="15dp"
             />
 
         <GridView
             android:id="@+id/badges"
             android:numColumns="4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="170dp"
             android:stretchMode="columnWidth"
             android:gravity="center_horizontal"
             android:verticalSpacing="15dp"
             android:paddingTop="0dp"/>
 
-
-
-        <LinearLayout
-            android:orientation="vertical" android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#EEEEEE"
-            android:layout_marginTop="15dp">
-            <TextView android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mina utmaningar:"
-                android:paddingRight="8dp"
-                android:textColor="#333333"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="15dp"
-                />
-
-            <GridView
-                android:id="@+id/achivements"
-                android:numColumns="4"
-                android:verticalSpacing="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:stretchMode="columnWidth"
-                android:gravity="center_horizontal"
-                android:paddingTop="0dp"
-                android:layout_marginBottom="5dp"/>
-
-
-        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

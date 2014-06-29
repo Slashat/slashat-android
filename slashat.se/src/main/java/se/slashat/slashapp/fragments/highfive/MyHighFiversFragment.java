@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
@@ -80,19 +81,19 @@ public class MyHighFiversFragment extends ListFragment {
 
                                 if (!headerPopulated) {
 
-                                    GridView achivmentGridView = (GridView) headerView.findViewById(R.id.achivements);
                                     GridView badgesView = (GridView) headerView.findViewById(R.id.badges);
 
-                                    Collection<Achivement> achivements = user.getAchivements();
-                                    Collection<Badge> badges = user.getBadges();
+                                    LinkedList<Badge> badgesAndAchivements = new LinkedList<Badge>();
+                                    badgesAndAchivements.addAll(user.getBadges());
+                                    badgesAndAchivements.addAll(user.getAchivements());
 
-                                    AchivementArrayAdapter achivementArrayAdapter = new AchivementArrayAdapter(new LinkedList(achivements));
-                                    AchivementArrayAdapter badgesArrayAdatper = new AchivementArrayAdapter(new LinkedList<Badge>(badges));
+                                    int numberOfItems = badgesAndAchivements.size();
+                                    int height = (int) Math.floor(numberOfItems / 4);
+                                    int heightDp = height * 85;
+                                    badgesView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, getPx(heightDp)));
 
-
-                                    achivmentGridView.setAdapter(achivementArrayAdapter);
+                                    AchivementArrayAdapter badgesArrayAdatper = new AchivementArrayAdapter(badgesAndAchivements);
                                     badgesView.setAdapter(badgesArrayAdatper);
-
 
                                     headerPopulated = true;
                                     getListView().addHeaderView(headerView, null, false);
