@@ -47,7 +47,6 @@ public class HighFiversAllAsyncTask extends AsyncTask<String, Void, List<HighFiv
 
             String jsonString = IOUtils.readStringFromStream(connection.getInputStream());
 
-            System.out.println(jsonString);
             JSONObject jsonObject = new JSONObject(jsonString);
 
 
