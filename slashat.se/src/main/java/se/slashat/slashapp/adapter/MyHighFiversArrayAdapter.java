@@ -2,6 +2,7 @@ package se.slashat.slashapp.adapter;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -58,5 +59,16 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<ViewModelBase
             ImageService.populateImage(h, vm.getModel().getPicture().toString(), position);
         }
 
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        Holder holder = (Holder) convertView.getTag();
+        if (holder instanceof ImageAsyncHolder){
+            if (holder != null){
+                ((ImageAsyncHolder) holder).loadImageAsyncTask.cancel();
+            }
+        }
+        return super.getView(position, convertView, parent);
     }
 }
