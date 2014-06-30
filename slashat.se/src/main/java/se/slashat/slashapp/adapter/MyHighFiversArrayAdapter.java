@@ -63,10 +63,15 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<ViewModelBase
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Holder holder = (Holder) convertView.getTag();
-        if (holder instanceof ImageAsyncHolder){
-            if (holder != null){
-                ((ImageAsyncHolder) holder).loadImageAsyncTask.cancel();
+        if (convertView != null) {
+            Holder holder = (Holder) convertView.getTag();
+            if (holder instanceof ImageAsyncHolder) {
+                if (holder != null) {
+                    ImageAsyncHolder h = (ImageAsyncHolder) holder;
+                    if (h.loadImageAsyncTask != null) {
+                        h.loadImageAsyncTask.cancel();
+                    }
+                }
             }
         }
         return super.getView(position, convertView, parent);
