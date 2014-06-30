@@ -46,6 +46,8 @@
         android:id="@+id/badgeDescription"
         android:layout_gravity="center_horizontal"
         android:textColor="#333333"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"
         android:lineSpacingMultiplier="1.15"
         android:text="Laddar"
         android:textSize="15sp"/>
