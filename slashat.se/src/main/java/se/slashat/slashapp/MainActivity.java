@@ -25,6 +25,7 @@ import se.slashat.slashapp.fragments.live.LiveFragment;
 import se.slashat.slashapp.player.PlayerInterfaceImpl;
 import se.slashat.slashapp.service.HighFiveService;
 import se.slashat.slashapp.service.ImageService;
+import se.slashat.slashapp.util.Conversion;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -49,6 +50,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         FragmentSwitcher.initalize(getSupportFragmentManager(), this);
         HighFiveService.initalize(this);
+        Conversion.init(this);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

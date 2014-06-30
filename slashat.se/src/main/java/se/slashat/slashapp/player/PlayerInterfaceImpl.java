@@ -26,6 +26,7 @@ import se.slashat.slashapp.androidservice.EpisodePlayer;
 import se.slashat.slashapp.async.EpisodeLoaderAsyncTask;
 import se.slashat.slashapp.model.Episode;
 import se.slashat.slashapp.service.ArchiveService;
+import se.slashat.slashapp.util.Conversion;
 import se.slashat.slashapp.util.Network;
 
 /**
@@ -99,7 +100,7 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
         overlayParams.x = (int) (seekBar.getLeft() + ((float) seekBar.getProgress() / (float) seekBar.getMax()) * seekBar.getWidth());
         int[] location = new int[2];
         seekBar.getLocationOnScreen(location);
-        overlayParams.y = location[1] - 100;
+        overlayParams.y = location[1] - Conversion.getPx(70);
         seekbarOverlay.setCancelable(false);
         seekbarOverlay.setContentView(R.layout.player_overlay);
         seekbarOverlay.show();
