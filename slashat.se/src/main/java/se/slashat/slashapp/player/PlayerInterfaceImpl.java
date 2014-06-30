@@ -26,6 +26,7 @@ import se.slashat.slashapp.androidservice.EpisodePlayer;
 import se.slashat.slashapp.async.EpisodeLoaderAsyncTask;
 import se.slashat.slashapp.model.Episode;
 import se.slashat.slashapp.service.ArchiveService;
+import se.slashat.slashapp.util.Network;
 
 /**
  * Created by nicklas on 6/24/13.
@@ -125,7 +126,7 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
         button.setImageResource(R.drawable.ic_media_play);
         // maybe use setDrawable instead
         Log.i("PlayerInterfaceImpl", "Current: " + episodeName);
-        if (EOF && episodeName != null && !episodeName.equals("")) {
+        if (EOF && episodeName != null && !episodeName.equals("") && Network.isNetworkAvailable()) {
             List<Episode> episodes = Arrays.asList(ArchiveService.getInstance().getEpisodes(EpisodeLoaderAsyncTask.getVoidCallback(), false));
 
             Episode newEpisode = null;
@@ -141,7 +142,7 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
             }
 
             if (newEpisode != null) {
-                EpisodePlayer.getEpisodePlayer().playStream(newEpisode.getStreamUrl(), newEpisode.getFullEpisodeName(), 0, null);
+                EpisodePlayer.getEpisodePlayer().playStream(newEpisode.getStreamUrl(), newEpisode.getFullEpisodeName(), 0, null, callingActivity);
             }
         }
 
@@ -162,7 +163,7 @@ public class PlayerInterfaceImpl implements EpisodePlayer.PlayerInterface, SeekB
             int lastPlayedPosition = EpisodePlayer.getEpisodePlayer().getLastPlayedPosition();
             String lastPlayedStreamUrl = EpisodePlayer.getEpisodePlayer().getLastPlayedStreamUrl();
             if (lastPlayedStreamUrl != null && !lastPlayedStreamUrl.equals("")) {
-                EpisodePlayer.getEpisodePlayer().playStream(lastPlayedStreamUrl, lastPlayedEpisodeName, lastPlayedPosition, null);
+                EpisodePlayer.getEpisodePlayer().playStream(lastPlayedStreamUrl, lastPlayedEpisodeName, lastPlayedPosition, null, callingActivity);
                 onMediaPlaying("");
             }
             return;

@@ -105,7 +105,7 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
         eh.playButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                EpisodePlayer.getEpisodePlayer().playStream(episode.getModel().getStreamUrl(), episode.getModel().getFullEpisodeName(), 0, null);
+                EpisodePlayer.getEpisodePlayer().playStream(episode.getModel().getStreamUrl(), episode.getModel().getFullEpisodeName(), 0, null, getContext());
             }
         });
 

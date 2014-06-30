@@ -3,6 +3,7 @@ package se.slashat.slashapp.androidservice;
 import java.io.Serializable;
 
 import se.slashat.slashapp.MainActivity;
+import se.slashat.slashapp.util.Network;
 
 import android.app.ActivityManager;
 import android.app.Notification;
@@ -141,7 +142,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	}
 
     public void playLiveStream(){
-        playStream("http://slashat.se:8000/","Slashat.se - live",0,null,true);
+        playStream("http://slashat.se:8000/","Slashat.se - live",0,null,callingContext, true);
     }
 
 	/**
@@ -152,47 +153,48 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
      * @param position
      */
 
-    public void playStream(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog) {
-        playStream(streamUrl, fullEpisodeName, position, progressDialog,false);
+    public void playStream(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog, Context context) {
+        playStream(streamUrl, fullEpisodeName, position, progressDialog,context, false);
     }
 
-	private void playStream(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog, boolean live) {
+	private void playStream(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog, Context context, boolean live) {
+        if (Network.isNetworkAvailable()) {
+            if (progressDialog == null) {
+                progressDialog = new ProgressDialog(context);
+                progressDialog.setTitle("Buffrar avsnitt");
+                progressDialog.setMessage(fullEpisodeName);
+                progressDialog.show();
+            }
 
-        if (progressDialog == null){
-            progressDialog = new ProgressDialog(callingContext);
-            progressDialog.setTitle("Buffrar avsnitt");
-            progressDialog.setMessage(fullEpisodeName);
-            progressDialog.show();
+            this.episodeName = fullEpisodeName;
+            this.streamUrl = streamUrl;
+            this.progressDialog = progressDialog;
+            this.startposition = position;
+            this.live = live;
+
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+            if (streamUrl == null) {
+                stopPlay(); // Temporary to stop playing until buttons are
+                // implemented.
+                progressDialog.dismiss();
+                return;
+            }
+            try {
+                mediaPlayer.setDataSource(streamUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            mediaPlayer.setOnPreparedListener(this);
+            mediaPlayer.setOnCompletionListener(this);
+            mediaPlayer.prepareAsync();
         }
-
-		this.episodeName = fullEpisodeName;
-		this.streamUrl = streamUrl;
-		this.progressDialog = progressDialog;
-		this.startposition = position;
-        this.live = live;
-
-        if (mediaPlayer != null && mediaPlayer.isPlaying()){
-            mediaPlayer.stop();
-        }
-
-		mediaPlayer = new MediaPlayer();
-		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-		if (streamUrl == null) {
-			stopPlay(); // Temporary to stop playing until buttons are
-						// implemented.
-			progressDialog.dismiss();
-			return;
-		}
-		try {
-			mediaPlayer.setDataSource(streamUrl);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		mediaPlayer.setOnPreparedListener(this);
-		mediaPlayer.setOnCompletionListener(this);
-		mediaPlayer.prepareAsync();
 
 	}
 
