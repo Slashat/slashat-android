@@ -88,8 +88,8 @@ public class MyHighFiversFragment extends ListFragment {
                                     badgesAndAchivements.addAll(user.getBadges());
                                     badgesAndAchivements.addAll(user.getAchivements());
 
-                                    int numberOfItems = badgesAndAchivements.size();
-                                    int height = (int) Math.floor(numberOfItems / 4);
+                                    double numberOfItems = badgesAndAchivements.size();
+                                    int height = (int) Math.ceil(numberOfItems / 4.0d);
                                     int heightDp = height * 85;
                                     badgesView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, getPx(heightDp)));
 
