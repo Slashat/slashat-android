@@ -76,7 +76,6 @@ public class HighFiveGetUserAsyncTask extends AsyncTask<String, Void, User> {
 
             if (!Strings.isNullOrEmpty(userJsonString)) {
                 JSONObject jsonObject = new JSONObject(userJsonString);
-                System.out.println(jsonObject.toString(5));
                 user = getUserFromJson(jsonObject);
                 if (user.getQr() != null){
                     InputStream qrStream = user.getQr().openStream();
