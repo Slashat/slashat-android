@@ -14,7 +14,6 @@ import java.net.URL;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
@@ -134,11 +133,6 @@ public class LoadImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
     protected void onPostExecute(Bitmap result) {
         super.onPostExecute(result);
         if (holder.position == position) {
-            /*if (imageView.get() != null) {
-                progressBar.setVisibility(View.GONE);
-                imageView.get().setImageBitmap(result);
-                imageView.get().setScaleType(ScaleType.CENTER_CROP);
-            }*/
             if (imageViewThumbnail.get() != null){
                 progressBar.setVisibility(View.GONE);
                 imageViewThumbnail.get().setImageBitmap(result);

@@ -3,7 +3,6 @@ package se.slashat.slashapp.fragments.highfive;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -18,38 +17,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.zxing.*;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.adapter.AbstractArrayAdapter;
-import se.slashat.slashapp.async.LoadImageAsyncTask;
-import se.slashat.slashapp.fragments.FragmentSwitcher;
-import se.slashat.slashapp.model.highfive.Badge;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.User;
 import se.slashat.slashapp.service.HighFiveService;
 import se.slashat.slashapp.service.ImageService;
-import se.slashat.slashapp.util.ContentView;
 import se.slashat.slashapp.util.Strings;
 
 /**

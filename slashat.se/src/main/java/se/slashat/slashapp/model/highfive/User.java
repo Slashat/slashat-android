@@ -1,7 +1,5 @@
 package se.slashat.slashapp.model.highfive;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
 import java.net.URL;
 import java.util.Collection;

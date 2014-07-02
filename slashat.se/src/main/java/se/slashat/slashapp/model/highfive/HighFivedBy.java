@@ -1,7 +1,6 @@
 package se.slashat.slashapp.model.highfive;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by nicklas on 9/28/13.

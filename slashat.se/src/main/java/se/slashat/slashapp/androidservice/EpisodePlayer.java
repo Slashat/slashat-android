@@ -15,7 +15,6 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -26,7 +25,6 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import android.support.v4.content.LocalBroadcastManager;
 
 /**
  * EpisodePlayerService that plays a selected episode in the background. TODO:
@@ -106,13 +104,6 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		episodePlayer.bindToEpisodePlayerService(context, playerInterface);
 		callingContext = context;
 		setupLastPlayed();
-        /*broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                System.out.println("!!!!!!!!!!!!!hehu!!!!!!!");
-            }
-        };
-        LocalBroadcastManager.getInstance(context).registerReceiver(broadcastReceiver,new IntentFilter("play-audio-episode"));*/
     }
 
 	private static void setupLastPlayed() {

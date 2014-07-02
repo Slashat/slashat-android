@@ -1,13 +1,11 @@
 package se.slashat.slashapp.fragments.about;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import se.slashat.slashapp.R;
-import se.slashat.slashapp.fragments.episode.EpisodeDetailFragment;
 import se.slashat.slashapp.model.Personal;
 import se.slashat.slashapp.util.ContentView;
 

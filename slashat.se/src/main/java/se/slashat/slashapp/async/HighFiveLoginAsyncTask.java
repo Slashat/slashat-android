@@ -1,7 +1,6 @@
 package se.slashat.slashapp.async;
 
 import android.os.AsyncTask;
-import android.provider.Settings;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

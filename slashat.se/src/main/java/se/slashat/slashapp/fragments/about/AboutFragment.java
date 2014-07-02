@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.fragments.FragmentSwitcher;
-import se.slashat.slashapp.fragments.episode.EpisodeDetailFragment;
 import se.slashat.slashapp.model.Personal;
 
 /**

@@ -53,8 +53,6 @@ public class LiveStreamLoaderAsyncTask extends AsyncTask<URL,Void,String> {
                 return broadcastId;
 
             }
-
-            //return "2386973";
             return "";
 
         } catch (MalformedURLException e) {

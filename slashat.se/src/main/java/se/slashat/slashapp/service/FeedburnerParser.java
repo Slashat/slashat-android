@@ -10,8 +10,6 @@ import java.util.Locale;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import se.slashat.slashapp.MainActivity;
-
 import android.util.Log;
 import android.util.Xml;
 

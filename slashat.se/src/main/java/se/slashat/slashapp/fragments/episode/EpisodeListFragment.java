@@ -11,7 +11,6 @@ import android.widget.ListView;
 import se.slashat.slashapp.CallbackPair;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.async.EpisodeLoaderAsyncTask;
-import se.slashat.slashapp.fragments.FragmentSwitcher;
 import se.slashat.slashapp.model.Episode;
 
 /**

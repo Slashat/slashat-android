@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import se.slashat.slashapp.R;
-import se.slashat.slashapp.model.highfive.User;
 import se.slashat.slashapp.util.ContentView;
 
 /**

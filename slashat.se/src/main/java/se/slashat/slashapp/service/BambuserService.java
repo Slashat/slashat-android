@@ -1,6 +1,5 @@
 package se.slashat.slashapp.service;
 
-import android.R;
 import android.os.Build;
 import android.util.Log;
 

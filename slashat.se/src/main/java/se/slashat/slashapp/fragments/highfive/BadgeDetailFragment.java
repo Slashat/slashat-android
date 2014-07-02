@@ -1,6 +1,5 @@
 package se.slashat.slashapp.fragments.highfive;
 
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.InflateException;
@@ -11,11 +10,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.adapter.AbstractArrayAdapter;
-import se.slashat.slashapp.model.highfive.User;
-import se.slashat.slashapp.service.HighFiveService;
 import se.slashat.slashapp.service.ImageService;
 
 /**

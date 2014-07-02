@@ -2,7 +2,6 @@ package se.slashat.slashapp.viewmodel;
 
 import java.net.URL;
 
-import se.slashat.slashapp.R;
 import se.slashat.slashapp.model.Personal;
 import se.slashat.slashapp.model.highfive.HighFiver;
 

@@ -82,15 +82,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     protected void onStop() {
         super.onStop();
-
-        //mMediaRouter.removeCallback(mMediaRouterCallback);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //MediaRouteHelper.unregisterMediaRouteProvider(mCastContext);
-        //mCastContext.dispose();
     }
 
     @Override
@@ -104,22 +100,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-
-        /*MenuItem mediaRouteItem = menu.findItem( R.id.action_mediaroute );
-        mediaRouteItem.getActionView().setBackgroundColor(R.color.abc_search_url_text_normal);
-
-        mMediaRouteButton = (MediaRouteButton) mediaRouteItem.getActionView();
-
-        mCastContext = new CastContext( getApplicationContext() );
-        MediaRouteHelper.registerMinimalMediaRouteProvider( mCastContext, this );
-        mMediaRouter = MediaRouter.getInstance( getApplicationContext() );
-        mMediaRouteSelector = MediaRouteHelper.buildMediaRouteSelector( MediaRouteHelper.CATEGORY_CAST );
-        mMediaRouteButton.setRouteSelector( mMediaRouteSelector );
-        mMediaRouterCallback = new MyMediaRouterCallback();
-
-        mMediaRouter.addCallback(mMediaRouteSelector, mMediaRouterCallback, MediaRouter.CALLBACK_FLAG_REQUEST_DISCOVERY);
-*/
-
         return true;
     }
 
@@ -154,8 +134,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 fragment = mHighfiveFragment;
                 break;
         }
-        //getSupportFragmentManager().popBackStack();
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
         FragmentSwitcher.getInstance().switchFragment(fragment,false,R.id.fragment_container);
     }
 

@@ -44,7 +44,7 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 
 
 		View row = convertView;
-		Holder holder = null;
+		Holder holder;
 		final T t = data[position];
 
         boolean isSection = false;

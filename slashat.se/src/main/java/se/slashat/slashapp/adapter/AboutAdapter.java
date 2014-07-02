@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
-import se.slashat.slashapp.async.LoadImageAsyncTask;
 import se.slashat.slashapp.model.Personal;
 import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.viewmodel.AboutViewModel;

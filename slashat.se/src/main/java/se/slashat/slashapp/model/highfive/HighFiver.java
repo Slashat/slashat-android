@@ -2,7 +2,6 @@ package se.slashat.slashapp.model.highfive;
 
 import java.io.Serializable;
 import java.net.URL;
-import java.util.Comparator;
 
 /**
  * Created by nicklas on 9/28/13.
