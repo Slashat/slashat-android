@@ -27,6 +27,7 @@
                 android:textSize="15sp"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
+                android:layout_gravity="center"
                 android:text="Visa denna QR-kod för att High-Fivea!"
             android:layout_marginBottom="12dp" />
     </LinearLayout>
