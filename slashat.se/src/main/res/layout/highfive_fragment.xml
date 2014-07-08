@@ -127,7 +127,7 @@
                             android:id="@+id/givehighfive"
                             android:layout_below="@+id/linearLayout"
                             android:layout_alignParentLeft="true"
-                            android:enabled="false"
+                            android:enabled="true"
                         android:layout_marginLeft="-2dp"
                         style="@style/Widget.AppCompat.Base.ActionButton.Overflow" />
 

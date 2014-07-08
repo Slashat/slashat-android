@@ -153,7 +153,6 @@ public class HighfiveFragment extends Fragment {
                     });
 
                     Button giveHighfive = (Button) view.findViewById(R.id.givehighfive);
-                    if (!user.getHighFivers().isEmpty()) {
                         giveHighfive.setEnabled(true);
                         giveHighfive.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -161,7 +160,6 @@ public class HighfiveFragment extends Fragment {
                                 IntentIntegrator.initiateScan(HighfiveFragment.this.getActivity(), "QR_CODE");
                             }
                         });
-                    }
 
                 }
             }
