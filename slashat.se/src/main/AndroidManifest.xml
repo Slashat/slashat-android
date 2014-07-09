@@ -14,16 +14,23 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Slashat" >
+        <receiver android:name="se.slashat.slashapp.androidservice.MediaControllerIntentReceiver">
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name="se.slashat.slashapp.MainActivity"
             android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

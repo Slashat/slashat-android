@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="100dp">
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:cropToPadding="true"
+        android:src="@drawable/ic_launcher"
+
+        />
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/playpause"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_alignTop="@+id/icon"
+        android:singleLine="true"
+        android:text="Slashat.se"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="20sp"
+        android:ellipsize="marquee"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/content"
+        android:layout_alignLeft="@+id/title"
+        android:layout_toLeftOf="@+id/playpause"
+        android:layout_below="@+id/title"
+        android:singleLine="false"
+        android:textSize="15sp"
+        android:text="#666 - Ett crazy avsnitt"
+        android:paddingTop="8dp"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingLeft="8dp"
+        />
+    <ImageButton
+        android:id="@+id/playpause"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@drawable/ic_media_play"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

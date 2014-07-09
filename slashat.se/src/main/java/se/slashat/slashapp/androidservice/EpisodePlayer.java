@@ -3,8 +3,11 @@ package se.slashat.slashapp.androidservice;
 import java.io.Serializable;
 
 import se.slashat.slashapp.MainActivity;
+import se.slashat.slashapp.R;
 import se.slashat.slashapp.util.Network;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -15,32 +18,40 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
+import android.media.RemoteControlClient;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.widget.RemoteViews;
 
 /**
  * EpisodePlayerService that plays a selected episode in the background. TODO:
  * Wake locks, MediaPlayerState handling, seek in file, interaction with
  * buttons.
- * 
+ *
  * @author nicklas.lof
- * 
+ *
  */
 
-public class EpisodePlayer extends Service implements OnPreparedListener, OnCompletionListener, Serializable {
+public class EpisodePlayer extends Service implements OnPreparedListener, OnCompletionListener, Serializable, AudioManager.OnAudioFocusChangeListener {
 
 	private static final String PREF_LAST_PLAYED_POSITION = "lastPlayedPosition";
 	private static final String PREF_LAST_PLAYED_STREAM_URL = "lastPlayedStreamUrl";
 	private static final String PREF_LAST_PLAYED_EPISODE_NAME = "lastPlayedEpisodeName";
 	private static final String PREF_EPISODE_PLAYER = "EpisodePlayer";
+    public static final String PLAYPAUSE_COMMAND = "se.slashat.slashapp.PLAYPAUSE_COMMAND";
 	private static final long serialVersionUID = 1L;
     private static BroadcastReceiver broadcastReceiver;
     private MediaPlayer mediaPlayer;
@@ -60,10 +71,18 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	private int startposition;
 	private static Context callingContext;
     private boolean live;
+    private AudioManager audioManager;
+    private ComponentName mediaControllerReciever;
+    private RemoteControlClient remoteClient;
+
+    @Override
+    public void onAudioFocusChange(int i) {
+
+    }
 
     public class EpisodePlayerBinder extends Binder implements Serializable {
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 1L;
 
@@ -75,9 +94,9 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	/**
 	 * Callback interface to inform caller about duration updates and update
 	 * media player status.
-	 * 
+	 *
 	 * @author Nicklas Löf
-	 * 
+	 *
 	 */
 	public interface PlayerInterface {
 		public void durationUpdate(int seekMax, int seek);
@@ -95,11 +114,10 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	/**
 	 * Initalizes the episoderplayer and binds it as a service. It seems to need
 	 * the applicationContext from the MainActivity to work correctly.
-	 * 
+	 *
 	 * @param context
 	 */
 	public static void initalize(Context context, PlayerInterface playerInterface) {
-		// EpisodePlayer.playerInterface = playerInterface;
         episodePlayer = new EpisodePlayer();
 		episodePlayer.bindToEpisodePlayerService(context, playerInterface);
 		callingContext = context;
@@ -116,7 +134,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 
 	/**
 	 * Gets the episodeplayer.
-	 * 
+	 *
 	 * @return
 	 */
 	public static EpisodePlayer getEpisodePlayer() {
@@ -130,7 +148,12 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	public void onCreate() {
 		super.onCreate();
 		binder = new EpisodePlayerBinder();
-	}
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(Integer.MAX_VALUE);
+        filter.addAction(PLAYPAUSE_COMMAND);
+        broadcastReceiver = new MediaControllerIntentReceiver();
+        registerReceiver(broadcastReceiver, filter);
+    }
 
     public void playLiveStream(){
         playStream("http://slashat.se:8000/","Slashat.se - live",0,null,callingContext, true);
@@ -148,7 +171,8 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
         playStream(streamUrl, fullEpisodeName, position, progressDialog,context, false);
     }
 
-	private void playStream(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog, Context context, boolean live) {
+	@SuppressLint("NewApi")
+    private void playStream(String streamUrl, String fullEpisodeName, int position, ProgressDialog progressDialog, Context context, boolean live) {
         if (Network.isNetworkAvailable()) {
             if (progressDialog == null) {
                 progressDialog = new ProgressDialog(context);
@@ -196,13 +220,34 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		return START_STICKY;
+
+        System.out.println("START COMMAND!!!!!");
+
+        return START_STICKY;
 	}
 
-	@Override
-	public void onPrepared(MediaPlayer mp) {
-		startPlay();
-	}
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        mediaControllerReciever = new ComponentName(getApplicationContext(), MediaControllerIntentReceiver.class);
+
+        Intent li = new Intent(Intent.ACTION_MEDIA_BUTTON);
+        li.setComponent(mediaControllerReciever);
+
+
+        PendingIntent lpi = PendingIntent.getBroadcast(getApplicationContext(), 0, li, 0);
+        remoteClient = new RemoteControlClient(lpi);
+        remoteClient.setTransportControlFlags(RemoteControlClient.FLAG_KEY_MEDIA_PLAY_PAUSE);
+
+
+        int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            audioManager.registerMediaButtonEventReceiver(mediaControllerReciever);
+            audioManager.registerRemoteControlClient(remoteClient);
+        }
+        startPlay();
+    }
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
@@ -221,9 +266,10 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	 * Start play the media set in initializePlayer() and plays the media in the
 	 * background.
 	 */
-	private void startPlay() {
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private void startPlay() {
 
-		setNotification();
+        broadcastChange();
 		mediaPlayer.start();
 		progressDialog.dismiss();
 
@@ -234,6 +280,10 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		if (startposition > 0) {
 			mediaPlayer.seekTo(startposition);
 		}
+
+        remoteClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PLAYING);
+
+        updateNotificationAndMediaMetadata();
 
 	}
 
@@ -252,6 +302,16 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		saveLastPlayerPrefs();
 
 	}
+    public void broadcastChange() {
+        Intent i=new Intent("com.android.music.playstatechanged");
+
+         		i.putExtra("artist", episodeName);
+         		i.putExtra("album", episodeName);
+         		i.putExtra("track", episodeName);
+         		i.putExtra("playing", isPlaying());
+
+         		sendStickyBroadcast(i);
+         	}
 
 	private void saveLastPlayerPrefs() {
 		if (callingContext != null && mediaPlayer != null) {
@@ -267,35 +327,63 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 		mediaPlayer.seekTo(position);
 	}
 
-	public void pause() {
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public void pause() {
 		paused = true;
 		if (mediaPlayer != null) {
 			mediaPlayer.pause();
 			saveLastPlayerPrefs();
-			unsetNotification();
+            remoteClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PAUSED);
+            updateNotificationAndMediaMetadata();
 		}
 	}
 
-	public void resume() {
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public void resume() {
 		paused = false;
-		setNotification();
 		mediaPlayer.start();
+        remoteClient.setPlaybackState(RemoteControlClient.PLAYSTATE_PLAYING);
+        updateNotificationAndMediaMetadata();
 	}
 
-	private void setNotification() {
-		// TODO Replace with Non deprecated way to create notifications
-		notification = new Notification(android.R.drawable.ic_media_play, "slashat.se", System.currentTimeMillis());
-		Intent notificationIntent = new Intent(this, MainActivity.class);
-		notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private void updateNotificationAndMediaMetadata() {
 
-		CharSequence contentTitle = "slashat.se spelar nu";
-		CharSequence contentText = episodeName;
+        Intent playpause = new Intent(PLAYPAUSE_COMMAND);
+        PendingIntent piPlayPause = PendingIntent.getBroadcast(this, 0, playpause, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		notification.setLatestEventInfo(getApplicationContext(), contentTitle, contentText, pendingIntent);
+        RemoteControlClient.MetadataEditor remoteEditor = remoteClient.editMetadata(true);
+        remoteEditor.putBitmap(RemoteControlClient.MetadataEditor.BITMAP_KEY_ARTWORK, BitmapFactory.decodeResource(getResources(), R.drawable.logo));
+        remoteEditor.putString(MediaMetadataRetriever.METADATA_KEY_ARTIST, "Slashat.se");
+        remoteEditor.putString(MediaMetadataRetriever.METADATA_KEY_TITLE, episodeName);
+        remoteEditor.apply();
 
-		startForeground(1, notification);
-	}
+        RemoteViews remoteView = new RemoteViews(getPackageName(), R.layout.notification);
+        remoteView.setTextViewText(R.id.title, "Slashat.se");
+        remoteView.setTextViewText(R.id.content, episodeName);
+
+        if (isPlaying()){
+            remoteView.setImageViewResource(R.id.playpause,R.drawable.ic_media_pause);
+        }else{
+            remoteView.setImageViewResource(R.id.playpause,R.drawable.ic_media_play);
+        }
+
+        remoteView.setImageViewBitmap(R.id.icon, BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher));
+        remoteView.setOnClickPendingIntent(R.id.playpause, piPlayPause);
+
+
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getApplicationContext());
+        notificationBuilder.setContentIntent(pendingIntent);
+        notificationBuilder.setContent(remoteView);
+        notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+        notification = notificationBuilder.build();
+        broadcastChange();
+        startForeground(1, notification);
+    }
 
 	private void unsetNotification() {
 		stopForeground(true);
@@ -345,7 +433,7 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 
 	/**
 	 * Checks if the Episode Player Service is running or not
-	 * 
+	 *
 	 * @return
 	 */
 	private boolean isEpisodePlayerRunning(Context context) {
@@ -396,9 +484,9 @@ public class EpisodePlayer extends Service implements OnPreparedListener, OnComp
 	/**
 	 * Background thread that runs every second and sends duration updates to
 	 * the PlayerInterface.
-	 * 
+	 *
 	 * @author Nicklas Löf
-	 * 
+	 *
 	 */
 	public static class DurationUpdaterThread extends Thread {
 
