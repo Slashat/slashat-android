@@ -2,6 +2,7 @@ package se.slashat.slashapp.fragments.episode;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import se.slashat.slashapp.CallbackPair;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.async.EpisodeLoaderAsyncTask;
 import se.slashat.slashapp.model.Episode;
+import se.slashat.slashapp.service.ArchiveService;
 
 /**
  * Created by nicklas on 6/18/13.
@@ -24,11 +26,26 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
     private static EpisodeFragment callback;
+    private SwipeRefreshLayout swipeLayout;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.episode_list, null);
+        View view = inflater.inflate(R.layout.episode_list, null);
+
+        swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        swipeLayout.setColorSchemeResources(android.R.color.white,
+                android.R.color.black,
+                R.color.pressed_slashat,
+                R.color.pressed_slashat);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populate(true);
+            }
+        });
+        swipeLayout.setRefreshing(true);
+        return view;
     }
 
     @Override
@@ -54,9 +71,21 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
         populate(false);
     }
 
+    public void startProgress() {
+        if (swipeLayout != null){
+            swipeLayout.setRefreshing(true);
+        }
+    }
+
+    public void stopProgress() {
+        if (swipeLayout != null){
+            swipeLayout.setRefreshing(false);
+        }
+    }
 
     public void populate(boolean fullRefresh) {
-        getActivity().setProgressBarIndeterminateVisibility(true);
+        //getActivity().setProgressBarIndeterminateVisibility(true);
+        startProgress();
         EpisodeLoaderAsyncTask episodeLoaderAsyncTask = new EpisodeLoaderAsyncTask(this, fullRefresh);
         episodeLoaderAsyncTask.execute();
     }
@@ -64,7 +93,8 @@ public class EpisodeListFragment extends ListFragment implements CallbackPair<Ep
     @Override
     public void setListAdapter(ListAdapter adapter) {
         super.setListAdapter(adapter);
-        getActivity().setProgressBarIndeterminateVisibility(false);
+        //getActivity().setProgressBarIndeterminateVisibility(false);
+        stopProgress();
     }
 
     @Override
