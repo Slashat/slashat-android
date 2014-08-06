@@ -93,7 +93,7 @@ public class FeedburnerParser {
 			String name = parser.getName();
 			if (name.equals("title")) {
 				title = readTitle(parser);
-			} else if (name.equals("media:content")) {
+			} else if (name.equals("enclosure")) {
 				url = getMediaReadUrl(parser);
 			} else if (name.equals("pubDate")) {
 				date = getDate(parser);
@@ -133,14 +133,14 @@ public class FeedburnerParser {
 
 	private String getMediaReadUrl(XmlPullParser parser) throws XmlPullParserException, IOException {
 		String url = null;
-		parser.require(XmlPullParser.START_TAG, "", "media:content");
+		parser.require(XmlPullParser.START_TAG, "", "enclosure");
 		String tag = parser.getName();
-		if (tag.equals("media:content")) {
+		if (tag.equals("enclosure")) {
 			url = parser.getAttributeValue(null, "url");
 			parser.nextTag();
 		}
 
-		parser.require(XmlPullParser.END_TAG, "", "media:content");
+		parser.require(XmlPullParser.END_TAG, "", "enclosure");
 
 		return url;
 	}
