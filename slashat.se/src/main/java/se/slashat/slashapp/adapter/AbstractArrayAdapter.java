@@ -1,7 +1,6 @@
 package se.slashat.slashapp.adapter;
 
 import se.slashat.slashapp.R;
-import se.slashat.slashapp.async.LoadImageAsyncTask;
 import se.slashat.slashapp.viewmodel.SectionViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
 import android.app.Activity;
@@ -149,7 +148,6 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
         public ImageView imageThumb;
         public ProgressBar progressBar;
         public boolean hasImage = false;
-        public LoadImageAsyncTask loadImageAsyncTask = null;
     }
 
 	static class SectionHolder extends Holder {

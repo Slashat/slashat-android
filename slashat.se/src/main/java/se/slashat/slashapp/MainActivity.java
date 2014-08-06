@@ -24,7 +24,6 @@ import se.slashat.slashapp.fragments.highfive.HighfiveFragment;
 import se.slashat.slashapp.fragments.live.LiveFragment;
 import se.slashat.slashapp.player.PlayerInterfaceImpl;
 import se.slashat.slashapp.service.HighFiveService;
-import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.util.Conversion;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -75,7 +74,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onStart();
         playerInterface = new PlayerInterfaceImpl(this);
         EpisodePlayer.initalize(this,playerInterface);
-        ImageService.init(this);
 
     }
 

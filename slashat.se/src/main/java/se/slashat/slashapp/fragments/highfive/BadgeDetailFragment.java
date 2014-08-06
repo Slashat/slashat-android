@@ -10,9 +10,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.adapter.AbstractArrayAdapter;
-import se.slashat.slashapp.service.ImageService;
 
 /**
  * Created by nicklas on 6/29/14.
@@ -39,13 +40,25 @@ public class BadgeDetailFragment extends Fragment {
             TextView descriptionView = (TextView) view.findViewById(R.id.badgeDescription);
 
 
-            BadgeImageHolder badgeImageHolder = new BadgeImageHolder();
+            final BadgeImageHolder badgeImageHolder = new BadgeImageHolder();
             badgeImageHolder.progressBar = progressBar;
             badgeImageHolder.image = image;
             badgeImageHolder.imageThumb = image;
 
 
-            ImageService.populateImage(badgeImageHolder, pictureLarge, 0);
+            badgeImageHolder.progressBar.setVisibility(View.VISIBLE);
+            Picasso.with(badgeImageHolder.imageThumb.getContext()).load(pictureLarge).into(badgeImageHolder.imageThumb, new com.squareup.picasso.Callback() {
+                @Override
+                public void onSuccess() {
+                    badgeImageHolder.progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError() {
+                    badgeImageHolder.progressBar.setVisibility(View.GONE);
+                }
+            });
+
 
             descriptionView.setText(description);
 

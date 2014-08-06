@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -28,7 +30,6 @@ import se.slashat.slashapp.model.highfive.Badge;
 import se.slashat.slashapp.model.highfive.HighFiver;
 import se.slashat.slashapp.model.highfive.User;
 import se.slashat.slashapp.service.HighFiveService;
-import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.viewmodel.HighFiverViewModel;
 import se.slashat.slashapp.viewmodel.SectionViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
@@ -137,7 +138,7 @@ public class MyHighFiversFragment extends ListFragment {
 
                 ProgressBar progressBar = new ProgressBar(getActivity());
 
-                BadgeImageHolder imageHolder = new BadgeImageHolder();
+                final BadgeImageHolder imageHolder = new BadgeImageHolder();
                 imageHolder.imageThumb = imageView;
                 imageHolder.image = imageView;
                 imageHolder.progressBar = progressBar;
@@ -153,7 +154,20 @@ public class MyHighFiversFragment extends ListFragment {
                     }
                 }
 
-                ImageService.populateImage(imageHolder, achivements.get(i).getPicture(), 0);
+
+                imageHolder.progressBar.setVisibility(View.VISIBLE);
+                Picasso.with(imageHolder.imageThumb.getContext()).load(achivements.get(i).getPicture()).into(imageHolder.imageThumb, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        imageHolder.progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        imageHolder.progressBar.setVisibility(View.GONE);
+                    }
+                });
+
 
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override

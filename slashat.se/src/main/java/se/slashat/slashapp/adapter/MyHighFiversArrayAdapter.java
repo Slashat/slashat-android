@@ -7,8 +7,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import se.slashat.slashapp.R;
-import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.viewmodel.HighFiverViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
 
@@ -49,31 +50,31 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<ViewModelBase
 
     @Override
     public void setDataOnHolder(Holder holder, ViewModelBase highFiverViewModel, int position) {
-        MyHighFiversHolder h = (MyHighFiversHolder) holder;
+        final MyHighFiversHolder hi5Holder = (MyHighFiversHolder) holder;
         HighFiverViewModel vm = (HighFiverViewModel) highFiverViewModel;
 
-        h.name.setText(vm.getModel().getUsername());
-        h.username.setText("");
+        hi5Holder.name.setText(vm.getModel().getUsername());
+        hi5Holder.username.setText("");
 
         if (vm.getModel().getPicture() != null){
-            ImageService.populateImage(h, vm.getModel().getPicture().toString(), position);
-        }
 
+            hi5Holder.progressBar.setVisibility(View.VISIBLE);
+            Picasso.with(hi5Holder.imageThumb.getContext()).load(vm.getModel().getPicture().toString()).into(hi5Holder.imageThumb, new com.squareup.picasso.Callback() {
+                @Override
+                public void onSuccess() {
+                    hi5Holder.progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError() {
+                    hi5Holder.progressBar.setVisibility(View.GONE);
+                }
+            });
+        }
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView != null) {
-            Holder holder = (Holder) convertView.getTag();
-            if (holder instanceof ImageAsyncHolder) {
-                if (holder != null) {
-                    ImageAsyncHolder h = (ImageAsyncHolder) holder;
-                    if (h.loadImageAsyncTask != null) {
-                        h.loadImageAsyncTask.cancel();
-                    }
-                }
-            }
-        }
         return super.getView(position, convertView, parent);
     }
 }

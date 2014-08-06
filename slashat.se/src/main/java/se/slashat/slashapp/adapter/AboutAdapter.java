@@ -5,7 +5,6 @@ import java.io.Serializable;
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.model.Personal;
-import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.viewmodel.AboutViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
 
@@ -15,6 +14,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 public class AboutAdapter extends AbstractArrayAdapter<ViewModelBase<?>> implements Serializable {
 
@@ -72,16 +73,27 @@ public class AboutAdapter extends AbstractArrayAdapter<ViewModelBase<?>> impleme
 	@Override
 	public void setDataOnHolder(Holder holder, ViewModelBase personal, int position) {
         AboutViewModel pvm = (AboutViewModel) personal;
-		AboutHolder ph = (AboutHolder) holder;
+		final AboutHolder aboutHolder = (AboutHolder) holder;
 
-		ph.txtName.setText(pvm.getName());
+		aboutHolder.txtName.setText(pvm.getName());
         if (pvm.getImageUrl() == null){
-            ph.imageThumb.setImageResource(pvm.getImg());
+            aboutHolder.imageThumb.setImageResource(pvm.getImg());
         }else if (pvm.getImageUrl() != null){
-            ImageService.populateImage(ph,pvm.imageUrl.toString(), position);
+            aboutHolder.progressBar.setVisibility(View.VISIBLE);
+            Picasso.with(aboutHolder.imageThumb.getContext()).load(pvm.imageUrl.toString()).into(aboutHolder.imageThumb, new com.squareup.picasso.Callback() {
+                @Override
+                public void onSuccess() {
+                    aboutHolder.progressBar.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onError() {
+                    aboutHolder.progressBar.setVisibility(View.GONE);
+                }
+            });
         }
 		//
 
-        ph.txtTitle.setText(pvm.getTitle());
+        aboutHolder.txtTitle.setText(pvm.getTitle());
 	}
 }

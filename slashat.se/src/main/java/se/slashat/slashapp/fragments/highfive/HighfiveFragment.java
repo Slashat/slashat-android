@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -32,7 +33,6 @@ import se.slashat.slashapp.adapter.AbstractArrayAdapter;
 import se.slashat.slashapp.model.highfive.HighFivedBy;
 import se.slashat.slashapp.model.highfive.User;
 import se.slashat.slashapp.service.HighFiveService;
-import se.slashat.slashapp.service.ImageService;
 import se.slashat.slashapp.util.Strings;
 
 /**
@@ -129,7 +129,7 @@ public class HighfiveFragment extends Fragment {
             @Override
             public void call(final User user) {
                 if (user != null) {
-                    UserImageHolder userImageHolder = new UserImageHolder();
+                    final UserImageHolder userImageHolder = new UserImageHolder();
                     userImageHolder.imageThumb = (ImageView) view.findViewById(R.id.highfive_userimage);
                     userImageHolder.image = (ImageView) view.findViewById(R.id.highfive_userimage);
                     userImageHolder.progressBar = (ProgressBar) view.findViewById(R.id.imageviewprogress);
@@ -138,7 +138,18 @@ public class HighfiveFragment extends Fragment {
                     setText(view.findViewById(R.id.highfive_firsthighfive), formatFirstHighfivedBy(user.getHighFivedBy()));
 
                     if (user.getPicture() != null) {
-                        ImageService.populateImage(userImageHolder, user.getPicture().toString(),0);
+                        userImageHolder.progressBar.setVisibility(View.VISIBLE);
+                        Picasso.with(userImageHolder.imageThumb.getContext()).load(user.getPicture().toString()).into(userImageHolder.imageThumb, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                userImageHolder.progressBar.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError() {
+                                userImageHolder.progressBar.setVisibility(View.GONE);
+                            }
+                        });
                     }
 
                     Button getHighfive = (Button) view.findViewById(R.id.gethighfive);
