@@ -77,7 +77,7 @@ public class ArchiveService extends SerializableService<Set<Episode>> {
                 final FeedburnerParser feedburnerParser = new FeedburnerParser();
                 progressMessage = "Hämtar avsnittsinformation";
                 updateCallback.onUpdate();
-                URL url = new URL("http://feeds.feedburner.com/slashat?format=xml");
+                URL url = new URL("http://slashat.se/avsnitt.rss");
                 inputStream = url.openStream();
 
                 try {
