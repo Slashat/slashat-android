@@ -41,6 +41,8 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 
         // There is probably a better way to do this :-)
 
+        // TODO: Replace this with RecyclerView when API-level 21 is stable.
+
 
 		View row = convertView;
 		Holder holder;
@@ -92,9 +94,9 @@ public abstract class AbstractArrayAdapter<T extends ViewModelBase<?>> extends A
 		return row;
 	}
 
-	private void setDataOnSectionHolder(Holder holder, SectionViewModel t) {
+	private void setDataOnSectionHolder(Holder holder, SectionViewModel sectionViewModel) {
 		SectionHolder h = (SectionHolder) holder;
-		h.titleTextView.setText(((SectionViewModel) t).getModel().getSectionName());
+		h.titleTextView.setText(sectionViewModel.getSectionName());
 
 	}
 

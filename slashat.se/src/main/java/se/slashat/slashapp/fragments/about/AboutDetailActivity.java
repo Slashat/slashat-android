@@ -6,7 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import se.slashat.slashapp.R;
-import se.slashat.slashapp.model.Personal;
+import se.slashat.slashapp.model.Crew;
 import se.slashat.slashapp.util.ContentView;
 
 /**
@@ -14,25 +14,25 @@ import se.slashat.slashapp.util.ContentView;
  */
 public class AboutDetailActivity extends ActionBarActivity {
 
-    private Personal personal;
+    private Crew crew;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getIntent().getExtras().containsKey("person")) {
-            personal = (Personal) getIntent().getExtras().getSerializable("person");
+            crew = (Crew) getIntent().getExtras().getSerializable("person");
         }
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable("person", personal);
+        bundle.putSerializable("person", crew);
 
         AboutDetailFragment aboutDetailFragment = new AboutDetailFragment();
         aboutDetailFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction().add(ContentView.getContentViewCompat(), aboutDetailFragment).commit();
 
-        setTitle(personal.getName());
+        setTitle(crew.getName());
 
         ActionBar ab = getSupportActionBar();
 

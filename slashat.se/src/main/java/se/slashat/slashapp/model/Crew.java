@@ -2,7 +2,7 @@ package se.slashat.slashapp.model;
 
 import java.io.Serializable;
 
-public class Personal implements Serializable{
+public class Crew implements Serializable{
 	
 	public enum Type {
         SHOW,
@@ -21,7 +21,7 @@ public class Personal implements Serializable{
 	private final String bio;
 	private final int img;
 
-	public Personal(String name, String title, Type type, int img, String email, String twitter, String homepage, String bio) {
+	public Crew(String name, String title, Type type, int img, String email, String twitter, String homepage, String bio) {
 		super();
 		this.name = name;
 		this.title = title;

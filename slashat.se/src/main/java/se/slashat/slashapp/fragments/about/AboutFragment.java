@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.fragments.FragmentSwitcher;
-import se.slashat.slashapp.model.Personal;
+import se.slashat.slashapp.model.Crew;
 
 /**
  * Created by nicklas on 6/18/13.
  */
-public class AboutFragment extends Fragment implements Callback<Personal> {
+public class AboutFragment extends Fragment implements Callback<Crew> {
     private static View view;
     private AboutListFragment aboutListFragment;
     private AboutDetailFragment aboutDetailFragment;
@@ -51,7 +51,7 @@ public class AboutFragment extends Fragment implements Callback<Personal> {
 }
 
     @Override
-    public void call(Personal result) {
+    public void call(Crew result) {
 
         if (isDualPane){
             Bundle bundle = new Bundle();

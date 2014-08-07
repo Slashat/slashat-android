@@ -66,16 +66,15 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 	}
 
 	@Override
-	public OnClickListener createOnClickListener(final EpisodeViewModel episode) {
+	public OnClickListener createOnClickListener(final EpisodeViewModel episodeViewModel) {
 		return new OnClickListener() {
 			/**
-			 * Pass the selected episode details to the Fragment that will start
+			 * Pass the selected episodeViewModel details to the Fragment that will start
 			 * playing it.
 			 */
 			@Override
 			public void onClick(View v) {
-				// episodeCallback.call(episode.getStreamUrl(),episode.getFullEpisodeName());
-				episodeCallback.call(episode.getModel(), true);
+				episodeCallback.call(episodeViewModel.getEpisode(), true);
 			}
 		};
 	}
@@ -88,11 +87,11 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 	@Override
 	public void setDataOnHolder(Holder holder, final EpisodeViewModel episode, int position) {
 		EpisodeHolder eh = (EpisodeHolder) holder;
-		eh.episodeNumber.setText(String.format("#%03d",episode.getModel().getEpisodeNumber()));
-		eh.txtTitle.setText(episode.getModel().getName());
-        eh.description.setText(episode.getModel().getDescription());
+		eh.episodeNumber.setText(episode.getFormatedEpisodeNumber());
+		eh.txtTitle.setText(episode.getName());
+        eh.description.setText(episode.getDescription());
 		
-		String duration = episode.getModel().getDuration();
+		String duration = episode.getDuration();
 		if (countOccurrences(duration, ':') == 1){
 			duration = "00:"+duration; // For episodes shorter than 1 hour.
 		}
@@ -100,17 +99,14 @@ public class EpisodeAdapter extends AbstractArrayAdapter<EpisodeViewModel> imple
 
         Period period = durationFormatter.parsePeriod(duration).normalizedStandard(PeriodType.minutes());
         String periodString = String.valueOf(period.getMinutes())+" minuter";
-        eh.date.setText(dateFormat.format(episode.getModel().getPublished()) + " - " + periodString);
+        eh.date.setText(dateFormat.format(episode.getPublished()) + " - " + periodString);
 
         eh.playButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                EpisodePlayer.getEpisodePlayer().playStream(episode.getModel().getStreamUrl(), episode.getModel().getFullEpisodeName(), 0, null, getContext());
+                EpisodePlayer.getEpisodePlayer().playStream(episode.getEpisode().getStreamUrl(), episode.getEpisode().getFullEpisodeName(), 0, null, getContext());
             }
         });
-
-
-		
 	}
 	
 	public int countOccurrences(String string, char needle)

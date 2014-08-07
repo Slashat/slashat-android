@@ -30,6 +30,7 @@ import se.slashat.slashapp.model.highfive.Badge;
 import se.slashat.slashapp.model.highfive.HighFiver;
 import se.slashat.slashapp.model.highfive.User;
 import se.slashat.slashapp.service.HighFiveService;
+import se.slashat.slashapp.viewmodel.DisplayRowViewModel;
 import se.slashat.slashapp.viewmodel.HighFiverViewModel;
 import se.slashat.slashapp.viewmodel.SectionViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
@@ -66,7 +67,7 @@ public class MyHighFiversFragment extends ListFragment {
                         } else {
                             Collection<HighFiver> highFivers = user.getHighFivers();
                             if (!highFivers.isEmpty()) {
-                                ArrayList<ViewModelBase> list = new ArrayList<ViewModelBase>();
+                                ArrayList<DisplayRowViewModel> list = new ArrayList<DisplayRowViewModel>();
 
                                 list.add(new SectionViewModel(new SectionModel("Mina "+user.getHighFivers().size()+" High-Fivers:")));
 
@@ -97,7 +98,7 @@ public class MyHighFiversFragment extends ListFragment {
                                     getListView().addHeaderView(headerView, null, false);
                                 }
 
-                                MyHighFiversArrayAdapter myHighFiversArrayAdapter = new MyHighFiversArrayAdapter(getActivity(), R.layout.about_list_item_row, list.toArray(new ViewModelBase[list.size()]));
+                                MyHighFiversArrayAdapter myHighFiversArrayAdapter = new MyHighFiversArrayAdapter(getActivity(), R.layout.about_list_item_row, list.toArray(new DisplayRowViewModel[list.size()]));
                                 setListAdapter(myHighFiversArrayAdapter);
 
                             }

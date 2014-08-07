@@ -13,26 +13,27 @@ import java.util.List;
 import se.slashat.slashapp.Callback;
 import se.slashat.slashapp.R;
 import se.slashat.slashapp.adapter.AboutAdapter;
-import se.slashat.slashapp.model.Personal;
+import se.slashat.slashapp.model.Crew;
 import se.slashat.slashapp.model.SectionModel;
 import se.slashat.slashapp.model.highfive.HighFiver;
 import se.slashat.slashapp.service.HighFiveService;
 import se.slashat.slashapp.service.PersonalService;
 import se.slashat.slashapp.viewmodel.AboutViewModel;
+import se.slashat.slashapp.viewmodel.DisplayRowViewModel;
 import se.slashat.slashapp.viewmodel.SectionViewModel;
 import se.slashat.slashapp.viewmodel.ViewModelBase;
 
 /**
  * Created by nicklas on 6/19/13.
  */
-public class AboutListFragment extends ListFragment implements Callback<Personal> {
+public class AboutListFragment extends ListFragment implements Callback<Crew> {
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
     private int mActivatedPosition = ListView.INVALID_POSITION;
-    private static Callback<Personal> callback;
+    private static Callback<Crew> callback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,14 +64,14 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
         HighFiveService.getAllHighfivers(new Callback<List<HighFiver>>() {
             @Override
             public void call(List<HighFiver> result) {
-                AboutAdapter adapter = null;
-                Personal[] show = PersonalService.getPersonal(Personal.Type.SHOW);
-                Personal[] crew = PersonalService.getPersonal(Personal.Type.HOST);
-                Personal[] assistant = PersonalService.getPersonal(Personal.Type.ASSISTANT);
-                Personal[] dev = PersonalService.getPersonal(Personal.Type.DEV);
+                AboutAdapter adapter;
+                Crew[] show = PersonalService.getPersonal(Crew.Type.SHOW);
+                Crew[] crew = PersonalService.getPersonal(Crew.Type.HOST);
+                Crew[] assistant = PersonalService.getPersonal(Crew.Type.ASSISTANT);
+                Crew[] dev = PersonalService.getPersonal(Crew.Type.DEV);
 
 
-                ArrayList<ViewModelBase> arrayList = new ArrayList<ViewModelBase>();
+                ArrayList<DisplayRowViewModel> arrayList = new ArrayList<DisplayRowViewModel>();
 
                 arrayList.add(new SectionViewModel(new SectionModel("Om showen")));
                 for (int i = 0; i < show.length; i++) {
@@ -98,7 +99,7 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
                     arrayList.add(new AboutViewModel(allHighfiver));
                 }
 
-                ViewModelBase<?>[] array = arrayList.toArray(new ViewModelBase<?>[arrayList.size()]);
+                DisplayRowViewModel<?>[] array = arrayList.toArray(new DisplayRowViewModel<?>[arrayList.size()]);
 
 
                 adapter = new AboutAdapter(getActivity(), R.layout.about_list_item_row, array, AboutListFragment.this);
@@ -107,10 +108,7 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
 
             }
         },false);
-
-
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -132,12 +130,12 @@ public class AboutListFragment extends ListFragment implements Callback<Personal
     }
 
     @Override
-    public void call(Personal result) {
+    public void call(Crew result) {
 
         callback.call(result);
     }
 
-    public static void setCallback(Callback<Personal> callback) {
+    public static void setCallback(Callback<Crew> callback) {
         AboutListFragment.callback = callback;
     }
 }

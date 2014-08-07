@@ -10,15 +10,15 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import se.slashat.slashapp.R;
+import se.slashat.slashapp.viewmodel.DisplayRowViewModel;
 import se.slashat.slashapp.viewmodel.HighFiverViewModel;
-import se.slashat.slashapp.viewmodel.ViewModelBase;
 
 /**
  * Created by nicklas on 10/1/13.
  */
-public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<ViewModelBase<?>>{
+public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<DisplayRowViewModel<?>>{
 
-    public MyHighFiversArrayAdapter(Context context, int layoutResourceId, ViewModelBase[] data) {
+    public MyHighFiversArrayAdapter(Context context, int layoutResourceId, DisplayRowViewModel[] data) {
         super(context, layoutResourceId, R.layout.section, data);
     }
 
@@ -39,7 +39,7 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<ViewModelBase
     }
 
     @Override
-    public View.OnClickListener createOnClickListener(ViewModelBase highFiverViewModel) {
+    public View.OnClickListener createOnClickListener(DisplayRowViewModel highFiverViewModel) {
         return null;
     }
 
@@ -49,17 +49,16 @@ public class MyHighFiversArrayAdapter extends AbstractArrayAdapter<ViewModelBase
     }
 
     @Override
-    public void setDataOnHolder(Holder holder, ViewModelBase highFiverViewModel, int position) {
+    public void setDataOnHolder(Holder holder, DisplayRowViewModel highFiverViewModel, int position) {
         final MyHighFiversHolder hi5Holder = (MyHighFiversHolder) holder;
         HighFiverViewModel vm = (HighFiverViewModel) highFiverViewModel;
-
-        hi5Holder.name.setText(vm.getModel().getUsername());
+        hi5Holder.name.setText(vm.getUserName());
         hi5Holder.username.setText("");
 
-        if (vm.getModel().getPicture() != null){
+        if (vm.getPicture() != null){
 
             hi5Holder.progressBar.setVisibility(View.VISIBLE);
-            Picasso.with(hi5Holder.imageThumb.getContext()).load(vm.getModel().getPicture().toString()).into(hi5Holder.imageThumb, new com.squareup.picasso.Callback() {
+            Picasso.with(hi5Holder.imageThumb.getContext()).load(vm.getPicture()).into(hi5Holder.imageThumb, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
                     hi5Holder.progressBar.setVisibility(View.GONE);

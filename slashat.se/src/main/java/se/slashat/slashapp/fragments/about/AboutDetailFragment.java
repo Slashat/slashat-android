@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import se.slashat.slashapp.R;
-import se.slashat.slashapp.model.Personal;
+import se.slashat.slashapp.model.Crew;
 
 /**
  * Created by nicklas on 6/19/13.
@@ -20,7 +20,7 @@ import se.slashat.slashapp.model.Personal;
 public class    AboutDetailFragment extends Fragment {
 
 
-    private Personal person;
+    private Crew person;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class    AboutDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null && getArguments().containsKey("person")) {
-            person = (Personal) getArguments().getSerializable("person");
+            person = (Crew) getArguments().getSerializable("person");
         }
     }
 
@@ -63,7 +63,7 @@ public class    AboutDetailFragment extends Fragment {
     }
 
 
-    private void setHomepageClickListener(final Personal t, View view) {
+    private void setHomepageClickListener(final Crew t, View view) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +72,7 @@ public class    AboutDetailFragment extends Fragment {
         });
     }
 
-    private void setEmailClickListener(final Personal t, View view) {
+    private void setEmailClickListener(final Crew t, View view) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +81,7 @@ public class    AboutDetailFragment extends Fragment {
         });
     }
 
-    private void setTwitterClickListener(final Personal t, View view) {
+    private void setTwitterClickListener(final Crew t, View view) {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +90,7 @@ public class    AboutDetailFragment extends Fragment {
         });
     }
 
-    private void openTwitterIntent(final Personal t) {
+    private void openTwitterIntent(final Crew t) {
         try {
             // TODO: Can all twitter clients be targeted?
             // Looks like every different client has it's own way to open it
@@ -111,7 +111,7 @@ public class    AboutDetailFragment extends Fragment {
         }
     }
 
-    private void openEmailIntent(final Personal t) {
+    private void openEmailIntent(final Crew t) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(android.content.Intent.EXTRA_EMAIL,
@@ -121,7 +121,7 @@ public class    AboutDetailFragment extends Fragment {
                 "Välj applikation att skicka mail med"));
     }
 
-    private void openBrowserIntent(Personal t) {
+    private void openBrowserIntent(Crew t) {
         getActivity().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(t
                 .getHomepage())));
     }
